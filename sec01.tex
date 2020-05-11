@@ -1,0 +1,296 @@
+\section{線形空間}
+以下，$K$は実数全体$\RR$か複素数全体$\CC$であるとする．
+\begin{dfn}\label{dfn:vec_sp}
+    集合$V$に対して，
+    二項演算$+$と，$K$の元によるスカラー倍が定義されていて，
+    以下の性質をすべて満たすとき，
+    $V$は\textbf{$K$上のベクトル空間}(vector space)，
+    もしくは\textbf{$K$上の線形空間}(linear space)であるという．
+    \footnote{$K$が文脈から明らかにわかる場合，単にベクトル空間もしくは線形空間と言ってしまうことが多い．}
+    \begin{enumerate}
+        \item 任意の$v_1,v_2 \in V$に対して，
+        $v_1 + v_2 = v_2 + v_1$である．(加法に関する交換律)
+        \item 任意の$v_1,v_2,v_3 \in V$に対して，
+        $(v_1 + v_2) + v_3 = v_1 + (v_2 + v_3)$である．(加法に関する結合律)
+        \item ある$0_V \in V$で，
+        任意の$v \in V$に対して，$0_V + v = v$となるものが存在する．
+        このような$0_V$を$V$の\textbf{零元}もしくは\textbf{零ベクトル}という．
+        \footnote{ここでも，考えているベクトル空間がどれかが明らかな場合，$0$と書いてしまう事が多い．
+        場合によっては$o$(小文字のオー)で書くこともある．}
+        \item 任意の$v \in V$と$\alpha_1,\alpha_2 \in V$に対して，$\alpha_1(\alpha_2 v) = (\alpha_1 \alpha_2)v$である．
+        \item 任意の$v_1,v_2 \in V$と$\alpha \in K$について，$\alpha(v_1 + v_2) = \alpha v_1 + \alpha v_2$である．
+        \item 任意の$v \in V$と$\alpha_1,\alpha_2 \in K$について，$(\alpha_1 + \alpha_2)v = \alpha_1 v + \alpha_2 v$である．
+        \item 任意の$v \in V$に対し，$1v = v$である．
+    \end{enumerate}
+\end{dfn}
+\begin{notation}
+    $K=\RR$のときは「\textbf{実ベクトル空間}」，
+    $K=\CC$のときは「\textbf{複素ベクトル空間}」と呼ぶ．
+    また，「$K$上のベクトル空間」を，「\textbf{$K$-ベクトル空間}」と略すことも多い．
+\end{notation}
+以下，今後の講義でも用いる例を挙げる．
+\begin{example}
+    一番最小のベクトル空間は，零ベクトルのみからなる空間$\{0\}$である．
+    加法は$0+0=0$で，スカラー倍は$\alpha 0 = 0$で定義すれば，
+    定義~\ref{dfn:vec_sp}の条件をすべて満たす．
+    これを\textbf{自明な}(trivial)ベクトル空間という．
+    \footnote{英語のtrivialの方には
+    ，``not serious, important, or valuable''(from Longman Dictionary of Contemporary English, Fifth Edition)とあるように，
+    価値がないとか重要ではないという意味がある．
+    つまり，この空間は確かにベクトル空間ではあるが，あまり考える価値がないし，実質無視してもよいというニュアンスが伴う．}
+\end{example}
+\begin{example}
+    $K$の元を$n$個($n$は1以上の整数)並べてできる(数)ベクトル全体のなす空間
+    \[
+        K^n := \left\{ \pmt{x_1 \\ \vdots \\ x_n} \,;\, x_1,\dots,x_n \in K \right\}
+    \]
+    は，和とスカラー倍を，
+    \[
+        \pmt{x_1 \\ \vdots \\ x_n} + \pmt{y_1 \\ \vdots \\ y_n}
+        = \pmt{x_1+y_1  \\ \vdots \\ x_n+y_n}, \quad
+        \alpha \pmt{x_1  \\ \vdots \\ x_n} = \pmt{ \alpha x_1  \\ \vdots \\ \alpha x_n}
+    \]
+    と定義することで，$K$上のベクトル空間になる．
+    これを，\textbf{$K$上の$n$次元ユークリッド空間}という．
+    このときの零ベクトルは，成分がすべて0のベクトル$\pmt{0  \\ \vdots \\ 0}$である．
+\end{example}
+\begin{example}
+    $K$の元を係数とする1変数の多項式全体
+    \[
+        K[x] := \left\{ a_n x^n + \dots a_1 x + a_0 \,;\, a_0,\dots,a_n \in K\right\}
+    \]
+    は，和とスカラー倍を，通常の多項式の和と定数倍で定義することで$K$上のベクトル空間になる．
+\end{example}
+\begin{example}
+    $K$の元からなる数列の全体
+    \[
+        K^\NN := \left\{ (a_j)_{j\ge 0} = (a_0,a_1,a_2,\dots) \,;\, a_j \in K\ (j \ge 0) \right\}
+    \]
+    は，和とスカラー倍を，
+    \[
+        (a_j) + (b_j) = (a_j+b_j),\quad \alpha (a_j) = (\alpha a_j)
+    \]
+    で定義することで，$K$上のベクトル空間となる．
+\end{example}
+ベクトル空間の公理から，次のことがわかる．
+これらの性質は当たり前のことに思えるが，
+すべてベクトル空間の定義に基づいて証明できることである．
+\begin{prop}
+    $V$を$K$-ベクトル空間とする．
+    \begin{enumerate}
+        \item $V$の零ベクトルはただ1つしかない．
+        \footnote{定義~\ref{dfn:vec_sp}においては，零ベクトルが「ある」ということしか言っておらずこれが1つしかないかどうかについてはまったく言及されていないことに注意．零ベクトルが1個しかないということも，真面目に証明しなければならないことなのである．}
+        \item 任意の$v \in V$に対して，$0v = 0_V$である．
+        \item 任意の$v \in V$に対して，ある$-v \in V$で，$v + (-v) = 0_V$となるものがただ一つ存在する．これを$v$の\textbf{逆元}という．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $0_V$と$0'_V$を$V$に零ベクトルとする．
+        すると，零ベクトルの定義から，任意の$v \in V$に対して，
+        $v + 0_V = v$である．
+        ここで，$v = 0'_V$とおくと，$0'_V + 0_V = 0'_V$となる．
+        
+        一方，$0'_V$も零ベクトルなので，任意の$v' \in V$に対して，
+        $v' + 0'_V = v'$である．
+        ここで，$v' = 0_V$とおくと，$0_V + 0'_V = 0_V$となる．
+        交換律より，$0'_V + 0_V = 0_V + 0'_V$が成り立つので，
+        $0_V = 0'_V$が成り立つ．
+        \footnote{ここで行っている論法は「ただ一つであること」(\textbf{一意性})を証明するための基本的なテクニックである．
+        つまり，その性質を満たすものが2つ存在したとして，実はそれらは同じものだったということを示すやり方である．}
+        \item 分配律より，$1v + 0v = (1 + 0) v = 1v = v$である．
+        従って，任意の$v \in V$に対して，$v + 0v = v$が成立する．
+        つまり，$0v$は零ベクトルの性質を満たしており，
+        (1)で示したことから，$0v=0_V$であることがわかる．
+        \item $v \in V$に対して，$(-1)v$が逆元の性質を満たすことはすぐにわかる．
+        実際，分配律と(2)を用いて，
+        \[
+            v + (-1)v = 1v + (-1)v = (1 + (-1))v = 0v = 0_V
+        \]
+        となるからである．
+        
+        よって，逆元は存在することがわかったので，
+        これがただ一つしかないことを示せばよい．
+        $v \in V$に対して，$v + v_1 = 0_V$を満たす元$v_1\in V$を取る．
+        両辺に$(-1)v$を足すと，$v + (-1)v = 0_V$であることより，
+        \[
+            \begin{aligned}
+                (-1)v + v + v_1 &= (-1)v + 0_V \\
+                0_V + v_1 &= (-1)v \\
+                v_1 &= (-1)v
+            \end{aligned}
+        \]
+        となるので，逆元はただ一つしかないことがわかった．
+    \end{enumerate}
+\end{proof}
+ベクトル空間の中で，特別な性質を持つような部分集合を考えることができる．
+\begin{dfn}\label{dfn:subspace}
+    $V$を$K$上のベクトル空間として，$W \subset V$を部分集合とする．
+    $W$は次の2つの条件をすべて満たすとき，$V$の\textbf{部分空間}(subspace)であるという．
+    \begin{enumerate}
+        \item 任意の$w_1,w_2 \in W$に対して，$w_1 + w_2 \in W$である．
+        \item 任意の$w \in W$と，$\alpha \in K$に対して，$\alpha w \in W$である．
+    \end{enumerate}
+\end{dfn}
+上の定義の2つの主張はそれぞれ，
+\begin{itemize}
+    \item $W$に属する2つの元の和を取ると，その結果も$W$に属する．
+    \item $W$に属する元をスカラー倍すると，その結果も$W$に属する．
+\end{itemize}
+ということを意味している．
+このように，ある集合の元に対して，何らかの演算をした結果が再びもとの集合に属している状況を，その演算で「\textbf{閉じている}」と表現する．
+この言い回しを使うなら，「\textbf{部分空間とは，和とスカラー倍で閉じているような部分集合のことである}」と短く表現できる．
+
+まず具体例を示そう．
+\begin{example}
+    任意の$K$-ベクトル空間$V$に対して，$V$自身と，$V$の零ベクトルのみからなる部分集合$\{0_V\}$は$V$の部分空間である．これらを$V$の\textbf{自明な}部分空間という．
+\end{example}
+\begin{example}
+    $n$次元ユークリッド空間$K^n$に対して，
+    \[
+        W = \left\{ \pmt{a \\ a \\ \vdots \\ a} \,;\, a \in K\right\}
+    \]
+    という部分集合，つまり，すべての成分が同じであるようなベクトル全体のなす部分集合を考えると，これは$K^n$の部分空間になる．
+    
+    実際，和とスカラー倍で閉じていることを確認する．
+    まず，$W$の2つの元を$w_1 = \pmt{a_1 \\ \vdots \\a_1}$，$w_2 = \pmt{a_2 \\ \vdots \\a_2}$とする．
+    このとき，$w_1 + w_2 = \pmt{a_1 + a_2 \\  \dots \\ a_1 + a_2}$
+    は，すべての成分が同じなのでやはり$W$に属している．
+    一方で，任意の$\alpha \in K$と$w = \pmt{a \\  \vdots \\ a} \in W$に対して，
+    $\alpha w = \pmt{\alpha a \\  \vdots \\ \alpha a}$は，すべての成分が同じなのでやはり$W$に属している．
+    以上で$W$が部分空間になることが証明できた．
+\end{example}
+「$W$が$V$の部分空間ではない」ということの定義も確認しておく必要がある．
+そのためには定義~\ref{dfn:subspace}の否定を取ればよい．従って，$W$が$V$の部分空間ではないということは，次の2つの条件のうち\textbf{少なくとも1つ}が満たされることである:%
+\footnote{ここで論理の復習．「任意の$x$に対して$P(x)$が成り立つ」($\forall x\,P(x)$)の否定は，「ある$x$で，$P(x)$が成り立たないものが存在する」($\exists x\, \neg P(x)$)である．$\forall$と$\exists$が自動的に入れ替わることに注意．また，「$A$かつ$B$」の否定は「$A$でないまたは$B$でない」となる．}
+\begin{itemize}
+    \item ある$w_1,w_2 \in W$で，$w_1 + w_2 \not\in W$となるものが存在する．
+    \item ある$w \in W$と，$\alpha \in K$で，$\alpha w \not\in W$となるものが存在する．
+\end{itemize}
+\begin{example}
+    $K^n$に対して，
+    \[
+        W = \left\{ \pmt{a \\ a \\ \vdots \\ a+1} \,;\, a \in K\right\}
+    \]
+    という部分集合は$K^n$の部分空間にはならない．
+    
+    これを示すには，$W$の元の和，もしくはスカラー倍によって，その結果が$W$に属さなくなる例を作ればいい．
+    実際，$w = \pmt{0 \\ 0 \\ \vdots \\ 1}$は$W$の元だが，
+    $2w = \pmt{0 \\ 0 \\ \vdots \\ 2}$は$W$に属さない．
+\end{example}
+基本的に，部分空間であるかどうかを確認するためには，和とスカラー倍で閉じていることを確認すればいいが，実は以下のような判定方法がある．
+\begin{prop}\label{prop:subspace_one_condition}
+    $V$を$K$-ベクトル空間，$W \subset V$を部分集合とする．
+    このとき，以下は同値である．
+    \begin{enumerate}
+        \item $W$は$V$の部分空間である．
+        \item 任意の$w_1,w_2 \in W$と，$\alpha_1,\alpha_2 \in K$に対して，
+        $\alpha_1 w_1 + \alpha_2 w_2 \in W$である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    $(1) \Rightarrow (2)$: $W$が$V$の部分空間であるとする．
+    このとき，任意の$w_1,w_2 \in W$と，$\alpha_1,\alpha_2 \in K$に対して，
+    部分空間の定義から，$\alpha_1 w_1$と$\alpha_2 w_2$はともに$W$の元である．
+    すると，その和である$\alpha_1 w_1 + \alpha_2 w_2$も$W$の元であるので，
+    (2)が成り立つ．
+    
+    \noindent
+    $(2) \Rightarrow (1)$: 任意の$w_1,w_2 \in W$と，$\alpha_1,\alpha_2 \in K$に対して，$\alpha_1 w_1 + \alpha_2 w_2 \in W$が成り立つとする．
+    ここで，特に$\alpha_1 = \alpha_2 = 1$とすれば，
+    任意の$w_1,w_2 \in W$に対して，$w_1 + w_2 \in W$であることがわかる．
+    また，$\alpha_2 = 0$とすれば，
+    任意の$w_1 \in W$と$\alpha_1 \in K$に対して，$\alpha_1 w_1 \in W$であることがわかる．
+    以上で$W$が$V$の部分空間であることがわかった．
+\end{proof}
+このことを用いて部分空間であることを証明してみる．
+\begin{example}
+    $K^3$の部分集合
+    \[
+        W = \left\{ \pmt{x_1 \\ x_2 \\ x_3} \in K^3 \,;\, x_1 + x_2 + 2x_3 = 0\right\}
+    \]
+    が部分空間であることを示そう．
+    $w_1 = \pmt{x_1 \\ x_2 \\ x_3}$と$w_2 = \pmt{y_1 \\ y_2 \\ y_3}$を$W$の元とする．
+    このとき，$W$の定義から，$x_1 + x_2 + 2x_3 = 0$と$y_1 + y_2 + 2y_3 = 0$が成り立つことに注意する．
+    
+    任意の$\alpha,\beta\in K$について，$ \alpha w_1 + \beta w_2 = \pmt{\alpha x_1 + \beta y_1 \\ \alpha x_2 + \beta y_2 \\ \alpha x_3 + \beta y_3}$である．
+    これが$W$の元であることを確認すればよいが，それは，
+    \[
+        \begin{aligned}
+            &(\alpha x_1 + \beta y_1) + (\alpha x_2 + \beta y_2) + 2(\alpha x_3 + \beta y_3) \\
+            &= \alpha (x_1 + x_2 + 2x_3) + \beta (y_1 + y_2 + 2y_3) \\
+            &= 0
+        \end{aligned}
+    \]
+    となることから言える．
+\end{example}
+\begin{example}
+    多項式全体が作るベクトル空間$K[x]$の部分集合
+    \[
+        W = \{ f(x) \in K[x] \,;\, \mbox{$f(x)$は$x+1$で割り切れる} \}
+    \]
+    は，$K[x]$の部分空間である．
+    
+    実際，任意の$f_1(x),f_2(x) \in W$と，$\alpha_1,\alpha_2$に対して，
+    $\alpha_1f_1(x) + \alpha_2 f_2(x)$が$x+1$で割り切れることを確認すればよい．
+    これにはいくつか方法があるが，真面目に証明すると以下の通りである．$f_1(x)$と$f_2(x)$は$x+1$で割り切れるので，ある多項式$g_1(x)$と$g_2(x)$で，
+    \[
+        f_1(x) = (x+1)g_1(x),\quad f_2(x) = (x+1)g_2(x)
+    \]
+    となるものが存在する．
+    このとき，
+    \[
+        \alpha_1f_1(x) + \alpha_2 f_2(x) = (x+1)(\alpha_1 g_1(x) + \alpha_2 g_2(x))
+    \]
+    であり，$\alpha_1 g_1(x) + \alpha_2 g_2(x)$は多項式だから，$\alpha_1f_1(x) + \alpha_2 f_2(x)$が$x+1$で割り切れることがわかった．
+\end{example}
+部分空間から別の部分空間を作る方法として，和と共通部分がある．
+\begin{prop}\label{prop:sum_and_intersection}
+    $V$を$K$-ベクトル空間とする．
+    \begin{enumerate}
+        \item 任意の部分空間$W \subset V$に対して，$0_V \in W$である．
+        \item $W_1,W_2$を$V$の2つの部分空間とする．
+        このとき，共通部分$W_1 \cap W_2$も$V$の部分空間になる．
+        \item $W_1,W_2$を$V$の2つの部分空間とする．
+        このとき，
+        \[
+            W_1 + W_2 = \left\{ w_1 + w_2 \in V \,;\, w_1 \in W_1,\ w_2 \in W_2 \right\}
+        \]
+        で与えられる集合は$V$の部分空間となる．これを，$W_1$と$W_2$の和という．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $w \in W$を任意に一つ取る．
+        このとき，$W$は$V$の部分空間なので，$-w = (-1)w \in W$が成り立つ．
+        よって，$w + (-w) = 0_V$も$W$の元である．
+        \item $w_1,w_2 \in W_1 \cap W_2$，$\alpha_1,\alpha_2 \in K$を任意に取る．
+        このとき，$\alpha_1 w_1 + \alpha_2 w_2$も$W_1 \cap W_2$の元であることを示せばよい．
+        そのためには，$\alpha_1 w_1 + \alpha_2 w_2$が$W_1$に属し，かつ$W_2$にも属していることを示せばよい．
+        
+        $w_1,w_2 \in W_1 \cap W_2$なので，$w_1,w_2$は$W_1$に属している．
+        $W_1$は$V$の部分空間なので，$\alpha_1 w_1 + \alpha_2 w_2$は$W_1$に属している．
+        同様の議論で$\alpha_1 w_1 + \alpha_2 w_2$は$W_2$に属していることもわかるので，以上で結論を得る．
+        \item $v,v' \in W_1+W_2$，$\alpha,\alpha' \in K$を任意に取る．
+        このとき，$\alpha v + \alpha' v'$も$W_1 + W_2$の元であることを示せばよい．
+        
+        $v,v'$は$W_1+W_2$の元なので，$w_1,w'_1 \in W_1$と，$w_2,w'_2 \in W_2$で，
+        \[
+            v = w_1 + w_2,\quad v' = w'_1 + w'_2
+        \]
+        となるものが存在する．
+        このとき，
+        \[
+            \begin{aligned}
+                \alpha v + \alpha' v' &= \alpha (w_1 + w_2) + \alpha' (w'_1 + w'_2) \\
+                &= (\alpha w_1 + \alpha' w'_1) + (\alpha w_2 + \alpha' w'_2)
+            \end{aligned}
+        \]
+        と変形できる．
+        $w_1,w'_1 \in W_1$であることと，
+        $W_1$が$V$の部分空間であることから，
+        $\alpha w_1 + \alpha' w'_1 \in W_1$である．
+        同様にして，$\alpha w_2 + \alpha' w'_2 \in W_2$もわかる．
+        よって，$\alpha v + \alpha' v'$は$W_1$の元と$W_2$の元の和で書けることがわかるので，$\alpha v + \alpha' v'\in W_1 + W_2$であることが証明できた．
+    \end{enumerate}
+\end{proof}

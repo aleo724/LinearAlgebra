@@ -1,0 +1,981 @@
+\section{内積空間}
+ここでは，ベクトル空間に対して，通常の平面ベクトルや空間ベクトルにおける内積に当たるものを導入して，その性質を調べる．
+\subsection{双線形形式・エルミート形式}
+まず集合の直積について定義をしておく．
+\begin{dfn}
+$A,B$を集合とするとき，$A$と$B$の順序対全体からなる集合
+\[
+  A \times B = \left\{ (a,b) \,;\, a \in A,\ b \in B \right\} 
+\]
+を，$A$と$B$の\textbf{直積}という．
+\end{dfn}
+さて，内積に相当する概念を定義するわけだが，
+$K$-ベクトル空間の$K$が$\RR$であるか$\CC$であるかによって，微妙に定義が変わってくる．
+まずは$\RR$の場合を定義する．
+\begin{dfn}\label{dfn:bilinear}
+  $V$を$\RR$-ベクトル空間とする．
+  写像$\varphi\colon V \times V \to \RR$が\textbf{双線形形式}(symmetric bilinear form)であるとは，以下の性質を満たすことをいう．
+  \begin{enumerate}
+    \item 任意の$v_1,v_2,w\in V$に対して，
+    \[
+      \begin{aligned}
+        \varphi(v_1 + v_2, w) &= \varphi(v_1,w) + \varphi (v_2,w) \\
+        \varphi(w, v_1 + v_2) &= \varphi(w,v_1) + \varphi (w,v_2)
+      \end{aligned}
+    \]
+    である．
+    \item 任意の$\alpha \in \RR$と$v,w\in V$に対して，
+    \[
+      \begin{aligned}
+        \varphi(\alpha v, w) &= \alpha \varphi(v,w) \\
+        \varphi(v,\alpha w) &= \alpha \varphi(v,w)
+      \end{aligned}
+    \]
+    である．
+  \end{enumerate}
+\end{dfn}
+この定義の意味するところは，簡単に言えば，
+\begin{itemize}
+  \item $w \in V$を固定すると，$V$から$\RR$への写像$v \mapsto \varphi(v,w)$は線形写像である．
+  \item $v \in V$を固定すると，$V$から$\RR$への写像$w \mapsto \varphi(v,w)$は線形写像である．
+\end{itemize}
+ということを意味する．
+$\varphi$の2つの引数のそれぞれについて線形写像になっているという意味を込めて，
+「\textbf{双}線形」という名前がついているのである．
+
+上のことから，\cref{dfn:bilinear}が以下と同値であることはたやすいだろう．
+\begin{prop}
+  $V$を$\RR$-ベクトル空間とする．
+  写像$\varphi\colon V \times V \to \RR$について，以下は同値である．
+  \begin{enumerate}
+    \item $\varphi$は双線形形式である．
+    \item 任意の$\alpha_1,\alpha_2 \in \RR$と$v_1,v_2,w\in V$に対して，
+    \[
+      \begin{aligned}
+        \varphi(\alpha_1 v_1 + \alpha_2 v_2, w) &= \alpha_1 \varphi(v_1,w) + \alpha_2 \varphi (v_2,w) \\
+        \varphi(w, \alpha_1 v_1 + \alpha_2 v_2) &= \alpha_1 \varphi(w,v_1) + \alpha_2 \varphi (w,v_2)
+      \end{aligned}
+    \]
+    である．
+  \end{enumerate}
+\end{prop}
+
+また，\cref{dfn:bilinear}では関数であることを強調してわかりやすく記述するために$\varphi(\cdot,\cdot)$という記号を使ったが，明示的に関数名は使わず，$(v,w)$や$\langle v,w\rangle$という形の記号を用いることが多い．なので，例えば\cref{dfn:bilinear}の条件は，
+\[
+  \begin{aligned}
+    (v_1 + v_2, w) &= (v_1,w) + (v_2,w) \\
+    (w, v_1 + v_2) &= (w,v_1) + (w,v_2) \\
+    (\alpha v, w) &= \alpha (v,w) \\
+    (v,\alpha w) &= \alpha (v,w)
+  \end{aligned}  
+\]
+という形でシンプルに書き表すことができる．
+
+双線形形式の中でも，いくつか都合が良い性質を持つものを定義しておく．
+\begin{dfn}
+$(\cdot,\cdot)$を$\RR$-ベクトル空間$V$上の双線形形式とする．
+\begin{enumerate}
+  \item 任意の$v,w \in V$について，$(v,w)=(w,v)$であるとき，双線形形式$(\cdot,\cdot)$は\textbf{対称}(symmetric)であるという．
+  \item 任意の$0 \neq v \in V$について，$(v,v) > 0$であるとき，双線形形式$(\cdot,\cdot)$は\textbf{正定値}(positive definite)であるという．
+\end{enumerate}
+\end{dfn}
+正定値性の定義について一つコメントしておく．
+双線形形式の定義から，任意の$v \in V$について，$(0,v)=(v,0)=0$であることはすぐにわかる．
+従って，$(0,0)=0$である．だから，正定値性の定義の中には，\textbf{「$(v,v)=0$ならば$v=0$」}という命題も同時に含まれている．
+
+次に$\CC$-ベクトル空間の場合を考える．
+この場合，$\RR$上の双線形形式とは少し異なる写像を考える必要がある．
+\begin{dfn}\label{dfn:sesquilinear}
+  $V$を$\CC$-ベクトル空間とする．
+  写像$\varphi\colon V \times V \to \CC$が\textbf{半双線形形式}(sesquilinear form\footnote{``sesqui-''とは「1と1/2」という意味のラテン語の接頭辞である．つまり2番目の引数については完全に線形で，最初の引数については「半分だけ」線形だから，「1と1/2だけ線形」という意味でsesquilinearと名付けられているのである．ちなみにbilinearの``bi-''は「2」という意味の接頭辞である．})であるとは，以下の性質を満たすことをいう．
+  \begin{enumerate}
+    \item 任意の$v_1,v_2,w\in V$に対して，
+    \[
+      \begin{aligned}
+        \varphi(v_1 + v_2, w) &= \varphi(v_1,w) + \varphi (v_2,w) \\
+        \varphi(w, v_1 + v_2) &= \varphi(w,v_1) + \varphi (w,v_2)
+      \end{aligned}
+    \]
+    である．
+    \item 任意の$\alpha \in \CC$と$v,w\in V$に対して，
+    \[
+      \begin{aligned}
+        \varphi(\alpha v, w) &= \conj{\alpha} \varphi(v,w) \\
+        \varphi(v,\alpha w) &= \alpha \varphi(v,w)
+      \end{aligned}
+    \]
+    である．
+  \end{enumerate}
+\end{dfn}
+双線形形式との違いは，(2)の第1引数のスカラー倍に関する式のところで，複素共役がつくことである．
+先ほどと同様にまとめると，
+\begin{itemize}
+  \item $w \in V$を固定すると，$V$から$\RR$への写像$v \mapsto \varphi(v,w)$は\textbf{反線形}写像である．
+  \item $v \in V$を固定すると，$V$から$\RR$への写像$w \mapsto \varphi(v,w)$は線形写像である．
+\end{itemize}
+ということになる．\footnote{もちろん，第1引数と第2引数のどちらを反線形にするかについては任意性がある．ここでは，量子力学などで一般に用いられる，第1引数を反線形にする定義を採用した．}
+双線形形式の対称性と同じような概念を，半双線形形式でも定義できる．
+まず対称性に相当するものとして以下があある．
+\begin{dfn}
+  $(\cdot,\cdot)$を$\CC$-ベクトル空間$V$上の双線形形式とする．
+  任意の$v,w \in V$について，$(v,w)=\conj{(w,v)}$であるとき，半双線形形式$(\cdot,\cdot)$は\textbf{Hermite形式}(Hermitian form)\footnote{Hermite(,Charles 1822-1901)はフランスの数学者であり，フランス語読みすれば「エルミート」であり，これが一般的な呼び方である．ただ，英語圏だと英語読みで「ハーミット」などと呼ばれることがあるので聞き取りの際には注意しないといけない．}であるという．
+\end{dfn}
+この定義では，第1引数と第2引数を入れ替えると複素共役がかかることを要求しているが，これは正定値性をまともに定義するために必要なものである．
+実際次が成り立つ．
+\begin{prop}
+  $(\cdot,\cdot)$を$\CC$-ベクトル空間$V$上のHermite形式とする．
+  このとき，任意の$v \in \CC$について，$(v,v)$は実数である．
+\end{prop}
+\begin{proof}
+$(v,w)=\conj{(w,v)}$において，$v=w$とすると，
+$(v,v)=\conj{(v,v)}$となるので，$(v,v)$は実数である．
+\end{proof}
+こうして，正定値性はHermite形式に関して定義されることになる．
+\begin{dfn}
+  $(\cdot,\cdot)$を$\CC$-ベクトル空間$V$上のHermite形式とする．
+  任意の$0 \neq v \in V$について，$(v,v)>0$であるとき，このHermite形式は正定値(positive definite)であるという．
+\end{dfn}
+
+具体例をいくつか見ていこう．
+\begin{example}
+$\RR^n$の\textbf{標準内積}
+\[
+  \left( \pmt{x_1 \\ \vdots \\ x_n}, \pmt{y_1 \\ \vdots \\ y_n} \right) = \lncmb{x}{y}{1}{n}{+}
+\]
+は双線形形式である．
+実際，
+\[
+  \begin{aligned}
+    \left( \alpha \idxvec{x}{1}{n} + \alpha' \idxvec{x'}{1}{n}, \idxvec{y}{1}{n} \right)
+    &= (\alpha x_1 + \alpha' x'_1) y_1 + \dots + (\alpha x_n + \alpha' x'_n) y_n \\
+    &= \alpha (\lncmb{x}{y}{1}{n}{+}) + \alpha' (\lncmb{x'}{y}{1}{n}{+}) \\
+    &= \alpha \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) + \alpha' \left( \idxvec{x'}{1}{n}, \idxvec{y}{1}{n} \right) 
+  \end{aligned}
+\]
+であり，同様にして，$\left( \idxvec{x}{1}{n},\alpha \idxvec{y}{1}{n} + \alpha' \idxvec{y'}{1}{n}\right) = \alpha \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) + \alpha' \left( \idxvec{x}{1}{n}, \idxvec{y'}{1}{n} \right)$もわかる．
+
+また，この双線形形式は明らかに対称である．また，$\idxvec{x}{1}{n}$が0でないならば，
+\[
+  \left( \idxvec{x}{1}{n}, \idxvec{x}{1}{n} \right) = x_1^2 + \dots + x_n^2 > 0
+\]
+であるので，正定値でもある．
+\end{example}
+\begin{example}
+  $\CC^n$の\textbf{標準Hermite内積}
+  \[
+    \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) 
+    = \lncmb{\conj{x}}{y}{1}{n}{+}
+  \]
+  は半双線形形式である．
+  実際，
+  \[
+    \begin{aligned}
+      \left( \alpha \idxvec{x}{1}{n} + \alpha' \idxvec{x'}{1}{n}, \idxvec{y}{1}{n} \right)
+      &= \conj{(\alpha x_1 + \alpha' x'_1)} y_1 + \dots + \conj{(\alpha x_n + \alpha' x'_n)} y_n \\
+      &= \conj{\alpha} (\lncmb{\conj{x}}{y}{1}{n}{+}) + \conj{\alpha'} (\lncmb{\conj{x'}}{y}{1}{n}{+}) \\
+      &= \conj{\alpha} \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) + \conj{\alpha'} \left( \idxvec{x'}{1}{n}, \idxvec{y}{1}{n} \right) 
+    \end{aligned}
+  \]
+  であり，同様にして，$\left( \idxvec{x}{1}{n},\alpha \idxvec{y}{1}{n} + \alpha' \idxvec{y'}{1}{n}\right) = \alpha \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) + \alpha' \left( \idxvec{x}{1}{n}, \idxvec{y'}{1}{n} \right)$もわかる．
+  
+  また，この半双線形形式はHermite形式である．実際，
+  \[
+    \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right) 
+    = \lncmb{\conj{x}}{y}{1}{n}{+}
+    = \conj{\lncmb{\conj{y}}{x}{1}{n}{+}}
+    = \conj{\left( \idxvec{y}{1}{n}, \idxvec{x}{1}{n} \right)}
+  \]
+  となるからである．
+  また，$\idxvec{x}{1}{n}$が0でないならば，
+  \[
+    \left( \idxvec{x}{1}{n}, \idxvec{x}{1}{n} \right) = \abs{x_1}^2 + \dots + \abs{x_n}^2 > 0
+  \]
+  であるので，正定値でもある．
+\end{example}
+\begin{example}
+$\RR[x]$において，
+\[
+  (f,g) := \int_{0}^{1} f(x) g(x) \id x
+\]
+と定めると，$(\cdot,\cdot)$は双線形形式である．
+実際両方の引数について線形であることはたやすい．
+しかもこの双線形形式は対称であり，正定値である．
+実際，$\displaystyle (f,f) = \int_0^1 f(x)^2 \id x$であるが，$f(x)^2$は常に0以上の値を取るので$(f,f) \ge 0$である．
+更に，$(f,f)=0$となったとすると，$f$は恒等的に0である．
+\end{example}
+\begin{example}
+  $\CC[x]$において，
+  \[
+    (f,g) := \int_{0}^{1} \conj{f(x)} g(x) \id x
+  \]
+  と定めると，$(\cdot,\cdot)$は半双線形形式である．
+  実際最初の引数について反線形で，第2引数について線形であることはたやすい．
+  しかもこの半双線形形式は対称であり，正定値である．
+  実際，$\displaystyle (f,f) = \int_0^1 \abs{f(x)}^2 \id x$であるが，$f(x)^2$は常に0以上の値を取るので$(f,f) \ge 0$である．
+  更に，$(f,f)=0$となったとすると，$f$は恒等的に0である．
+\end{example}
+\begin{example}
+正定値にならない双線形形式の例をあげる．
+例えば，$\RR^2$において，
+\[
+  \left( \pmt{x_1 \\ x_2 },\pmt{y_1 \\ y_2} \right)
+  := - x_1 y_1 + x_2 y_2
+\]
+と定めると，これは双線形形式になる上，対称でもある．
+しかし正定値ではない．
+実際，$\left( \pmt{1 \\ 1}, \pmt{1 \\ 1} \right) = 0$となってしまうからである．
+\end{example}
+\begin{remark}
+一般に，$\RR^n$において，
+\[
+  \left( \idxvec{x}{1}{n}, \idxvec{y}{1}{n} \right)
+  = -x_1 y_1 + \lncmb{x}{y}{2}{n}{+}
+\]
+という形の双線形形式は，Lorentz計量と呼ばれており，相対性理論において重要なものである．
+\end{remark}
+\subsection{内積空間の定義}
+ここでは，内積の概念が導入されたベクトル空間を定義する．
+\begin{dfn}
+  $V$を$\RR$($\CC$)-ベクトル空間とする．
+  $V$とその上の正定値な対称双線形(Hermite)形式$(\cdot,\cdot)$の組を，$\RR$($\CC$)上の\textbf{内積空間}，もしくは計量ベクトル空間という．
+\end{dfn}
+内積の概念がベクトル空間に導入されることによって，ベクトルの長さや角度といった概念が拡張されることになる．このことはベクトルを幾何学的に捉える上で非常に重要である．
+\begin{dfn}
+$V$を内積空間とする．
+\begin{enumerate}
+  \item $v \in V$について，$\norm{v}:=\sqrt{(v,v)}$を$v$の\textbf{長さ}，もしくは$v$の\textbf{ノルム}(norm)という．
+  \item $v,w \in V$について，$(v,w)=0$であるとき，$v$と$w$は\textbf{直交する}という．
+\end{enumerate}
+\end{dfn}
+ノルムについては以下の性質を押さえておけばよい．
+\begin{prop}
+$V$を内積空間とする．
+\begin{enumerate}
+  \item 任意の$\alpha \in K$と$v \in V$について，$\norm{\alpha v} = \abs{\alpha}\norm{v}$である．
+  \item 任意の$v,w \in V$について，
+  \[
+    \abs{(v,w)} \le \norm{v}\norm{w}  
+  \]
+  である．(\textbf{Cauchy--Schwarzの不等式})
+  \item 任意の$v,w \in V$について，
+  \[
+    \norm{v+w} \le \norm{v} + \norm{w}  
+  \]
+  である．(\textbf{三角不等式})
+\end{enumerate}
+\end{prop}
+\begin{proof}
+$\CC$上のベクトル空間のHermite形式に対して証明をすれば十分である．\footnote{$\RR$上の場合はすべてのスカラーを$\RR$で読み替えれば証明できる．}
+\begin{enumerate}
+  \item $\norm{\alpha v}^2 = (\alpha v, \alpha v) = \conj{\alpha} (v,\alpha v) = \conj{\alpha}\alpha (v,v)=\abs{\alpha}^2 \norm{v}^2$であるから，両辺の平方根を取れば結論を得る．
+  \item 実数上の関数$f(t) = \norm{v + tw}^2$を考える．
+  $t$についてこれを整理すると，
+  \[
+    \begin{aligned}
+      f(t) &= (v+tw,v+tw) \\
+      &= (v,v+tw) + (tw, v+tw) \\
+      &= (v,v) + (v, tw) + (tw,v) + (tw,tw) \\
+      &= \norm{v}^2 + t(v,w) + \conj{t}(w,v) + \abs{t}^2 \norm{w}^2 \\
+      &= \norm{v}^2 + t(v,w) + t\conj{(v,w)} + t^2 \norm{w}^2 \\
+      &= \norm{v}^2 + 2 t \Re (v,w) + t^2 \norm{w}^2
+    \end{aligned}
+  \]
+  である．ここで，$t \in \RR$なので，$t = \conj{t}$であることを用いた．
+  最後の式を平方完成すると，
+  \[
+    f(t) = \left(t \norm{w} + \frac{\Re (v,w)}{\norm{w}} \right)^2 %
+    + t^2 \frac{\norm{v}^2 \norm{w}^2 - (\Re (v,w))^2}{\norm{w}^2}
+  \]
+  を得るが，$f(t)$は常に0以上なので，$\norm{v}^2 \norm{w}^2 - (\Re (v,w))^2 \ge 0$である．これを整理すると，
+  \[
+    (\Re (v,w))^2 \le \norm{v}^2 \norm{w}^2  
+  \]
+  を得る．
+
+  あとは，左辺を$\abs{(v,w)}^2$とすれば証明が終わる．そのために次のようなトリックを使う．まず，$(v,w)$を極表示して，
+  \[
+    (v,w) = \abs{(v,w)}(\cos \theta + i \sin \theta)  
+  \]
+  とおき，$\alpha = \cos \theta + i \sin \theta$とおく．
+  $\abs{\alpha} = 1$に注意する．
+  すると，$(\alpha v, w) = \conj{\alpha}(v,w) = \conj{\alpha}\alpha \abs{(v,w)} = \abs{\alpha}^2 \abs{(v,w)} = \abs{(v,w)}$であるから，$\Re (\alpha v, w) = \abs{(v,w)}$となる．
+  そこで，上の不等式を$v$を$\alpha v$に変えて適用すると，
+  \[
+      \abs{(v,w)}^2 = (\Re (\alpha v, w))^2 \le \norm{\alpha v}^2 \norm{w}^2 = \norm{v}^2 \norm{w}^2
+  \]
+  となるので，結論を得る．
+  \item $\norm{v+w}^2$を定義に従って展開すると，
+  \[
+    \begin{aligned}
+      \norm{v+w}^2 & (v+w,v+w) \\
+      &= (v,v) + (v,w) + (w,v) + (w,w) \\
+      &= \norm{v}^2 + 2\Re (v,w) + \norm{w}^2
+    \end{aligned}
+  \]
+  となる．
+  ここで，(2)の証明中の不等式より，
+  $\abs{\Re (v,w)} \le \norm{v}\norm{w}$であるので，$\Re (v,w) \le \norm{v}\norm{w}$となるから，
+  \[
+    \norm{v+w}^2 \le \norm{v}^2 + 2\norm{v}\norm{w} + \norm{w}^2 \le (\norm{v}+\norm{w})^2
+  \]
+  であることがわかるので，両辺の平方根をとれば結論を得る．
+\end{enumerate}
+\end{proof}
+\subsection{正規直交基底とGramm--Schmidtの直交化}
+内積を考えられるようになったことで，特にベクトルとベクトルの直交という概念が定義できるようになった．
+なので，例えば平面や空間座標における直交座標系のような，考えやすい座標のようなものを導入することは自然である．
+ここでは，特別な性質を満たす基底を導入して，ある意味において直交座標系のようなものを内積空間に定義できることを示す．
+
+まず，直交性と基底であるという性質には関係があることを見る．
+\begin{prop}
+$V$を内積空間とし，$\dim V = n$とする．
+零ベクトルでない$n$個のベクトル$\idxdot{v}{1}{n} \in V$が互いに直交する，
+つまり，$j \neq k$ならば$(v_j,v_k) = 0$を満たすのであれば，
+$\idxdot{v}{1}{n}$は$V$の基底をなす．
+\end{prop}
+\begin{proof}
+$\idxdot{v}{1}{n}$は$V$の次元と同じ個数のベクトルからなるので，
+一次独立であることを示せば証明が終わる．
+スカラー$\idxdot{\alpha}{1}{n}$を$\lncmb{\alpha}{v}{1}{n}{+}=0$となるように取る．
+$v_j\,(1 \le j \le n)$との内積を取ると，$j \neq k$ならば$(v_j,v_k)=0$なので，
+結局$\alpha_j(v_j,v_j) = 0$となる．
+$v_j \neq 0$なので，内積の正定値性から$(v_j,v_j) > 0$であるので，$\alpha_j = 0$を得る．
+$j$は任意に取れるので，結論を得る．
+\end{proof}
+以上の準備のもと，次のように定義をする．
+\begin{dfn}
+$V$を内積空間とし，$\dim V = n$とする．
+$\idxdot{v}{1}{n} \in V$が\textbf{正規直交基底}(orthonormal basis)であるとは，以下の性質を満たすことをいう．
+\begin{enumerate}
+  \item $\idxdot{v}{1}{n}$は互いに直交する．
+  \item 各$j$について，$\norm{v_j}=1$である．
+\end{enumerate}
+\end{dfn}
+上の定義の2つの条件は，\textbf{Kroneckerのデルタ}と呼ばれる記号
+\[
+  \delta_{jk} := \left\{
+    \begin{array}{ll}
+      1 & j = k, \\
+      0 & j \neq k
+    \end{array}  
+  \right.  
+\]
+を用いると，$(v_j,v_k)=\delta_{jk}$と短く書くことが可能である．
+\begin{example}
+  $\RR^n$や$\CC^n$の標準基底は正規直交基底である．
+  しかし，正規直交基底はこれだけではない．例えば，$\RR^3$において，
+  \[
+    \pmt{1/\sqrt{2} \\ 1/\sqrt{2} \\ 0},\ 
+    \pmt{1/\sqrt{2} \\ -1/\sqrt{2} \\ 0},\ 
+    \pmt{0 \\ 0 \\ 1}  
+  \]
+  も正規直交基底である．
+\end{example}
+\begin{example}
+$\RR_2[x]$に
+\[
+  (f,g) := \int_{-1}^{1} f(x)g(x)\id x
+\]
+で定まる内積を入れて内積空間だとみなす．
+この空間において，
+\[
+  \frac{1}{\sqrt{2}},\ \frac{\sqrt{6}}{2} x,\ \frac{3\sqrt{10}}{4}\left(x^2 - \frac{1}{3} \right)
+\]
+は正規直交基底をなす．
+\end{example}
+有限次元の内積空間において，正規直交基底は必ず存在する．
+そのことを，実際に通常の基底から正規直交基底を作ることで示そう．
+\begin{thm}
+$V$を有限次元の内積空間とする．
+$V$には正規直交基底が存在する．
+\end{thm}
+\begin{proof}
+$V$の次元を$n$とする．
+$V$の(正規直交基底とは限らない)順序付き基底$(\idxdot{v}{1}{n})$を一つ取る．
+そして，以下の操作を続けていって，新しい$n$個のベクトル$\idxdot{w}{1}{n}$を構成する．
+\begin{enumerate}[label=(GS\arabic*)]
+  \item $w_1 = \dfrac{v_1}{\norm{v_1}}$とする．
+  \item $\idxdot{w}{1}{r-1}$までが構成されているとき，
+  \begin{equation}\label{eq:GS-step}
+    \tilv_{r} = v_{r} - \sum_{j=1}^{r-1} (w_j,v_r) w_j
+  \end{equation}
+  とおく．
+  \item $w_{r} = \dfrac{\tilv_{r}}{\norm{\tilv_{r}}}$とする．
+\end{enumerate}
+こうしてできた$\idxdot{w}{1}{n}$は正規直交基底であることを，$r$についての帰納法を用いて示す．
+$r=1$のとき，
+\[
+  \norm{w_1} = \frac{\norm{v_1}}{\norm{v_1}} = 1  
+\]
+となる．
+次に，ある$r$について，$\idxdot{w}{1}{r-1}$が，次の3つを満たすと仮定する．
+\begin{itemize}
+  \item $j \neq k$ならば$(w_j,w_k) = 0$．
+  \item 各$1 \le j \le r-1$について，$\norm{w_j} = 1$．
+  \item $\idxdot{w}{1}{r-1}$は$\idxdot{v}{1}{r-1}$の線形結合で書けている．
+\end{itemize}
+
+このとき，$w_{r}$が定義できて，これを加えてもこの性質が保たれることを示す．つまり，以下の4つを証明すればよい．
+\begin{enumerate}[label=(Claim \arabic*)]
+  \item $w_{r}$が定義可能である．つまり，$\tilv_{r}$は0にならない．
+  \item 任意の$1 \le j \le r-1$について，$(w_r,w_j) = 0$である．
+  \item $\norm{w_r}=1$である．
+  \item $w_{r}$は$\idxdot{v}{1}{r}$の線形結合で書ける．
+\end{enumerate}
+まず(Claim 1)を示す．
+もしも$\tilv_{r} = 0$になったとすると，\eqref{eq:GS-step}より，
+\[
+  v_{r} = \sum_{j=1}^{r-1} (v_j,w_j) w_j  
+\]
+である．
+帰納法の仮定より，$\idxdot{w}{1}{r-1}$は$\idxdot{v}{1}{r-1}$の線形結合で書けている．
+従って，これは$v_r$が$\idxdot{v}{1}{r-1}$の線形結合で表せるということを意味しており，
+$\idxdot{v}{1}{n}$が一次独立であることに反する．
+以上で(Claim 1)は証明できた．
+
+次に(Claim 2)を示す．$w_r$は$\tilv_r$のスカラー倍なので，
+$\tilv_r$が$\idxdot{w}{1}{r-1}$と直交することを示せばよい．
+\eqref{eq:GS-step}の両辺の$w_k (1\le k \le r-1)$との内積を取ると，
+\[
+    (w_k,\tilv_r) = (w_k,v_r) - \sum_{j=1}^{r-1} (w_j,v_r) (w_k,w_j) 
+\]
+となる．
+帰納法の仮定より，$(w_k,w_j)$は$j=k$のとき1で，それ以外0だから，
+\[
+    (w_k,\tilv_r) = (w_k,v_r) - (w_k,v_r) (w_k,w_k) = (w_k,v_r) - (w_k,v_r) = 0
+\]
+となるので，(Claim 2)は示せた．
+
+(Claim 3)は構成法の(GS3)から直ちに言える．
+
+最後に(Claim 4)は，$\tilv_r$は\eqref{eq:GS-step}で定義されており，
+この式の右辺が帰納法の仮定より$\idxdot{v}{1}{r}$の線形結合で書けていることからわかる．
+
+以上より，$r=n$でも上の主張は成立しており，$\idxdot{w}{1}{n}$は正規直交基底であることが示された．
+\end{proof}
+この証明中にでてきた(GS1)-(GS3)のアルゴリズムを，\textbf{Gramm--Schmidtの直交化法}という．
+これを使うことで，任意の基底から正規直交基底を構成することができる．
+\begin{example}
+$\CC^3$の順序付き基底$(v_1,v_2,v_3)$:
+\[
+  v_1 = \pmt{i \\ 1 \\ 0}, v_2 = \pmt{1 \\ 1 \\ -i}, v_3 = \pmt{0 \\ 1 \\ i}  
+\]
+にGramm--Schmidtの直交化法を適用してみる．
+まず，$v_1$を規格化する．$\norm{v_1} = \sqrt{2}$なので，
+\[
+  w_1 = \frac{1}{\sqrt{2}}\pmt{i \\ 1 \\ 0}
+\]
+である．
+次に，
+\[
+  \begin{aligned}
+    \tilv_2 &= v_2 - (w_1, v_2)w_1 \\
+    &= \pmt{1 \\ 1 \\ -i} - \frac{1}{\sqrt{2}}(-i \cdot 1 + 1 \cdot 1) \frac{1}{\sqrt{2}}\pmt{i \\ 1 \\ 0} \\
+    &= \pmt{1 \\ 1 \\ -i} - \frac{1}{2}\pmt{1+i \\ 1-i \\ 0} = \pmt{(1-i)/2 \\ (1+i)/2 \\ -i}
+  \end{aligned}
+\]
+となるので，$\norm{\tilv_2} = \sqrt{2}$だから，
+\[
+    w_2 = \frac{1}{2\sqrt{2}} \pmt{1-i \\ 1+i \\ -2i}
+\]
+である．
+そして，
+\[
+  \begin{aligned}
+    (w_1,v_3) &= \frac{1}{\sqrt{2}} ((-i)\cdot 0 + 1 \cdot 1 + 0 \cdot i) = \frac{1}{\sqrt{2}}  \\
+    (w_2,v_3) &= \frac{1}{2\sqrt{2}} ((1+i)\cdot 0 + (1-i) \cdot 1 + 2i \cdot i) = \frac{1}{2\sqrt{2}}(-1-i)
+  \end{aligned}
+\]
+なので，
+\[
+  \begin{aligned}
+    \tilv_3 &= v_3 - (w_1, v_3)w_1 - (w_2, v_3)w_2\\
+    &= \pmt{0 \\ 1 \\ i} %
+      - \frac{1}{\sqrt{2}}\cdot \frac{1}{\sqrt{2}}\pmt{i \\ 1 \\ 0} %
+      - \frac{1}{2\sqrt{2}}(-1-i) \cdot \frac{1}{2\sqrt{2}} \pmt{1-i \\ 1+i \\ -2i} %
+    = \frac{1}{4}\pmt{1-2i \\ 2 + i \\ 1 + 3i}
+  \end{aligned}
+\]
+である．
+$\norm{\tilv_3} =  \dfrac{\sqrt{5}}{2}$なので，
+\[
+  w_3 = \frac{\sqrt{5}}{10}\pmt{1-2i \\ 2+i \\ 1+3i}  
+\]
+となる．以上で，正規直交基底
+\[
+  \frac{1}{\sqrt{2}}\pmt{i \\ 1 \\ 0},
+  \frac{1}{2\sqrt{2}} \pmt{1-i \\ 1+i \\ -2i},
+  \frac{\sqrt{5}}{10}\pmt{1-2i \\ 2+i \\ 1+3i}
+\]
+を得る．
+\end{example}
+\begin{example}
+$\RR_2[x]$に，
+\[
+(f,g) := \int_{-1}^{1} f(x)g(x) \id x  
+\]
+という内積を導入して内積空間とみなす．
+$\RR_2[x]$の順序付き基底$(1,x,x^2)$にGramm--Schmidtの直交化法を適用しよう．
+今，$v_1 = 1, v_2 = x, v_3 = x^2$とおこう．
+まず，$v_1$を規格化すると，
+\[
+  \norm{v_1} = \sqrt{\int_{-1}^{1} \id x} = \sqrt{2}
+\]
+なので，$w_1 = \frac{\sqrt{2}}{2}$である．
+次に，
+\[
+  (w_1, v_2) = \frac{1}{\sqrt{2}}\int_{-1}^1 x \id x = 0 
+\]
+なので，
+\[
+  \tilv = v_2 - (w_1,v_2)w_1 = x
+\]
+である．
+$\norm{\tilv} = \dfrac{\sqrt{6}}{3}$であるから，
+$w_2 = \dfrac{\sqrt{6}}{2} x$を得る．
+次に
+\[
+  \begin{aligned}
+    (w_1, v_3) &= \int_{-1}^1 \frac{\sqrt{2}}{2}x^2 \id x %
+    = \frac{\sqrt{2}}{3} \\
+    (w_2, v_3) &= \int_{-1}^1 \frac{\sqrt{6}}{2}x^3 \id x = 0
+  \end{aligned}  
+\]
+であるので，
+\[
+    \tilv_3 = v_3 - (w_1, v_3)w_1 - (w_2, v_3)w_2
+    = x^2 - \frac{1}{3}
+\]
+となる．これを規格化すると，$w_3 = \dfrac{3\sqrt{10}}{4}\left(x^2 - \dfrac{1}{3} \right)$となるので，
+\[
+  \frac{\sqrt{2}}{2}, \frac{\sqrt{6}}{2} x, \frac{3\sqrt{10}}{4}\left(x^2 - \frac{1}{3} \right)
+\]
+は正規直交基底となる．
+\end{example}
+Gramm--Schmidtの直交化法における\eqref{eq:GS-step}の意味するところを，
+2次元Euclid空間の場合に説明すると次のようになる．
+$w_1$がすでに定まっているとき，$(w_2,v_1)$というのは，
+$v_2$を$w_2$の方向に射影してできるベクトルの長さである．
+\footnote{$v_2$と$w_1$のなす角を$\theta$とすると，
+$(w_1,v_2)=\norm{w_1}\norm{v_2}\cos \theta = \norm{v_2}\cos \theta$であるから．}
+したがって，$(w_1,v_2) w_1$はその射影してできるベクトルそのものである．
+だから，$\tilv_2 = v_2 - (w_1,v_2) w_1$はちょうど$w_1$と直交することが図からわかる．
+$w_2$は$\tilv_2$を規格化したものなので，やはり$w_1$と直交する．
+多次元の場合も，各$w_j$へ射影してできるベクトルを引くことで同じように次のベクトルを求めることができる．
+
+正規直交基底を用いることで，$V$の部分空間$W$について，特殊な補空間を考えることが可能である．
+\begin{prop}
+$V$を内積空間とし，$W$をその部分空間とする．
+部分空間$W^\perp$を
+\[
+  W^\perp := \left\{ v \in V \,;\, \mbox{任意の$w \in W$に対して，$(w,v) = 0$} \right\}
+\]
+とすると，$V = W \oplus W^\perp$である．
+この$W^\perp$を$W$の\textbf{直交補空間}という．
+さらにこのとき，$\dim W^\perp + \dim W = \dim V$である．
+\end{prop}
+\begin{proof}
+まず$W + W^\perp$は直和であることを示す．
+$W \cap W^\perp = \{0\}$を示せばよい．
+$w \in W \cap W^\perp$であるとすると，$w \in W^\perp$なので，
+任意の$w' \in W$に対して$(w',w)=0$である．
+ところが，$w \in W$でもあるから，この$w'$として$w$自身を取ることができ，$(w,w)=0$となる．
+内積の正定値性から$w = 0$を得る．
+
+次に$V = W \oplus W^\perp$であることを証明する．
+$W$の正規直交基底$\idxdot{w}{1}{r}$を取る．
+$v \in V$に対して，
+\[
+  w = \sum_{j=1}^r (w_j,v)w_j,\ w'=v-w
+\]
+と定義する．このとき，$w \in W$は明らかである．
+一方，各$w_k\,(1 \le k \le r)$に対して，
+\[
+  (w_k,w') = (w_k,v)-\sum_{j=1}^r (w_j,v)(w_k,w_j) = (w_k,v) - (w_k,v) = 0
+\]
+となるから，$\idxdot{w}{1}{r}$と$w'$は直交する．よって，$w'$は$W$の任意の元と直交するから，$w' \in W^\perp$である．
+以上で，$v = w + w'$は$V$の元の$W$と$W^\perp$による分解を与えるので，結論を得る．
+次元の関係式は\cref{prop:direct_sum_dim}より明らかである．
+\end{proof}
+\subsection{自己共役写像とユニタリ写像}
+\subsubsection{共役写像と自己共役写像}
+内積空間の間の線形写像を考える．
+\begin{dfn}
+$V$を内積空間とし，$f \colon V \to V$を線形写像とする．
+このとき，線形写像$g \colon V \to V$で，
+任意の$v,w\in V$に対して，
+\begin{equation}\label{eq:adjoint}
+    (f(v),w) = (v,g(w))
+\end{equation}
+となるものがただ一つ存在する．
+この線形写像$g$を$f$の\textbf{共役写像}といい，$f^\ast$などと書く．
+\end{dfn}
+\begin{proof}
+$V$の正規直交基底$\idxdot{v}{1}{n}$を取る．
+そして，$\rho_{kj} := (f(v_j),v_k)$とおいて，線形写像$g\colon V \to V$を，
+\[
+  g(v_k) = \sum_{\ell=1}^n \rho_{k\ell} v_\ell   
+\]
+となるように定義する．\footnote{基底の元の行き先さえ定義しておけば，あとの元は基底の線形結合でかけるので自動的に行き先が求まる．
+つまり，$v = \lncmb{\alpha}{v}{1}{n}{+}$であるとき，
+\[
+  g(v) = \alpha_1 g(v_1) + \dots + \alpha_n g(v_n)  
+\]
+という形で行き先を決めればよい．
+}
+$v = \lncmb{\alpha}{v}{1}{n}{+}$と$w = \lncmb{\beta}{v}{1}{n}{+}$に対して，
+\[
+  (f(v),w) = \left( \sum_{j=1}^n \alpha_j f(v_j), \sum_{k=1}^n \beta_k v_k \right) = \sum_{j,k=1}^{n} \conj{\alpha_j} \beta_k \rho_{kj}
+\]
+であり，一方で，
+\[
+  \begin{aligned}
+    (v,g(w)) &= \left( \sum_{j=1}^{n} \alpha_j v_j, \sum_{k=1}^{n} \beta_k g(v_k)  \right)  \\
+    &= \left( \sum_{j=1}^{n} \alpha_j v_j, \sum_{k=1}^{n} \sum_{\ell=1}^{n} \beta_k \rho_{k\ell} v_\ell \right) \\
+    &= \left( \sum_{j=1}^{n} \alpha_j v_j, \sum_{\ell=1}^{n} \left(\sum_{k=1}^{n} \beta_k \rho_{k\ell} \right) v_\ell \right)
+  \end{aligned}
+\]
+でとなる．
+$\idxdot{v}{1}{n}$は正規直交基底であるので$(v_j,v_\ell)$は$j=\ell$のみ1で，それ以外は0であることに注意すると，
+\[
+  (v,g(w)) = \sum_{j=1}^n \conj{\alpha_j} \left(\sum_{k=1}^{n} \beta_k \rho_{kj} \right)
+  =\sum_{j,k=1}^{n} \conj{\alpha_j} \beta_k \rho_{kj}
+\]
+となる．よって$(f(v),w) = (v,g(w))$を得る．
+
+次に，共役写像が一意に決まることを示す．$g_1,g_2\colon V \to V$がともに\cref{eq:adjoint}を満たしているとする．
+このとき，任意の$v,w \in V$に対して，
+\[
+  (v,g_1(w)-g_2(w)) = (v,g_1(w)) - (v,g_2(w)) = (f(v),w) - (f(v),w) = 0  
+\]
+となる．
+よって，$g_1(w)-g_2(w)$は$V$のすべての元と直交するので，$g_1(w)-g_2(w)=0$がわかる．
+$w$は任意だから，$g_1$と$g_2$は恒等的に等しい．
+\end{proof}
+特に，(標準内積の入った)ユークリッド空間上での線形写像はすべて行列をかける操作に帰着されてしまうので，その共役写像も行列の言葉で言い換えることができる．
+\begin{prop}\label{prop:self-adjoint-matrix}
+  $A \in M_n(\CC)$として，線形写像$f \colon \CC^n \to \CC^n$を$f(v) = Av$で定める．
+  $\CC^n$に標準内積を入れて内積空間とみなすとき，$f$の共役写像$f^\ast$は，$f^\ast(v) = A^\ast v$で与えられる．
+  ここで，$A^\ast$は$A$の\textbf{Hermite共役}と呼ばれ，$A$の全成分の共役をとって転置してできる行列である．
+  また，$\RR^n$の場合，$f^\ast$は$f^\ast(v) = {}^tA v$で与えられる．
+\end{prop}
+\begin{proof}
+$\CC$の場合のみ証明する．$\CC^n$の標準基底$\idxdot{e}{1}{n}$を取ると，これは正規直交基底になっている．
+$A$の$(j,k)$成分を$a_{jk}$と書くことにすれば，
+任意の$\idxvec{z}{1}{n}, \idxvec{w}{1}{n} \in \CC^n$に対して，
+\[
+  \left( f \idxvec{z}{1}{n}, \idxvec{w}{1}{n} \right) = \sum_{j=1}^{n} \conj{\left( \sum_{k=1}^{n} a_{jk}z_k\right)} w_j 
+  = \sum_{j,k=1}^n \conj{a_{jk}}\conj{z_k}w_j
+\]
+である．一方で，$A^\ast$の$(j,k)$成分は$\conj{a_{kj}}$なので，
+\[
+  \left( \idxvec{z}{1}{n}, A^\ast\idxvec{w}{1}{n} \right) 
+  = \sum_{k=1}^n \conj{z_k} \left( \sum_{j=1}^n \conj{a_{jk}} w_j \right) 
+  = \sum_{j,k=1}^n \conj{a_{jk}}\conj{z_k}w_j
+  = \left( f \idxvec{z}{1}{n}, \idxvec{w}{1}{n} \right) 
+\]
+となり，結論を得る．
+\end{proof}
+自分自身とその共役が等しい写像を考えることは重要である．
+\begin{dfn}
+$V$を内積空間とし，$f \colon V \to V$を線形写像とする．
+$f$とその共役写像$f^\ast$が等しいとき，$f$は\textbf{自己共役}であるという．
+\end{dfn}
+自己共役であるという性質をユークリッド空間上で考えることで，対応する行列の性質を導くことができる．
+\begin{example}
+\begin{enumerate}
+  \item $A \in M_n(\CC)$として，$f \colon \CC^n \to \CC^n$を$f(v)=Av$で定義する．
+  \cref{prop:self-adjoint-matrix}より，$f$が自己共役になることと，$A=A^\ast$であることは同値になる．
+  このような行列$A$は\textbf{Hermite行列}であるという．
+  \item $A \in M_n(\RR)$として，$f \colon \RR^n \to \RR^n$を$f(v)=Av$で定義する．
+  \cref{prop:self-adjoint-matrix}より，$f$が自己共役になることと，$A={}^t A$であることは同値になる．
+  つまり$A$は対称行列になる．
+\end{enumerate}
+\end{example}
+\subsubsection{ユニタリ写像}
+今度は，「内積を保存する」ような写像を考える．
+\begin{dfn}
+$V$を内積空間とし，$f \colon V \to V$を線形写像とする．
+任意の$v_1,v_2 \in V$について，
+\begin{equation}\label{eq:unitary}
+  (f(v_1),f(v_2)) = (v_1,v_2)
+\end{equation}
+となるとき，$f$は\textbf{ユニタリ}(unitary)であるという．
+\end{dfn}
+$f$がユニタリならば，内積を一切変えないので，特にノルムも保存している．実際，$v \in V$について，
+\[
+  \norm{f(v)}^2 = (f(v),f(v)) = (v,v) = \norm{v}^2  
+\]
+となる．
+この意味で，$f$がユニタリならば$f$は\textbf{等長写像}(ノルムを変えない写像)になっている．
+
+ユニタリ性のいいところは，正規直交基底を正規直交基底に移すという点にある．
+\begin{prop}
+$f \colon V \to V$を線形写像として，$\idxdot{v}{1}{n}$を$V$の正規直交基底とする．
+このとき以下は同値である．
+\begin{enumerate}
+  \item $f$はユニタリである．
+  \item $f(v_1),\dots,f(v_n)$は正規直交基底である．
+\end{enumerate}
+\end{prop}
+\begin{proof}
+$(1) \Rightarrow (2)$:
+$f$はユニタリであり，$\idxdot{v}{1}{n}$は正規直交基底だから，
+$(f(v_j),f(v_k))=(v_j,v_k)=\delta_{jk}$となり結論を得る．
+
+$(2) \Rightarrow (1)$:
+$f(v_1),\dots,f(v_n)$が正規直交基底であるとする．
+$v,w \in V$を任意にとって，
+$v = \lncmb{\alpha}{v}{1}{n}{+}$，$w=\lncmb{\beta}{v}{1}{n}{+}$とおく．
+\[
+  (f(v),f(w)) = \left( \sum_{j=1}^n \alpha_j f(v_j), \sum_{k=1}^n \beta_k f(v_k) \right)
+  = \sum_{j,k=1}^n \conj{\alpha_j} \beta_k (f(v_j),f(v_k))
+  = \sum_{j=1}^n \conj{\alpha_j} \beta_j
+\]
+である．一方，
+\[
+  (v,w) = \left( \sum_{j=1}^n \alpha_j v_j, \sum_{k=1}^n \beta_k v_k \right)
+  = \sum_{j,k=1}^n \conj{\alpha_j} \beta_k (v_j,v_k)
+  = \sum_{j=1}^n \conj{\alpha_j} \beta_j
+\]
+であるので，$(f(v),f(w))=(v,w)$である．
+以上で結論を得る．
+\end{proof}
+ユークリッド空間の場合，ユニタリ性は行列の性質に置き換えられる．
+\begin{prop}
+\begin{enumerate}
+  \item $A \in M_n(\CC)$として，線形写像$f \colon \CC^n \to \CC^n$を$f(v)=Av$で定める．
+  $f$がユニタリであるための必要十分条件は，$A^\ast A = A A^\ast = I_n$となることである．
+  このような行列を\textbf{ユニタリ行列}という．
+  \item $A \in M_n(\RR)$として，線形写像$f \colon \RR^n \to \RR^n$を$f(v)=Av$で定める．
+  $f$がユニタリであるための必要十分条件は，${}^t A A = A {}^t A = I_n$となることである．
+  このような行列を\textbf{直交行列}という．
+\end{enumerate}
+\end{prop}
+\begin{proof}
+(1)のみ示す．(2)も同様に示せる．
+まず$f$がユニタリであると仮定する．
+任意の$v,w \in \CC^n$に対して，$(f(v),f(w))=(Av,Aw)=(v,w)$である．
+\cref{prop:self-adjoint-matrix}より，$(Av,Aw)=(v,A^\ast A w)$なので，$(v, A^\ast A w)=(v,w)$である．
+$v$は任意なので，$A^\ast A w = w$が成立する．$w$も任意なので，$A^\ast A = I_n$を得る．
+両辺のHermite共役を取ると，$A A^\ast = I_n$もわかる．\footnote{$(A^\ast)^\ast = A$であることと，$(AB)^\ast = B^\ast A^\ast$であることに注意．}
+
+一方，$A^\ast A = I_n$とすると，$(v,w)=(A^\ast A v,w)=(Av,Aw)=(f(v),f(w))$だから，$f$はユニタリである．
+以上で結論を得る．
+\end{proof}
+ユニタリ行列の性質についての次の命題は，後でHermite行列や直交行列の対角化を考える上で必要である．
+\begin{prop}\label{prop:unitary_matrix}
+\begin{enumerate}
+  \item $A \in M_n(\CC)$に対して，$v_j$を$A$の第$j$列からなるベクトルとする．
+  このとき，$A$がユニタリ行列であることと，$v_1,\dots,v_n$が$\CC^n$の標準内積に関して正規直交基底となることは同値である．
+  \item $A \in M_n(\RR)$に対して，$v_j$を$A$の第$j$列からなるベクトルとする．
+  このとき，$A$が直交行列であることと，$v_1,\dots,v_n$が$\RR^n$の標準内積に関して正規直交基底となることは同値である．
+\end{enumerate}
+\end{prop}
+\begin{proof}
+(1)のみ示す．
+$A$の$(j,k)$成分を$a_{jk}$とおけば，$v_k = \pmt{a_{1k} \\ \vdots \\ a_{nk}}$となる．
+$B=A^\ast$として，その$(j,k)$成分を$b_{jk}$とすると，$b_{jk} = \conj{a_{kj}}$が成り立つ．
+よって，$A^\ast A=BA$の$(j,k)$成分は，
+\[
+  \sum_{\ell=1}^n b_{j\ell} a_{\ell k} = \sum_{\ell=1}^n \conj{a_{\ell j}} a_{\ell k} = (v_j,v_k)
+\]
+となる．よって，$\idxdot{v}{1}{n}$が正規直交基底ならば$BA$の$(j,k)$成分は$\delta_{jk}$なので$BA = I_n$である．
+逆に$BA = I_n$なら$(v_j,v_k) = \delta_{jk}$なので$\idxdot{v}{1}{n}$は正規直交基底である．
+\end{proof}
+\begin{example}
+$\RR^2$上のユニタリ写像，つまり実数成分2次の直交行列をすべて決定しよう．
+$A=\pmt{a & b \\ c & d}$が直交行列だとすると，
+$\pmt{a \\ c}, \pmt{b \\ d}$は正規直交基底をなす．
+すると，$a^2 + c^2 = 1$かつ$b^2 + d^2 = 1$だから，ある$\theta,\varphi \in \RR$で，
+\[
+  \pmt{a \\ c} = \pmt{\cos \theta \\ \sin \theta},\  \pmt{b \\ d} = \pmt{\cos \varphi \\ \sin \varphi}  
+\]
+となるものが存在する．$\pmt{a\\c}$と$\pmt{b\\d}$は直交するので，$ab+cd = 0$であるから，$\cos(\theta - \varphi) = 0$がわかる．
+従って，$\theta = \varphi + \left( n + \dfrac{1}{2} \right) \pi\,(n \in \mathbb{Z})$であることがわかるので，結局$A$の形は以下の2通りしかないことがわかる．
+\[
+  \pmt{\cos \theta & -\sin \theta \\ \sin \theta & \cos \theta},\ \pmt{\cos \theta & \sin \theta \\ \sin \theta & -\cos \theta}
+\]
+このうち，左の行列は原点を中心として$\theta$だけ回転する行列となっている．
+右の行列はわかりづらいが，
+\[
+  \pmt{\cos \theta & \sin \theta \\ \sin \theta & -\cos \theta} = \pmt{\cos \theta & -\sin \theta \\ \sin \theta & \cos \theta} \pmt{1 & 0 \\ 0 & -1} 
+\]
+という積の形にすると，これは回転と$y$軸に関する折り返しの合成であるとみなせる．
+つまり，$\RR^2$上のユニタリ写像，つまり実数成分2次の直交行列は，回転とある軸に対する折り返し，そしてそれらの有限回の合成で尽くされる．
+\end{example}
+\subsection{対称行列とHermite行列の固有値と対角化}
+前節で対称行列やHermite行列が，自己共役写像というクラスの線形写像の表現行列として実現されていることをみたが，
+こうした行列の固有値について考察する．
+実際のところ，対称行列やHermite行列は実は常に対角化することが可能であり，この点で非常に扱いやすい行列のクラスである．
+
+まず，対称行列やHermite行列の固有値について考える．
+\begin{prop}
+  $V$を内積空間とし，$f \colon V \to V$は自己共役写像であるとする．
+  このとき，$f$の固有値はかならず実数になる．
+\end{prop}
+\begin{proof}
+$f(v)=\lambda v$となる$\lambda \in \CC$と$0 \neq v \in V$が存在すると仮定する．
+このとき，$(f(v),v)=(\lambda v,v) = \conj{\lambda}(v,v)$である．
+一方，$f$は自己共役だから，
+\[
+  (f(v),v) = (v,f(v)) = (v,\lambda v) = \lambda (v,v)
+\]
+でもある．$(v,v) \neq 0$なので，$\lambda = \conj{\lambda}$となり，結論を得る．
+\end{proof}
+
+次に固有空間について考える．
+\cref{prop:direct_sum_eigenspace}より，異なる固有値に対応する固有空間の和は直和になる．
+内積空間の場合，さらに次が成立する．
+\begin{prop}\label{prop:eigenspace_perp}
+  $V$を内積空間とし，$f \colon V \to V$は自己共役写像であるとする．
+  このとき，$\lambda_1,\lambda_2 \in \RR$を$f$の相異なる固有値とするとき，
+  $E(\lambda_1;f)$と$E(\lambda_2;f)$は直交する．
+  つまり，任意の$E(\lambda_1;f)$の元と$E(\lambda_2;f)$の元は直交している．
+\end{prop}
+\begin{proof}
+$v_1 \in E(\lambda_1;f)$，$v_2 \in E(\lambda_2;f)$とする．
+このとき，$f(v_1)=\lambda_1 v_1$，$f(v_2)=\lambda_2 v_2$である．
+$f$は自己共役なので，
+\[
+    (f(v_1),v_2) = (v_1,f(v_2))
+\]
+である．以上を総合すると，
+\[
+    \lambda_1 (v_1,v_2) 
+    = (f(v_1),v_2) 
+    = (v_1,f(v_2))
+    = \lambda_2 (v_1,v_2)
+\]
+となる．$\lambda_1 \neq \lambda_2$なので，
+$(v_1,v_2)=0$である．
+\end{proof}
+さて，この節の本題は，自己共役写像，つまりHermite行列や対称行列は常に対角化可能であることを示すことにある．
+\begin{thm}\label{thm:self-adjoint-diagonalize}
+  $V$を有限次元の内積空間とし，$f \colon V \to V$は自己共役写像であるとする．
+  このとき，$V$の正規直交基底で，その元がすべて$f$の固有ベクトルになっているようなものが存在する．
+\end{thm}
+\begin{proof}
+$V$の次元$n$についての帰納法で示す．
+まず$n=1$のとき，$f$は定数倍写像になるので明らかである．
+
+次にある$n$で命題が成立したとし，
+$f$の固有値$\lambda$を任意に一つとって，
+$0 \neq v \in V$を$\lambda$に対応する$f$の固有ベクトルで，
+$\norm{v}=1$となるものとする．
+そして，$V$の部分空間$W$を，$\gen{v}$の直交補空間，つまり
+\[
+    W := \{w \in V\,;\, (v,w) = 0\}
+\]
+で定義する．
+このとき，$V = \gen{v} \oplus W$である．
+そこで，$f$の$W$への制限$f|_W$を考えると，
+これは$W$から$W$への線形写像である．
+実際，$w \in W$ならば，$f$の自己共役性から，
+\[
+    (v,f(w))=(f(v),w)=\lambda(v,w) = 0
+\]
+であり，$f(w) \in W$となるからである．
+さらに$W$の次元は$n-1$なので，
+$f|_W$について帰納法の仮定を適用することができる．
+つまり，$W$の正規直交基底$\{w_1,\dots,w_{n-1}\}$で，
+すべての元が$f|_W$の，すなわち$f$の固有ベクトルになっているものが取れる．
+これに$v$を追加した$\{v,w_1,\dots,w_{n-1}\}$を考えると，
+$v$を$W$の元は常に直交するので，これは$V$の正規直交基底になる．
+以上で結論を得る．
+\end{proof}
+この定理を対称行列やHermite行列に適用しよう．
+通常の行列$A$の対角化については，
+一般に固有ベクトルからなる基底を見つけて，
+それらを並べてできる行列$P$を考えれば，
+$P^{-1}AP$は対角行列になるのであった．
+今の場合，\cref{thm:self-adjoint-diagonalize}より，
+この基底は特に正規直交基底となるように取れる．
+すると，\cref{prop:unitary_matrix}から，次のことがわかる．
+\begin{thm}
+  \begin{enumerate}
+      \item 任意のHermite行列$A \in M_n(\CC)$に対して，あるユニタリ行列$U \in M_n(\CC)$で，
+      $U^\ast A U$が対角行列になるものが存在する．
+      \item 任意の対称行列$A \in M_n(\RR)$に対して，ある直交行列$R \in M_n(\RR)$で，
+      ${}^tR A R$が対角行列になるものが存在する．
+  \end{enumerate}
+\end{thm}
+具体的にユニタリ行列や直交行列で対角化する際には，以下のステップを踏めばよい．
+\begin{itemize}
+    \item 固有値と固有空間の基底を求める
+    \footnote{
+    Hermite行列や対称行列は常に対角化可能なので，
+    この時点で各固有空間の基底をあわせたものは元の空間の基底となっている．}
+    \item 各固有空間の基底からGramm--Schmidtの直交化法などを使って正規直交基底を作る．
+    \footnote{
+    \cref{prop:eigenspace_perp}より，
+    異なる固有空間のベクトルどうしは直交しているので，固有空間の内部だけで正規直交基底を作れば十分である．
+    }
+    \item こうしてできた固有ベクトルを並べて行列を作る．
+\end{itemize}
+このやり方を例を使って示そう．
+\begin{example}
+対称行列
+\[
+    A=\pmt{2 & 0 & -1 \\ 0 & 1 & 0 \\ -1 & 0 & 2}
+\]
+を対角化する．
+まず固有値を計算すると1と3であることがすぐにわかる．
+そして，固有ベクトルを計算すると，
+\[
+E(1;A) = \gen{\pmt{1 \\ 0 \\ 1}, \pmt{0 \\ 1 \\ 0}},\quad
+E(3;A) = \gen{\pmt{1 \\ 0 \\ -1}}
+\]
+であることがわかる．
+（この時点で，$E(1;A)$と$E(3;A)$は直交していることに注意．）
+
+$E(1;A)$の基底を正規直交化すると，
+\[
+    \frac{1}{\sqrt{2}} \pmt{1 \\ 0 \\ 1},\quad
+    \pmt{0 \\ 1 \\ 0}
+\]
+を得る．また，$E(3;A)$は基底が1つのベクトルだけからなるので，規格化すれば十分で，
+\[
+    \frac{1}{\sqrt{2}}\pmt{1 \\ 0 \\ -1}
+\]
+となる．よって，これらを並べて，
+\[
+    R = \frac{1}{\sqrt{2}}\pmt{1 & 0 & \sqrt{2} \\ 0 & \sqrt{2} & 0 \\ 1 & 0 & -\sqrt{2}}
+\]
+とすれば，$R$は直交行列であり，%
+${}^t R A R = \pmt{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 3}$と対角化される．
+\end{example}
+もう一つ，Hermite行列の場合を考えよう．
+\begin{example}
+Hermite行列
+\[
+    A = \pmt{1 & i & 1 \\ -i & 1 & i \\ 1 & -i & 1}
+\]
+を対角化する．
+固有値は2と$-1$であり，
+それぞれの固有空間の基底として，
+\[
+    E(2;A) = \gen{\pmt{i \\ 1 \\ 0}, \pmt{1 \\ 0 \\ 1}},\quad
+    E(-1;A) = \gen{\pmt{1 \\ i \\ -1}}
+\]
+を取れる．
+
+$E(2;A)$の基底を$\CC^n$の標準内積で正規直交化すると，
+\[
+    \frac{1}{\sqrt{2}}\pmt{i \\ 1 \\ 0},\quad
+    \frac{1}{\sqrt{6}}\pmt{1 \\ i \\ 2}
+\]
+となる．$E(-1;A)$の基底は規格化して，
+\[
+    \frac{1}{\sqrt{3}} \pmt{1 \\ i \\ -1}
+\]
+を得る．よって，
+\[
+    U = \frac{1}{\sqrt{6}}
+    \pmt{\sqrt{3}i & 1 & \sqrt{2} \\
+    \sqrt{3} & i & \sqrt{2}i \\
+    0 & 2 & -\sqrt{2}
+    }
+\]
+とすれば，$U$はユニタリ行列で，$U^\ast A U = \pmt{2 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & -1}$である．
+\end{example}

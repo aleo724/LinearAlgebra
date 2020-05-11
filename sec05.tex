@@ -1,0 +1,757 @@
+\section{固有値と固有ベクトル}
+\subsection{固有値と固有ベクトルの定義}
+まず固有値と固有ベクトルを線形写像に対して定義する．
+\begin{dfn}
+    $V$を$K$-ベクトル空間，
+    $f \colon V \to V$を線形写像とする．
+    $\lambda \in K$が$f$の固有値であるとは，
+    0でないベクトル$v \in V$で，
+    $f(v) = \lambda v$となるものが存在することを言う．
+    このような$v$を，固有値$\lambda$に対応する固有ベクトルという．
+\end{dfn}
+次の命題はすぐに証明できる．
+\begin{prop}
+    $V$を$K$-ベクトル空間，
+    $f \colon V \to V$を線形写像とする．
+    $\lambda \in K$が$f$の固有値である場合，
+    $\lambda$に対応する$f$の固有ベクトル(と零ベクトル)全体
+    \[
+        E(\lambda;f) := \left\{
+            v \in V \,;\,
+            f(v) = \lambda v
+        \right\}
+    \]
+    は$V$の部分空間である．
+\end{prop}
+そこで以下のように定義しておく．
+\begin{dfn}
+    上の$E(\lambda;f)$を，$\lambda$に対応する固有空間という．
+\end{dfn}
+
+一方で，固有値という概念は$n \times n$行列に対して定義されるのが普通である．
+\begin{dfn}
+    $A \in M_n(K)$を$n \times n$行列とする．
+    $\lambda \in K$が$A$の固有値であるとは，
+    0でないベクトル$v \in K^n$で，
+    $Av = \lambda v$となるものが存在することをいう．
+    このような$v$を，固有値$\lambda$に対応する$A$の固有ベクトルという．
+    また，
+    $\lambda$に対応する$A$の固有ベクトル(と零ベクトル)全体
+    \[
+        E(\lambda;A) := \left\{
+            v \in K^n \,;\,
+            Av = \lambda v
+        \right\}
+    \]
+    は$K^n$の部分空間であり，
+    これを$\lambda$に対応する$A$の固有空間という．
+\end{dfn}
+有限次元のベクトル空間を考えている限り，線形写像の固有値と行列の固有値というのはほぼ同じものであることは，以下の命題から示される．
+\begin{prop}
+    \begin{enumerate}
+        \item $A \in M_n(K)$とし，
+        線形写像$f \colon K^n \to K^n$を，$f(v) = Av$で定める．
+        このとき，$\lambda \in K$が$A$の固有値であることと，
+        $\lambda$が$f$の固有値であることは同値であり，さらにこのとき，$E(\lambda;f)=E(\lambda;A)$である．
+        \item $V$を有限次元の$K$-ベクトル空間とし，
+        $n = \dim V$とする．
+        $f \colon V \to V$を線形写像とし，$B \subset V$を$V$の基底とする．
+        このとき，$f$の$B$に関する表現行列を$A \in M_n(K)$とすると，
+        $\lambda \in K$が$f$の固有値であることと，
+        $\lambda$が$A$の固有値であることは同値であり，
+        さらにこのとき，$E(\lambda;f)$と$E(\lambda;A)$は同型になる．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item 定義から明らかである．
+        \item $\lambda$が$f$の固有値であるとし，
+        $v \in V$をその固有ベクトルとする．
+        $B = \{\idxdot{v}{1}{n}\}$として，
+        $v$を$B$の線形結合の形で表現しておく．
+        つまり，
+        \[
+            v = \lncmb{\alpha}{v}{1}{n}{+}
+        \]
+        となる$\idxdot{\alpha}{1}{n} \in K$を取る．
+        すると，表現行列の定義から，
+        \[
+            f(v) = \lncmb{\beta}{v}{1}{n}{+}
+        \]
+        とおくと，
+        \[
+            \idxvec{\beta}{1}{n}
+            = A \idxvec{\alpha}{1}{n}
+        \]
+        が成り立つ．
+        今，$f(v) = \lambda v$なので，結局
+        \[
+            A \idxvec{\alpha}{1}{n} = \lambda \idxvec{\alpha}{1}{n}
+        \]
+        となり，$\lambda$は$A$の固有値にもなる．
+        
+        逆に，$\idxvec{\alpha}{1}{n}$が固有値$\lambda$に対応する$A$の固有ベクトルであれば，
+        $\lncmb{\alpha}{v}{1}{n}{+}$が$f(v)=\lambda v$を満たすことは，上の議論を逆にたどればわかる．
+        このとき，$\varphi \colon E(\lambda;A) \to E(\lambda; f)$を，
+        $\varphi \idxvec{\alpha}{1}{n} = \lncmb{\alpha}{v}{1}{n}{+}$で定めれば，
+        これが同型写像になることは上の議論と$B$が基底になることから証明できる．
+    \end{enumerate}
+\end{proof}
+行列の固有値は以下のように求めることができる．
+\begin{prop}
+    $A \in M_n(K)$とする．
+    $\lambda$が$A$の固有値であるための必要十分条件は，$\det(A-\lambda I_n) = 0$となることである．
+    $\det(A - \lambda I_n)$は$\lambda$に関する$n$次の多項式であり，これを$A$の固有多項式という．
+\end{prop}
+\begin{proof}
+    $A$が$\lambda$の固有値であることの定義は，0でない$v \in K^n$で，$Av = \lambda v$となるものが存在することである．
+    $Av = \lambda v$は$(A-\lambda I_n)v = 0$と変形できるので，
+    $A$が$\lambda$の固有値であることは，$A - \lambda I_n$が正則でないことと同値であり，
+    これは$\det(A-\lambda I_n) = 0$と同値になる．
+\end{proof}
+\begin{example}\label{eg:eigen}
+行列
+\[
+    A = \pmt{
+        -3 & -2 & -2 \\
+        4 & 3 & 2 \\
+        8 & 4 & 5
+    }
+\]
+の固有値と固有ベクトルを求めてみる．
+\[
+    \det (A - \lambda I_3) 
+    = \det \pmt{
+        -3-\lambda & -2 & -2 \\
+        4 & 3-\lambda & 2 \\
+        8 & 4 & 5-\lambda
+    }
+    = - (\lambda-1)^2(\lambda - 3)
+\]
+なので，固有値は$\lambda = 1,3$である．
+
+固有値1に対応する固有空間は$(A-I)v=0$の解空間である．
+$A-I$を階段行列に変形すると，$\pmt{1 & 1/2 & 1/2 \\ 0 & 0 & 0 \\ 0 & 0 & 0}$となるので，固有空間は
+\[
+    E(1;A) = \gen{\pmt{-1/2 \\ 1 \\ 0},\pmt{-1/2 \\ 0 \\ 1}}    
+\]
+である．
+
+同様に，固有値3に対応する固有空間は$(A-3I)v=0$の解空間である．
+$A-3 I$を階段行列に変形すると，$\pmt{1 & 0 & 1/2 \\ 0 & 1 & -1/2 \\ 0 & 0 & 0}$となるので，固有空間は
+\[
+    E(1;A) = \gen{\pmt{-1/2 \\ 1/2 \\ 1}}    
+\]
+である．
+\end{example}
+\subsection{行列の相似}
+天下り的ではあるが，次のような概念を定義する．
+\begin{dfn}
+    $A,B\in M_n(K)$を$n \times n$行列とする．
+    $B$が$A$に相似であるとは，
+    正則な$n \times n$行列$P \in M_n(K)$で，
+    $B = P^{-1}AP$となるものが存在することである．
+\end{dfn}
+この相似という関係については以下が成立する．
+\begin{prop}
+    任意の$A,B,C \in M_n(K)$について以下が成り立つ．
+    \begin{enumerate}
+        \item $A$は$A$に相似である．
+        \item $B$が$A$に相似であるならば，
+        $A$は$B$に相似である．
+        \item $B$が$A$に相似であり，
+        $C$が$B$に相似であるならば，
+        $C$は$A$に相似である．
+    \end{enumerate}
+\end{prop}
+\begin{remark}
+    上の３つの主張が満たされていることを，「相似という関係は同値関係である」という．
+\end{remark}
+\begin{proof}
+    \begin{enumerate}
+        \item $P=I_n$とおけば，$P$は正則であり，$A = P^{-1}AP$である．
+        \item $B=P^{-1}AP$となる$P \in M_n(K)$を取ると，
+        $A = PBP^{-1} = (P^{-1})^{-1} B P^{-1}$だから，
+        $Q=P^{-1}$とおけば，$A = Q^{-1}BQ$となる．
+        \item $B = P^{-1}AP$，$C=Q^{-1}BQ$となる$P,Q \in M_n(K)$を取る．
+        すると，
+        \[
+            C = Q^{-1}BQ = Q^{-1}(P^{-1}AP)Q = (PQ)^{-1}A(PQ)
+        \]
+        なので，$R=PQ$とおけば，$C=R^{-1}AR$である．
+    \end{enumerate}
+\end{proof}
+行列どうしの相似という概念が重要なのは，相似な行列というのは線形写像としてほぼ同じものだからである．
+\begin{prop}\label{prop:basis_and_similarity}
+    $V$を$K$-ベクトル空間とし，その次元を$n$とする．
+    $f \colon V \to V$を線形写像として，
+    $\calB$を$V$の順序付き基底とし，
+    $A \in M_n(K)$を$\calB$に関する$f$の表現行列とする．
+    このとき，$A' \in M_n(K)$について以下は同値である．
+    \begin{enumerate}
+        \item $V$の順序付き基底$\calB'$で，
+        $f$の$\calB'$に関する表現行列が$A'$であるものが存在する．
+        \item $A'$は$A$と相似である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    以下，
+    \[
+        \calB = (\idxdot{v}{1}{n}),\ \calB' = (\idxdot{v'}{1}{n})
+    \]
+    とし，同型写像$\varphi_\calB \colon K^n \to V$を，
+    $\varphi_\calB \idxvec{\alpha}{1}{n} = \lncmb{\alpha}{v}{1}{n}{+}$で定める．
+    $\varphi_{\calB'} \colon K^n \to V$も同様に定める．
+    
+    $(1) \Rightarrow (2)$:
+    表現行列の定義から，$w \in K^n$とするとき，
+    $\varphi_\calB^{-1} \circ f \circ \varphi_\calB(w) = Aw$かつ
+    $\varphi_{\calB'}^{-1} \circ f \circ \varphi_{\calB'}(w) = A'w$である．
+    ここで，
+    \begin{equation}\label{eq:rel}
+        \begin{split}
+            &\varphi_{\calB'}^{-1} \circ f \circ \varphi_{\calB'}(w) \\
+            &= \varphi_{\calB'}^{-1} \circ (\varphi_{\calB} \circ \varphi_{\calB}^{-1}) \circ f \circ (\varphi_{\calB} \circ \varphi_{\calB}^{-1}) \circ \varphi_{\calB'}(w) \\
+            &= (\varphi_{\calB'}^{-1} \circ \varphi_{\calB}) \circ (\varphi_{\calB}^{-1} \circ f \circ \varphi_{\calB}) \circ (\varphi_{\calB}^{-1} \circ \varphi_{\calB'})(w) \\
+            &= (\varphi_{\calB}^{-1} \circ \varphi_{\calB'})^{-1} \circ (\varphi_{\calB}^{-1} \circ f \circ \varphi_{\calB}) \circ (\varphi_{\calB}^{-1} \circ \varphi_{\calB'})(w)
+        \end{split}
+    \end{equation}
+    なので，$\varphi_{\calB}^{-1} \circ \varphi_{\calB'} \colon K^n \to K^n$の表現行列を$P$とすると，
+    \[
+        A'w = \varphi_{\calB'}^{-1} \circ f \circ \varphi_{\calB'}(w) = P^{-1}APw
+    \]
+    であるから，結論を得る．
+    
+    $(2) \Rightarrow (1)$:
+    今，$A'=P^{-1}AP$となる$P\in M_n(K)$を取る．
+    そして，$P$の$(j,k)$成分を$p_{jk}$とする．
+    このとき，$\calB=(\idxdot{v}{1}{n})$に対して，
+    \begin{equation}\label{eq:rel_of_basis}
+        v'_j = p_{1j}v_1 + \dots + p_{nj}v_n
+    \end{equation}
+    で$\calB' = (\idxdot{v'}{1}{n})$を定めると，これは$V$の順序付き基底となる．
+    実際，$V$の次元は$n$なので，１次独立であることを示せば十分である．$\idxdot{\beta}{1}{n} \in K$で，
+    \[
+        \lncmb{\beta}{v'}{1}{n}{+} = 0
+    \]
+    となるものを取る．
+    これに上の式を代入すると，
+    \[
+        (p_{11}\beta_1 v_1 + \dots + p_{n1}\beta_1 v_n) + \dots +  (p_{1n}\beta_n v_1 + \dots + p_{nn}\beta_n v_n) = 0
+    \]
+    であるので，$v_j$の係数は$p_{j1}\beta_1 + \dots + p_{jn}\beta_n$であり，
+    これはベクトル$P\idxvec{\beta}{1}{n}$の第$j$成分である．
+    $v_1,\dots,v_n$は基底をなすので，$v_j$の係数はすべて0にならなくてはならない．
+    つまり，$P\idxvec{\beta}{1}{n} = 0$であり，
+    $P$の正則性から$\idxvec{\beta}{1}{n} = 0$となるので結論を得る．
+    
+    最後に$\calB'$による$f$の行列表示が$A'$であることを示す．
+    任意の$w=\idxvec{\alpha}{1}{n}$について，
+    \[
+        \varphi_{\calB'}(w) 
+        = \sum_{k=1}^n \alpha_k v'_k
+        = \sum_{j=1}^n \left(\sum_{k=1}^n p_{jk} \alpha_k\right) v_j
+    \]
+    であるので，
+    \[
+        \varphi_{\calB}^{-1} \circ \varphi_{\calB'}(w) = P w
+    \]
+    となることがすぐにわかる．
+    故に，\eqref{eq:rel}より，$\calB'$による$f$の表現行列は$P^{-1}AP=A'$となる．
+\end{proof}
+このように，\textbf{2つの行列が相似であるとは，その2つの行列はある同一の線形写像を別の基底でそれぞれ行列表示したものであるということを意味している}．
+だから，行列が相似であるということは，線形写像の意味での性質がほぼ同一であるということにほかならない．
+
+上の命題から導かれる帰結として，$f$が$K^n$からそれ自身への線形写像である場合に次が成り立つ．
+\begin{prop}\label{prop:change_basis_similarity}
+    $A \in M_n(K)$として，
+    $f_A \colon K^n \to K^n$を，$f_A(v)=Av$で与えられる線形写像とする．
+    このとき，$A' \in M_n(K)$について以下は同値である．
+    \begin{enumerate}
+        \item $K^n$の順序付き基底$\calB$で，
+        $f_A$の$\calB$に関する表現行列が$A'$であるものが存在する．
+        \item $A'$は$A$と相似である．
+    \end{enumerate}
+    また，(2)が成立するとき，$A'=P^{-1}AP$となる$P \in M_n(K)$をとり，$w_j \in K^n$を$P$の第$j$列からなるベクトルであるとすれば，(1)の$\calB$は$(\idxdot{w}{1}{n})$で与えられる．
+\end{prop}
+\begin{proof}
+    \cref{prop:basis_and_similarity}において，
+    $V = K^n$，$f=f_A$とし，
+    $\calB$として$K^n$の標準基底を取る．
+    そうすると，
+    $f_A$の標準基底に関する表現行列は$A$であることに注意すれば，
+    (1)と(2)が同値であることがわかる．
+    またこのとき，\eqref{eq:rel_of_basis}で，$v_j$ を標準基底の$e_j$に取れば，
+    $v'_j = w_j$であることがわかる．
+\end{proof}
+このように，行列$A$と行列$B$が相似ならば，基底を取り替えることで，線形写像$v \mapsto Av$の表現行列が$B$になるようにすることができる．
+そこで，$B$としてどこまで単純なものが取れるかを考察してみる．
+\subsection{対角化}
+\begin{dfn}
+    行列$A \in M_n(K)$について，$A$と相似な対角行列が存在するとき，$A$は対角化可能であるという．
+    言い換えれば，$A$が対角化可能であるとは，正則行列$P \in M_n(K)$で，
+    $P^{-1}AP$が対角行列になるものが存在することを言う．
+\end{dfn}
+行列が対角化可能である場合，どのような対角行列に相似になるかは固有値と固有ベクトルが教えてくれる．
+\begin{prop}
+    行列$A \in M_n(K)$が対角化可能であるとする．
+    そして，正則行列$P \in M_n(K)$で，
+    \[
+        P^{-1}AP = \pmt{
+            \lambda_1 & 0 & \cdots & 0 \\
+            0 & \lambda_2 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_n}    
+    \]
+    と表示できるとする．
+    このとき，$\lambda_j$はすべて$A$の固有値であり，さらに$P$の第$j$列は$A$の$\lambda_j$に対応する固有ベクトルである．
+\end{prop}
+\begin{proof}
+    $P$の第$j$列に対応するベクトルを$w_j$とおく．
+    $AP = P \pmt{
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n}$
+    であり，
+    \[
+        \begin{split}
+            AP &= A\pmt{w_1 & \dots & w_n} = \pmt{A w_1 & \dots A w_n} \\
+            P \pmt{
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n} &= \pmt{w_1 & \dots & w_n} \pmt{
+            \lambda_1 & 0 & \cdots & 0 \\
+            0 & \lambda_2 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \lambda_n}
+            = \pmt{\lambda_1 w_1 & \dots & \lambda_n w_n}
+        \end{split}
+    \]
+    だから，第$j$列を比較して，$Aw_j = \lambda_j w_j$を得る．
+    ここから結論が従う．
+\end{proof}
+すべての行列が対角化可能であるとは限らない．
+\begin{example}
+    行列$A=\pmt{0 & 1 \\ 0 & 0}$を考える．
+    この行列の固有多項式は$\det(A-\lambda I) = \lambda^2$なので，固有値は0である．
+    よって，もし$A$が対角化できたとすると，正則行列$P \in M_2(K)$で，
+    \[
+        P^{-1}AP = \pmt{0 & 0 \\ 0 & 0}    
+    \]
+    となるものが存在するが，これは$A=O$と同値になるので，矛盾する．
+\end{example}
+どのようなときに$A$が対角化可能であるのかについてこれから考える．
+まず，固有空間に関する次の性質を証明する．
+\begin{prop}\label{prop:direct_sum_eigenspace}
+    $A \in M_n(K)$とし，$\idxdot{\lambda}{1}{m}$を$A$の相異なる固有値であるとする．
+    このとき，固有空間の和
+    \[
+        E(\lambda_1;A) + \dots + E(\lambda_m;A)    
+    \]
+    は直和になる．
+\end{prop}
+\begin{proof}
+    $m$についての帰納法で示す．$m=1$ならば証明すべきことはない．
+    一般の$m$について，各固有空間から元$w_j \in E(\lambda_j;A)$を
+    \[
+        w_1 + \dots + w_m = 0    
+    \]
+    となるように取る．$w_1=\dots=w_m=0$であることを示せばよい．
+
+    この式の両辺に$A$を左からかけると，$Aw_j = \lambda_j w_j$なので，
+    \begin{equation}\label{eq:lw1}
+        \lambda_1 w_1 + \dots + \lambda_m w_m = 0
+    \end{equation}
+    が成り立つ．
+
+    ここで，$\lambda_j$の中に0が含まれていたとする．
+    一般性を失うことなく，$\lambda_1 = 0$としてよい．すると，\eqref{eq:lw1}は
+    \[
+        \lambda_2 w_2 + \dots + \lambda_m w_m = 0    
+    \]
+    と同値であり，$\idxdot{\lambda}{2}{n}$はすべて0でないので，
+    帰納法の仮定より，これが成立するならば$w_2=\dots=w_m=0$でなければならない．
+    よって$w_1 =0$も成立する．
+
+    そこで，以下ではすべての$\lambda_j$は0にならないと仮定する．
+    もう一度\eqref{eq:lw1}に$A$を左からかけると，
+    \begin{equation}\label{eq:lw2}
+        \lambda_1^2 w_1 + \dots + \lambda_m^2 w_m = 0
+    \end{equation}
+    となる．
+    \eqref{eq:lw1}を$\lambda_1$倍して，\eqref{eq:lw2}との差を取ると，
+    \[
+        \lambda_2 (\lambda_1 - \lambda_2) w_2 + \dots + \lambda_m (\lambda_1 - \lambda_m) w_m = 0    
+    \]
+    となる．$\idxdot{\lambda}{1}{m}$は相異なるので，
+    $w_j$の係数$\lambda_j (\lambda_1 - \lambda_j)$は0にはならない．
+    よって，帰納法の仮定より，$w_2 = \dots = w_m = 0$であって，従って$w_1 = 0$も成り立つ．以上で結論を得る．
+\end{proof}
+以上をもとにして，対角化可能であるための必要十分条件を与える．
+\begin{thm}\label{thm:diagonalize}
+    $A \in M_n(K)$とし，$\idxdot{\lambda}{1}{m}$を$A$の相異なるすべての固有値とする．
+    このとき，以下は同値である．
+    \begin{enumerate}
+        \item $A$は対角化可能である．
+        \item $K^n = E(\lambda_1;A) \oplus \dots \oplus E(\lambda_m;A)$である．
+        \item $\displaystyle \sum_{j=1}^m \dim E(\lambda_j;A) = n$である．
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    直和の次元の性質から，(2)と(3)の同値性はすぐ示せるので，(1)と(2)の同値性を示す．
+
+    $(1) \Rightarrow (2)$:
+    $A$は対角化可能であるとし，$P \in M_n(K)$を，$P^{-1}AP$が対角行列になるような正則行列とする．
+    すると，\cref{prop:change_basis_similarity}より，
+    $P$の列を並べてできる順序付き基底$\calB$に関して，線形写像$f\colon K^n \to K^n\,(v \mapsto Av)$を行列表示すると対角行列になる．
+    このとき，$\calB$の元はすべて固有ベクトルになるので，$K^n$の任意の元は固有ベクトルの線形結合でかけるということがわかる．
+    つまり，$K^n \subset E(\lambda_1;A) \oplus \dots \oplus E(\lambda_m;A)$である．
+    逆の包含関係は明らかであるので\footnote{$E(\lambda_j;A)$は$K^n$の部分空間である．部分空間の和をとっても部分空間である．}，
+    (2)が導かれる．
+
+    $(2) \Rightarrow (1)$:
+    $K^n = E(\lambda_1;A) \oplus \dots \oplus E(\lambda_m;A)$なので，各$E(\lambda_j;A)$の基底をとってその和集合を考えると，それは$K^n$の基底となる．
+    このとき，基底の各元はどれかの固有空間に入るので，固有ベクトルである．
+    従って，$K^n$には固有ベクトルのみからなる基底が取れることになる．
+    この基底に順序を入れて順序付き基底とし，$\calB=(w_1,\dots,w_n)$とする．
+    各$w_j$は固有ベクトルなので，$Aw_j = \mu_j w_j$ ($\mu_j$は$\idxdot{\lambda}{1}{m}$のどれか)となる．
+    すると，$\idxdot{w}{1}{n}$を並べてできる行列を$P$とすれば，
+    \[
+        AP = \pmt{Aw_1 & \dots & Aw_n} = \pmt{\mu_1 w_1 & \dots & \mu_n w_n} = P \pmt{
+            \mu_1 & 0 & \cdots & 0 \\
+            0 & \mu_2 & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \cdots & \mu_n} 
+    \]
+    となるので，$P^{-1}AP=\pmt{
+        \mu_1 & 0 & \cdots & 0 \\
+        0 & \mu_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \mu_n}$が成り立つ．
+    よって，$A$は対角化可能である．
+\end{proof}
+従って，対角化可能であるかどうかは，固有空間の次元を見ればいいことになる．
+さらに，この定理の証明は，具体的な対角化の方法まで与えていることに注意しよう．
+つまり，対角化可能性を調べて対角化するには，以下のステップを踏めばいい．
+\begin{itemize}
+    \item その行列$A$の固有値を計算する．
+    \item 各固有値に対応する$A$の固有空間を計算する．
+    \item 固有空間の次元の和が，行列$A$のサイズに一致すれば対角化可能である．
+    \item もし対角化可能ならば，各固有空間の基底を任意にとって並べてできる行列を$P$とすることで，$P^{-1}AP$は対角行列になる．
+\end{itemize}
+\begin{example}
+    \cref{eg:eigen}の$A$を再び考えると，
+    \[
+        \dim E(1;A) + \dim E(3;A) = 2 + 1 = 3    
+    \]
+    となり，$A$のサイズと一致するので，$A$は対角化可能である．
+    $E(1;A)$の基底$\pmt{-1/2 \\ 1 \\ 0},\pmt{-1/2 \\ 0 \\ 1}$と，
+    $E(3;A)$の基底$\pmt{-1/2 \\ 1/2 \\ 1}$を並べて，
+    \[
+        P = \pmt{-1/2 & -1/2 & -1/2 \\ 1 & 0 & 1/2 \\ 0 & 1 & 1}    
+    \]
+    とおけば，
+    \[
+        P^{-1}AP = \pmt{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 3}    
+    \]
+    となる．
+\end{example}
+\begin{example}
+    $A=\pmt{0 & 0 & -1 \\ 1 & 0 & 1 \\ 0 & 1 & 1}$を考える．
+    $\det (A-\lambda I) = -(\lambda-1)^2(\lambda+1)$なので，
+    固有値は$\lambda=1,-1$である．
+    $E(1;A)$と$E(-1;A)$はそれぞれ
+    \[
+        E(1;A) = \gen{\pmt{1 \\ 0 \\ -1}},
+        E(-1;A) = \gen{\pmt{1 \\ -2 \\ 1}}    
+    \]
+    となるが，これらの次元の合計は2であり，3にはならないので，
+    $A$は対角化可能にはならない．
+\end{example}
+\subsection{最小多項式とCayley-Hamiltonの定理}
+以下では$V$を$K$-ベクトル空間とする．
+$f(x)$を多項式とする．このとき，多項式に行列や線形写像を代入するという操作を次のように定義できる．
+\begin{dfn}
+    $f(x) \in K[x]$とし，$f(x)=a_m x^m + \dots + a_0$とする．
+    $A \in M_n(K)$について，
+    \[
+        f(A) = a_m A^m + \dots + a_0 I_n
+    \]
+    と定める．
+    また，線形写像$\varphi \colon V \to V$に対して，線形写像$f(\varphi) \colon V \to V$を，
+    \[
+        f(\varphi)(v) := a_m f^m(v) + \dots + a_0 v    
+    \]
+    で定義する．
+\end{dfn}
+このとき以下が成立することはすぐにわかる．
+\begin{prop}
+    \begin{enumerate}
+        \item $f(x),g(x)\in K[x]$，$A \in M_n(A)$ならば，
+        \[
+            f(A) + g(A) = (f+g)(A), \quad f(A)g(A) = (fg)(A)    
+        \]
+        である．
+        \item $f(x),g(x)\in K[x]$とし，$\varphi \colon V \to V$を線形写像とするならば，
+        \[
+            f(\varphi) + g(\varphi) = (f+g)(\varphi), \quad f(\varphi)\circ g(\varphi) = (fg)(\varphi)    
+        \]
+        である．
+        \item $f(x) \in K[x]$とし，$\varphi \colon V \to V$を線形写像として，$A \in M_n(K)$を$V$のある基底$\calB$に関する$\varphi$の表現行列とするならば，$f(\varphi)$の$\calB$に関する表現行列は$f(A)$である．
+    \end{enumerate}
+\end{prop}
+上の命題の(3)より，以下行列について成立することはすべて線形写像についても成立する．
+
+さて，行列$A \in M_n(K)$について，$A$を代入すると$O$になる多項式を考える．
+そのようなものの中で一番次数が小さいものを考える．
+\begin{prop}
+    $A \in M_n(K)$と表示できるとする．
+    このとき，monicな(最高次の係数が1であるような)多項式$f(x) \in K[x]$で，$f(A)=O$となるもののうち，$f$の次数が最小のものが存在する．
+\end{prop}
+\begin{proof}
+    今，$\dim M_n(K)=n^2$である．
+    従って，$\{I_n,A,\dots,A^{n^2}\}$は$n^2+1$個の行列からなるので一次独立ではない．
+    よって，$\{I_n,A,\dots,A^d\}$が一次独立にならない最小の$d$を考える．
+    この$d$について，$A^d \in \gen{I_n,A,\dots,A^{d-1}}$なので，
+    \[
+        A^d = a_0 I_n + \dots + a_{d-1} A^{d-1}
+    \]
+    となる$a_0,\dots,a_{d-1}\in K$が取れる．
+    すると，$f(x)=x^d-a_{d-1}x^{d-1}-\dots-a_0$は$f(A)=O$を満たすmonicな多項式である．
+
+    一方で，$d-1$次以下の多項式$g(x) = b_{d-1}x^{d-1} + \dots + b_0$で，
+    $g(A)=O$となるものが存在したと仮定する．
+    すると，$g(A)=b_{d-1}A^{d-1}+\dots+b_0I_n = O$であるが，
+    $d$の定義から，$\{I_n,\dots,A^{d-1}\}$は一次独立なので，$b_0=\dots=b_{d-1}=0$となる．よって，$g(x)$はmonicになりえない．
+
+    よって$f(x)$が求める多項式である．
+\end{proof}
+\begin{dfn}
+    上の命題に出てくる$f$を$A$の最小多項式という．
+\end{dfn}
+最小多項式の重要な性質を以下に示す．
+\begin{prop}\label{prop:ideal}
+    $A \in M_n(K)$とし，$A$の最小多項式を$f(x) \in K[x]$とする．
+    別の多項式$g(x) \in K[x]$が$g(A)=O$を満たすならば，
+    $g(x)$は$f(x)$で割り切れる．
+\end{prop}
+\begin{proof}
+    $g(x)$を$f(x)$で割った商とあまりを$q(x),r(x)$とすると，
+    $g(x)=f(x)q(x)+r(x)$であり，ここに$A$を代入すると，$g(A)=f(A)=O$なので，
+    $r(A)=O$である．しかしながら，$r$の次数は$f$の次数より真に小さいので，これは$f$が最小多項式であることと矛盾する．
+    以上で結論を得る．
+\end{proof}
+最小多項式を計算するために，以下の命題を用いる．
+\begin{prop}
+    $\varphi\colon V \to V$，$v \in V$とする．
+    $m$を，$\{v,\varphi(v),\dots,\varphi^m(v)\}$が一次独立でなくなるような最小の$m$とする．
+    そして，$W=\gen{v,\varphi(v),\dots,\varphi^{m-1}(v)}$とすると，以下が成り立つ．
+    \begin{enumerate}
+        \item $\varphi(W)\subset W$である．
+        \item $\varphi^m(v)=a_{m-1}\varphi^{m-1}(v) + \dots + a_0 v$とすると，$f$の$W$への制限$\varphi|_W$の最小多項式は$F(x) = x^m-a_{m-1}x^{m-1}-\dots-a_0$である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $W$の元を$w = \alpha_0 v + \dots + \alpha_{m-1} \varphi^{m-1}(v)$とする．
+        このとき，$\varphi(w) = \alpha_0 f(v) + \dots + \alpha_{m-1} \varphi^{m}(v)$であり，
+        $m$の定義から，$\varphi^m(v) \in W$であるので，
+        $\varphi(w) \in W$が成り立つ．
+        \item $v_j = \varphi^j(v)$と略記すると，\footnote{$v_0 = v$と約束しておく．}
+        \[
+            (\varphi^m-a_{m-1}\varphi^{m-1} + \dots + a_0 \mathrm{id}_V)(v) = 0
+        \]
+        なので，$F(\varphi)(v)=0$である．
+        ここで，$F(\varphi) \circ (\varphi^j) = \varphi^j \circ F(\varphi)$なので，
+        \[
+            F(\varphi)(v_j) = F(\varphi) \circ (\varphi^j)(v) = \varphi^j \circ F(\varphi)(v) = 0
+        \]
+        となる．
+        ここで，$W$は$\{v_0,\dots,v_{m-1}\}$を基底にもち，その元すべてが$F(\varphi)$で0に行くので，結局$F(\varphi|_W)$は零写像である．
+
+        一方，$m-1$次以下の多項式$G(x) = b_{m-1}x^{m-1} + \dots + b_0$で，
+        $G(\varphi|_W)=O$となるものが存在したと仮定する．
+        すると，
+        \[
+            G(\varphi|_W)(v) =  b_{m-1}v_{m-1} + \dots + b_0 v_0 = 0
+        \]
+        となるが，$\{v_0,\dots,v_{m-1}\}$は一次独立ゆえ，$b_0 = \dots = b_{m-1} = 0$である．
+        以上から，$F$が$\varphi|_W$の最小多項式であることが示された．
+    \end{enumerate}
+\end{proof}
+上の命題から，$\varphi(W) \subset W$となるような部分空間を考えることが，最小多項式を考える上で重要であることがわかる．実際次が成り立つ．
+\begin{prop}\label{prop:stable_subspace}
+    $\varphi \colon V \to V$を線形写像とし，
+    $f$を$\varphi$の最小多項式とする．
+    また，部分空間$W \subset V$は$\varphi(W)\subset W$を満たすとする．
+    このとき，$f$は$\varphi|_W$の最小多項式$g$で割り切れる．
+\end{prop}
+\begin{proof}
+    $F(x) \in K[x]$とするとき，$F(\varphi)|_W = F(\varphi|_W)$が成立するので，$F(\varphi)=0$ならば$F(\varphi|_W)=0$でもある．よって$f(\varphi|_W)=0$であり，これと\cref{prop:ideal}より，$f$は$g$で割り切れる．
+\end{proof}
+ここから，最小多項式の作り方がわかる．
+\begin{prop}\label{prop:min_poly_lcm}
+    $\varphi \colon V \to V$を線形写像とする．
+    $V$の部分空間$\idxdot{W}{1}{m}$は，
+    $V=\idxsum{W}{1}{m}{+}$を満たし，
+    さらに，各$W_j$について，$\varphi(W_j) \subset W_j$を満たすとする．
+    このとき，$\varphi$の最小多項式は，各$\varphi|_{W_j}$の最小多項式の最小公倍式になる．
+\end{prop}
+\begin{proof}
+$\varphi|_{W_j}$の最小多項式を$f_j$，$\varphi$の最小多項式を$f$とすると，
+\cref{prop:stable_subspace}より，$f$は$f_j$で割り切れるので，
+$f$は$\idxdot{f}{1}{m}$の最小公倍式$g$で割り切れる．
+よって，$g(\varphi)=0$であることを示せばよい．
+今，$v \in V$とすると，$w_j \in W_j$で，$v=\idxsum{w}{1}{m}{+}$となるものが存在する．
+今，各$j$について，$g(x)=f_j(x)h_j(x)$となる多項式$h_j$が存在するので，
+$g(\varphi|_{W_j})(w_j) = f_j(\varphi|_{W_j})(h_j(\varphi|_{W_j})(w_j)) = 0$である．よって，$g(\varphi)(w_j) =0$であるので，$g(\varphi)(v)=0$を得る．
+\end{proof}
+最小多項式を上の命題を使って計算してみよう．
+\begin{example}
+$A = \pmt{1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1}$を考える．
+$K^3$の標準基底$e_1,e_2,e_3$を順番に適用していくことを考える．
+\[
+        A e_1 = \pmt{1 \\ 0 \\ 0} = e_1,\  
+        A e_2 = \pmt{1 \\ 1 \\ 0} = e_1 + e_2,\ 
+        A e_3 = \pmt{0 \\ 1 \\ 1} = e_2 + e_3
+\]
+である．ここから，$W_1 = \gen{e_1,e_2}$とすれば，
+$AW_1 \subset W_1$，$AW_2 \subset W_2$である．
+\[
+    A^2 e_2 = 2 e_1 + e_2 = 2A e_2 - e_2  
+\]
+であるので，$(A-I)^2 e_2 = (A^2 - 2A + I)e_2 = 0$であり，
+このとき$(A-I)^2 e_1 = 0, (A-I)^2 e_3 = 0$も成り立つので，
+最小多項式は$(x-1)^2$である．
+\end{example}
+特に，行列が対角化可能である場合，最小多項式はすぐに計算できる．
+\begin{prop}
+$A \in M_n(K)$について，以下は同値である．
+\begin{enumerate}
+    \item $A$は対角化可能である．
+    \item $A$の相異なる固有値を$\idxdot{\lambda}{1}{m}$とするとき，$A$の最小多項式は$(x-\lambda_1)\dots(x-\lambda_m)$である．
+\end{enumerate}
+\end{prop}
+\begin{proof}
+ 以下，$\varphi \colon K^n \to K^n$を$\varphi(v)=Av$で定める．
+$(1) \Rightarrow (2)$:
+$A$が対角化可能であるとし，$\idxdot{\lambda}{1}{m}$を$A$の相異なる固有値とするとき，\cref{thm:diagonalize}より，
+$K^n = E(\lambda_1;A) \oplus \dots \oplus E(\lambda_m;A)$である．
+$A$の最小多項式は，$\varphi|_{E(\lambda_j;A)}$の最小多項式の最小公倍式になる．
+ところで，任意の$v \in E(\lambda_j;A)$について$(A-\lambda_j I)v = 0$であるので，
+$\varphi|_{E(\lambda_j;A)}$の最小多項式は$x-\lambda_j$である．
+$\idxdot{\lambda}{1}{m}$は相異なるので，結論を得る．
+
+$(2) \Rightarrow (1)$:
+もっと一般的な次の主張を示す．
+\begin{claim}
+    $\varphi\colon V \to V$を線形写像とし，
+    任意の相異なる$\idxdot{\alpha}{1}{\ell}$に対して，
+    $F(x)=(x-\alpha_1)\dots(x-\alpha_\ell)$とすれば，
+    $\ker F(\varphi) = E(\alpha_1;\varphi) \oplus \dots \oplus \ker E(\alpha_\ell;\varphi)$である．
+\end{claim}
+実際，これを$\varphi$の最小多項式$G(x)$に適用して，
+$\ker G(\varphi) = K^n$であること\footnote{$G(x)$は$\varphi$の最小多項式だから，任意の$v \in K^n$について，$G(\varphi)(v) = 0$である．}を用いれば証明は終わる．
+
+上の主張を$\ell$についての帰納法で示す．
+まず，$F_1(x)=(x-\alpha_1)\dots(x-\alpha_{\ell-1})$とおいて，
+$\ker F(\varphi) = E(\alpha_\ell;\varphi) \oplus \ker F_1(\varphi)$であることを示す．
+$w \in E(\alpha_\ell;A) \cap \ker F_1(\varphi)$であるような元を取る．
+すると，$w \in E(\alpha_\ell;A)$なので，$\varphi(w)=\alpha_\ell w$である．
+従って，$F_1(\varphi)(w)=F_1(\alpha_\ell)w$となる．
+今，$\idxdot{\alpha}{1}{\ell}$は相異なるので，
+$F_1(\alpha_\ell)$は0にならない．従って，$F_1(\varphi)(w)=0$ならば$w=0$となる．
+\cref{prop:two_direct_sum}より，$E(\alpha_\ell;A) + \ker F_1(\varphi)$は直和である．
+
+次に，$v \in \ker F(\varphi)$を任意に取り，$\varphi(v)-\alpha_\ell v = v'$とする．
+すると，$F(x) = F_1(x)(x-\alpha_\ell)$なので，$F_1(\varphi)(v')=0$であり，
+$v' \in \ker F_1(\varphi)$がわかる．
+帰納法の仮定より，$\ker F_1(\varphi) = E(\alpha_1;\varphi) \oplus \dots \oplus E(\alpha_{\ell-1};\varphi)$であるから，
+$v'$は$v_j \in E(\alpha_j;\varphi)$の和$v'=\idxsum{v}{1}{\ell-1}{+}$として一通りに表せる．
+そこで，$\idxdot{\alpha}{1}{\ell}$がすべて異なることを使って，
+\[
+    w = \frac{1}{\alpha_1-\alpha_\ell} v_1 + \dots + \frac{1}{\alpha_{\ell-1}-\alpha_\ell} v_{\ell-1} 
+\]
+とおくと，$w \in \ker F_1(\varphi)$であり，$\varphi(w) - \alpha_\ell w = v'$であることがすぐにわかる．
+従って，$\varphi(v-w) - \alpha_\ell (v-w) = 0$であり，$v-w \in E(\alpha_\ell;\varphi)$となる．以上で主張が証明できた．
+\end{proof}
+\subsection{Cayley--Hamiltonの定理}
+まず行列の固有多項式に関する次の性質に注意しよう．
+\begin{prop}
+$A,B\in M_n(K)$は互いに相似であるとする．
+このとき，$A$の固有多項式と$B$の固有多項式は一致する．
+\end{prop}
+\begin{proof}
+$P \in M_n(K)$を$B = P^{-1}AP$となる行列とする．
+すると，
+\[
+    B-\lambda I = P^{-1}AP-\lambda P^{-1}P = P^{-1}(A-\lambda I) P   
+\]
+なので，両辺の行列式を取れば，結論を得る．
+\end{proof}
+さて，\cref{prop:basis_and_similarity}より，
+$V$から$V$自身への線形写像を2つの基底で行列表示すると，その行列は互いに相似になるのだった．
+このとき上の命題を用いると，それらの表現行列の固有多項式は同じである．
+従って，線形写像をそのものに対する固有多項式を次のように定義することができる．
+\begin{dfn}
+線形写像$\varphi \colon V \to V$について，$V$のある順序付き基底$\calB \subset V$による$\varphi$の表現行列の固有多項式を，$\varphi$の固有多項式という．
+この定義は，$\calB$の選び方によらない．
+\end{dfn}
+固有多項式についても，$\varphi(W)\subset W$となるような部分空間への制限との関係が次のように示せる．
+\begin{prop}\label{prop:char_subspace}
+$\varphi \colon V \to V$を線形写像とし，
+$W \subset V$を，$\varphi(W) \subset W$となるような部分空間であるとする．
+このとき，$\varphi$の固有多項式は，$\varphi|_W$の固有多項式で割り切れる．
+\end{prop}
+\begin{proof}
+$W$の基底$\calB'$を取り，これを延長して$V$の基底$\calB' \subset \calB$を作る．
+この基底について$\varphi$を行列表示すると，次のようになる．
+\[
+    \pmt{
+        A & \widetilde{A} \\
+        O & B
+    }    
+\]
+ここで，$A$は$\varphi|_W$を$\calB'$で行列表示したものであり，$B$は正方行列である．
+この行列の固有多項式は，
+\[
+    \det \pmt{
+        A - \lambda I & \widetilde{A} \\
+        O & B - \lambda I
+    } = \det (A -\lambda I) \det(B-\lambda I)
+\]
+であり，$\det (A - \lambda I)$は$\varphi|_W$の固有多項式なので，結論を得る．
+\end{proof}
+以上の準備のもと，次の定理を証明する．
+\begin{thm}
+$A \in M_n(K)$に対して，$A$の固有多項式$\Phi(x)$は，$A$の最小多項式$f(x)$で割り切れる．
+特に，$\Phi(A) = O$である．
+\end{thm}
+\begin{proof}
+線形写像$\varphi\colon K^n \to K^n$を$\varphi(v)=Av$で定めると，$A$の固有多項式・最小多項式は，$\varphi$のそれらと等しい．
+$f(x)$の次数を$r$とする．$K^n$の基底$\{v_1,\dots,v_n\}$を任意に一つ固定して，
+$m_j$を，$v_j,\varphi(v_j),\dots,\varphi^{m-1}v_j$が線形独立となる最小の$m$と定めて，
+部分空間$W_j\,(1 \le j \le n)$を，$W_j := \gen{v_j,\varphi(v_j),\dots,\varphi^{m_j-1}v_j }$で定めると，$\varphi(W_j) \subset W_j$であり，
+さらに，$K^n = \idxsum{W}{1}{n}{+}$である．
+すると，\cref{prop:char_subspace}より，$\varphi$の固有多項式は，$\varphi|_{W_j}$の固有多項式で割り切れる．
+そこで，$\varphi|_{W_j}$の固有多項式と最小多項式は一致することを示す．
+もしこれが示せれば，\cref{prop:min_poly_lcm}より，
+$\varphi$の最小多項式は$\varphi|_{W_j}$たちの最小公倍式であることから結論が得られる．
+
+実際，$v_j,\varphi(v_j),\dots,\varphi^{m_j-1}v_j$は$W_j$の基底であることから，
+この基底に関する$W_j$の行列表示は，
+\[
+    \pmt{
+        0 & 0 & 0 & \cdots & b_0 \\
+        1 & 0 & 0 & \cdots & b_1 \\
+        0 & 1 & 0 & \cdots & b_2 \\
+        \vdots & \ddots & \ddots & \ddots & \vdots \\
+        0 & \cdots & 0 & 1 & b_{m_j-1}
+    }    
+\]
+という形で書ける．
+この行列の固有多項式は，$x^{m_j} - b_{m_j-1}x^{m_j-1} - \dots - b_0$である．
+一方，$m$の定義から，$\varphi|_{W_j}$の最小多項式も同じ多項式になるので，結論を得る．
+\end{proof}

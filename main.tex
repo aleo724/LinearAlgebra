@@ -1,0 +1,75 @@
+\documentclass[uplatex,paper=a4,fontsize=12pt,line_length=200mm,number_of_lines=37]{jlreq}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{tikz}
+\usepackage{cleveref}
+\usepackage{enumitem}
+%\usepackage{showkeys}
+\theoremstyle{definition}
+\newtheorem{thm}{定理}[section]
+\newtheorem{dfn}[thm]{定義}
+\newtheorem{lemma}[thm]{補題}
+\newtheorem{remark}[thm]{注意}
+\newtheorem{notation}[thm]{記号・記法}
+\newtheorem{cor}[thm]{系}
+\newtheorem{prop}[thm]{命題}
+\newtheorem{algorithm}[thm]{アルゴリズム}
+\newtheorem{example}[thm]{例}
+\newtheorem{claim}[thm]{主張}
+\newtheorem{exercise}[thm]{演習問題}
+\crefname{thm}{定理}{定理}
+\crefname{prop}{命題}{命題}
+\crefname{dfn}{定義}{定義} \crefname{lemma}{補題}{補題}
+\crefname{example}{例}{例}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\bfzr}{\mathbf{0}}
+\newcommand{\pmt}[1]{
+    \begin{pmatrix}
+        #1
+    \end{pmatrix}
+}
+\newcommand{\iden}{\mathrm{id}}
+\newcommand{\id}{\,\mathrm{d}}
+\newcommand{\im}{\mathrm{Im}\,}
+\newcommand{\rk}{\mathrm{rank}\,}
+\newcommand{\gen}[1]{\left\langle #1 \right\rangle}
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\renewenvironment{proof}{\small {\bfseries 証明}}{\qed\\}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\idxdot}[3]{
+    #1_{#2},\dots,#1_{#3}
+}
+\newcommand{\idxsum}[4]{
+    #1_{#2} #4 \dots #4 #1_{#3}
+}
+\newcommand{\lncmb}[5]{
+    #1_{#3} #2_{#3} #5 \dots #5 #1_{#4} #2_{#4}
+}
+\newcommand{\idxvec}[3]{
+    \pmt{#1_{#2} \\ \vdots \\ #1_{#3}}
+}
+\newcommand{\conj}[1]{
+    \overline{#1}
+}
+\newcommand{\norm}[1]{
+    \left\| #1 \right\|
+}
+\newcommand{\tilv}{\widetilde{v}}
+\begin{document}
+\input{sec01.tex}
+\newpage
+\input{sec02.tex}
+\newpage
+\input{sec03.tex}
+\newpage
+\input{sec04.tex}
+\newpage
+\input{sec05.tex}
+\newpage
+\input{sec06.tex}
+\end{document}

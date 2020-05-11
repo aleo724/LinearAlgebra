@@ -1,0 +1,815 @@
+\section{次元}
+\cref{thm:dim_well-posedness}より，基底が有限個からなるのであれば，
+その個数はどの基底をとっても同じであることがわかる．
+従って次のような定義ができる．
+\begin{dfn}
+  $V$を$K$-ベクトル空間とする．
+  $V$の基底が有限個のベクトルからなるとき，
+  その個数は基底の選び方によらず不変である．
+  その個数を$V$の\textbf{次元}(dimension)といい，
+  $\dim_K V$，もしくは$K$が明らかな場合は$\dim V$と書く．
+\end{dfn}
+\begin{example}
+  ユークリッド空間$K^n$の次元は$n$である．
+  これは，$K^n$の標準基底が$n$個のベクトルからなることから明らかである．
+\end{example}
+\begin{example}
+  $n$次以下の多項式全体からなる$K$-ベクトル空間
+  \[
+    K_n[x] := \left\{ a_0 + a_1 x + \dots + a_n x^n \,;\, a_j \in K\ (j=0,\dots,n) \right\} 
+  \]
+  は，$\{1,x,\dots,x^n\}$を基底として持つため，次元は$n+1$である．
+\end{example}
+\begin{example}
+  $K_4[x]$の部分空間
+  \[
+    V := \{p(x) \in K_4[x] \,;\, p(1)=p(3)=0\}  
+  \]
+  の次元を考える．
+  そのためには，$V$の基底を一つ求めればよい．
+  $p(x) \in V$とするとき，$p(1)=p(3)=0$なので，
+  ある$a_0,a_1,a_2 \in K$で，
+  \[
+    p(x) = (x-1)(x-3)(a_0 + a_1 x + a_2 x^2)  
+  \]
+  となるものが存在する．
+  すると，これを展開して，
+  \[
+    p(x) = a_0 (x-1)(x-3) + a_1 x (x-1)(x-3) + a_2 x^2 (x-1)(x-3)  
+  \]
+  と書けば，$V$は$\{(x-1)(x-3), x(x-1)(x-3), x^2(x-1)(x-3)\}$で生成されることがわかる．
+  これらは一次独立でもあるので，$V$の基底となる．
+  よって，$\dim V = 3$である．
+\end{example}
+\subsection{ベクトルの集合の性質と次元の関係}
+ベクトルの集合に対して，一次独立や生成するといった性質をすでに知っているが，
+これらが次元とどういう関係にあるのかについてここでは議論する．
+まず，ベクトルの集合が与えられたときに，
+それらから自然に作られる部分空間を定義する．
+\begin{dfn}
+  $V$を$K$-ベクトル空間とし，$X \subset V$を部分集合とする．
+  \begin{equation}
+    \gen{X} := \{ a_1 v_1 + \dots + a_n v_n \,;\, n \le 0, a_j \in K, v_j \in X \}
+  \end{equation}
+  と定義すると，$\gen{X}$は$V$の部分空間になる．
+  これを，\textbf{$X$の生成する$V$の部分空間}という．
+  もし，$X$が有限集合で，$X = \{v_1,\dots,v_m\}$である場合，
+  $\gen{X}$を$\gen{v_1,\dots,v_m}$と書くこともある．
+\end{dfn}
+つまり，$\gen{X}$とは，$X$の有限個の元の線形結合で表わすことのできるベクトル全体のなす部分空間である．
+\begin{prop}\label{prop:gen_property}
+  $V$を$K$-ベクトル空間とするとき，次が成り立つ．
+  \begin{enumerate}
+    \item $X \subset Y \subset V$ならば，$\gen{X} \subset \gen{Y}$である．
+    \item $X \subset V$を$n$個の元からなる部分集合で，一次独立であるようなものであるとする．
+    このとき，$\dim \gen{X} = n$である．
+    \item $X \subset V$を部分集合とする．
+    このとき，$v \in \gen{X}$であるための必要十分条件は，
+    $\gen{X \cup \{v\}} = \gen{X}$となることである．
+    \item $X \subset V$を部分集合とする．
+    このとき，$X$が一次独立でないための必要十分条件は，ある$v \in X$で，$v \in \gen{X \setminus \{v\}}$となるものが存在することである．
+    つまり，ある$X$の元$v$で，$v$が$v$以外の$X$の元の線形結合で書けるものが存在することである．
+    \item $X \subset V$を部分集合として，$\abs{X}=r$とする．
+    部分集合$X' \subset \gen{X}$に対して，
+    $\abs{X'}\ge r+1$ならば，
+    $X'$は一次独立にならない．
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  \begin{enumerate}
+    \item $X$の線形結合で書ける元が$Y$の線形結合でも書けるということを示せばいいが，これは明らかである．
+    \item $X$は$\gen{X}$を生成しており，さらに一次独立なので，
+    $\gen{X}$の基底になる．
+    従って結論を得る．
+    \item $v \in \gen{X}$であると仮定する．
+    すると，ある$v_1,\dots,v_n \in X$と，$\alpha_1,\dots,\alpha_n \in K$で，
+    \begin{equation}\label{eq:4-1}
+      v = \alpha_1 v_1 + \dots + \alpha_n v_n  
+    \end{equation}
+    となるものが存在する．
+    今，$w \in \gen{X \cup \{v\}}$を任意に取ると，
+    $w_1,\dots,w_m \in X$と
+    $\beta_1,\dots,\beta_m,\beta \in K$で，
+    \begin{equation}\label{eq:4-2}
+      w = \beta_1 w_1 + \dots + \beta_m w_m + \beta v
+    \end{equation}
+    となるものが存在する．
+    \eqref{eq:4-2}に\eqref{eq:4-1}を代入して整理すると，
+    \[
+      w = \alpha_1 \beta v_1 + \dots + \alpha_n \beta v_n
+      + \beta_1 w_1 + \dots + \beta_m w_m
+    \]
+    となるので，$w \in \gen{X}$である．
+    よって，$\gen{X \cup \{v\}} \subset \gen{X}$が成り立つ．
+    (1)より，$\gen{X} \subset \gen{X \cup \{v\}}$なので，結論を得る．
+
+    逆に$\gen{X\cup\{v\}} = \gen{X}$であると仮定すると，$v \in \gen{X\cup\{v\}}$なので，$v \in \gen{X}$である．
+    \item $X$が一次独立でないとすると，
+    $v_1,\dots,v_n \in X$と，自明でない$\alpha_1,\dots,\alpha_n \in K$で，
+    \[
+        \alpha_1 v_1 + \dots + \alpha_n v_n = 0
+    \]
+    となるものが存在する．
+    $\alpha_1,\dots,\alpha_n$はすべて0ではない．
+    必要ならば番号を付け替えることによって，
+    $\alpha_1 \neq 0$であると仮定してよい．
+    このとき，
+    \[
+      v_1 = - \frac{\alpha_2}{\alpha_1} v_2 - \dots - \frac{\alpha_n}{\alpha_1} v_n  
+    \]
+    であるので，$v_1$は$v_1$以外の$X$の元の線形結合で表すことができる．
+
+    逆に$v \in X$が$v$以外の$X$の元$v_1,\dots,v_m \in X$の線形結合で書けたとする．
+    つまり，ある$\beta_1,\dots,\beta_m \in K$で，
+    \[
+      v = \beta_1 v_1 + \dots + \beta_m v_m
+    \]
+    となるものが存在したと仮定する．
+    このとき，
+    \[
+      v - \beta_1 v_1 - \dots - \beta_m v_m = 0  
+    \]
+    であり，これは$X$の元の自明ではない線形結合が0になるということなので，$X$は一次独立ではない．
+    \item $X$の元を$v_1,\dots,v_r$，$X'$の元を$v'_1,\dots,v'_s$と並べる．
+    仮定より$s \ge r+1$である．
+    $X' \subset \gen{X}$なので，
+    $\alpha_{jk}\ (1 \le j \le r, 1 \le k \le s)$で，
+    各$k$に対して，
+    \[
+      v'_k = \alpha_{1k} v_1 + \dots + \alpha{rk} v_r  
+    \]
+    となるものが存在する．
+    今，$\beta_1 v'_1 + \dots + \beta_s v'_s = 0$となったと仮定すると，
+    上の式を代入してまとめることで，
+    \[
+      \sum_{j=1}^r \left(\sum_{k=1}^s \alpha_{jk} \beta_k\right) v_j = 0
+    \]
+    となることがわかる．
+    つまり，少なくともこの式で各$v_j$の係数が0になるような自明でない$\beta_1,\dots,\beta_r$が存在すれば証明は終わる．
+    それは
+    \[
+      \pmt{
+        \alpha_{11} & \cdots & \alpha_{1s} \\%
+        \vdots & \ddots & \vdots \\%
+        \alpha_{r1} & \cdots & \alpha_{rs}}%
+      \pmt{
+        \beta_1 \\ \vdots \\ \beta_s
+      } = 0
+    \]
+    ということと同値である．
+    ここで，行列$\pmt{
+        \alpha_{11} & \cdots & \alpha_{1s} \\%
+        \vdots & \ddots & \vdots \\%
+        \alpha_{r1} & \cdots & \alpha_{rs}}$
+    は$r \times s$行列であり，$r < s$なので，上の連立方程式を満たすような0でない$\pmt{ \beta_1 \\ \vdots \\ \beta_s }$が存在する．以上で結論を得る．
+  \end{enumerate}
+\end{proof}
+\cref{prop:gen_property}~(3)から，$X$の元の中には，$\gen{X}$を構成するには余分な元が存在する可能性があることがわかる．
+具体例を示そう．
+\begin{example}
+今，$K^3$の3つのベクトル
+\[
+  \pmt{1 \\ 0 \\ 0}, \pmt{1 \\ 1 \\ 0}, \pmt{0 \\ 1 \\ 0}  
+\]
+で生成される部分空間を考えよう．
+$\pmt{1 \\ 1 \\ 0} = \pmt{1 \\ 0 \\ 0} + \pmt{0 \\ 1 \\ 0}$なので，$\pmt{1 \\ 1 \\ 0}$は他の2つの元の一次結合で書くことができる．
+そうすると，\cref{prop:gen_property}(3)より，
+\[
+  \gen{\pmt{1 \\ 0 \\ 0}, \pmt{1 \\ 1 \\ 0}, \pmt{0 \\ 1 \\ 0}}%
+  = \gen{\pmt{1 \\ 0 \\ 0}, \pmt{0 \\ 1 \\ 0} }
+\]
+である．つまり，$\pmt{1 \\ 1 \\ 0}$は$\gen{\pmt{1 \\ 0 \\ 0}, \pmt{1 \\ 1 \\ 0}, \pmt{0 \\ 1 \\ 0}}$の構成には本来不要な元である．
+また，$\pmt{1 \\ 0 \\ 0}, \pmt{0 \\ 1 \\ 0}$は一次独立なので，
+\cref{prop:gen_property}(2)より，
+\[
+  \dim \gen{\pmt{1 \\ 0 \\ 0}, \pmt{1 \\ 1 \\ 0}, \pmt{0 \\ 1 \\ 0}} = 2
+\]
+である．
+\end{example}
+このように，部分集合$X \subset V$が与えられたとき，$\gen{X}$の次元を知るには，$X$の中に上の例のような「余分な元」がいくつあるかを調べる必要がある．
+それを踏まえて，次のような定義をする．
+\begin{dfn}
+  $V$を$K$-ベクトル空間とし，$X \subset V$とする．
+  $X$の\textbf{一次独立な最大個数が$m$}であるとは，
+  以下の2つの条件がともに成り立つことをいう．
+  \begin{enumerate}
+    \item $X$の部分集合$X' \subset X$で，
+    $\abs{X'} = m$かつ，$X'$が一次独立になるようなものが存在する．
+    \item $\abs{X'}\ge m+1$となる任意の$X$の部分集合$X' \subset X$に対して，$X'$は一次独立にならない．
+  \end{enumerate}
+  ただし，$m=\abs{X}$の場合は，(1)のみをもって定義するものとする．
+\end{dfn}
+\begin{prop}\label{prop:MI_equiv}
+  $V$を$K$-ベクトル空間とし，$X \subset V$とする．
+  このとき，以下は同値である．
+  \begin{enumerate}
+    \item $X$の一次独立な最大個数は$m$である．
+    \item 一次独立な部分集合$X' \subset X$で，
+    $\abs{X'}=m$であり，
+    かつ$X \subset \gen{X'}$となるものが存在する．
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(1) \Rightarrow (2)$:
+  $X'$を，$\abs{X'}=m$となるような一次独立な$X$の部分集合とする．
+  そして，$X'=\{v_1,\dots,v_m\}$とラベルづけしておく．
+  $v \in X \setminus X'$を一つとると，
+  (1)の仮定と一次独立な最大個数の定義から，
+  $X' \cup \{v\}$は一次独立にはならない．
+  よって，ある自明でない$\alpha_1,\dots,\alpha_m,\alpha \in K$で，
+  \[
+    \alpha_1 v_1 + \dots + \alpha_m v_m + \alpha v = 0  
+  \]
+  となるものが存在する．
+
+  今，$\alpha = 0$だったとすると，
+  \[
+    \alpha_1 v_1 + \dots + \alpha_m v_m = 0
+  \]
+  となるが，$X'$は一次独立なので，$\alpha_1 = \dots = \alpha_m = 0$となって，$\alpha_1,\dots,\alpha_m,\alpha$は自明でないという条件に反する．
+  ゆえに，$\alpha \neq 0$であって，
+  \[
+    v = - \frac{\alpha_1}{\alpha} v_1 - \dots - \frac{\alpha_m}{\alpha} v_m
+  \]
+  となるので，$v \in \gen{X'}$となる．
+  従って，$X\subset \gen{X'}$である．
+
+  $(2) \Rightarrow (1)$:
+  (2)の条件より，$\abs{X'}=m$となる一次独立な部分集合$X'\subset X$は存在するので，
+  $\abs{X''} \ge m + 1$となる任意の部分集合$X'' \subset X$が一次独立にならないことを示せばよい．
+  ここで，条件より，$X'' \subset X \subset \gen{X'}$であるので，
+  \cref{prop:gen_property}~(5)より，$X''$は一次独立にはならない．
+\end{proof}
+以上の準備のもと，以下が証明できる．
+\begin{thm}
+  $V$を$K$-ベクトル空間とし，$X \subset V$とする．
+  $X$の一次独立な最大個数が$m$であることと，$\dim \gen{X} = m$は同値である．
+\end{thm}
+\begin{proof}
+  $X$の一次独立な最大個数が$m$であると仮定する．
+  すると，\cref{prop:MI_equiv}~(2)より，一次独立な$X' \subset X$で，$\abs{X'}=m$であり，
+  なおかつ$X \subset \abs{X'}$となるものが存在する．
+  よって，$\gen{X} = \gen{X'}$が成り立つ．
+  $X'$は一次独立だから，
+  $X'$は$\gen{X}$の基底となることがわかる．
+  よって，$\dim \gen{X} = m$である．
+
+  逆に$\dim \gen{X} = m$であると仮定する．
+  そして，$X$の一次独立な最大個数を$r$とおく．
+  $X' \subset X$を$\abs{X'}\ge m+1$となるような部分集合であるとする．
+  このとき，$\gen{X}$の基底$\{w_1,\dots,w_m\}$を一つとると，
+  $X' \subset X \subset \gen{X}=\gen{w_1,\dots,w_m}$であるので，\cref{prop:gen_property}~(5)より，$X'$は一次独立にはならない．
+  よって，$r \le m$である．
+
+  一方で，$r < m$であると仮定する．
+  このとき，\cref{prop:MI_equiv}~(2)より，
+  一次独立な部分集合$X'' \subset X$で，$\abs{X''}=r$かつ$X \subset \gen{X''}$となるものが存在する．
+  このとき，$\gen{X} \subset \gen{X''}$である．
+  \cref{prop:gen_property}~(2)より，$\dim \gen{X''} = r$なので，$m = \dim \gen{X} \le r$とならなければならない．
+  しかしこれは$r < m$と矛盾する．
+  よって，$r=m$である．
+\end{proof}
+この定理を用いると，次元と一次独立性の関係が次のようにわかる．
+\begin{thm}
+  $V$を$K$-ベクトル空間として，$B \subset V$を$\abs{B}=n$であるような部分集合とするとき，以下は同値である．
+  \begin{enumerate}
+    \item $B$は基底である．
+    \item $B$は一次独立である．
+    \item $B$は$V$を生成する．
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  (2)かつ(3)は(1)と同値なので，
+  (2)と(3)が同値であることを示せば証明が終わる．
+
+  $(2) \Rightarrow (3)$: $\dim V = n$なので，$V$の一次独立な最大個数は$n$である．
+  すると，任意の$v \in V \setminus B$に対して，$B \cup \{v\}$は一次独立にはならない．$B$自身は一次独立なので，\cref{prop:MI_equiv}の証明と同様の議論をすれば，$v \in \gen{B}$であることがわかる．
+  よって$V=\gen{B}$である．
+
+  $(3) \Rightarrow (2)$:
+  $B$は$V$を生成するので，$\gen{B} = V$であり，
+  $\dim \gen{B}=n$となるから，$B$の一次独立な最大個数は$n$である．
+  $\abs{B}=n$なので，$B$自身が一次独立である．
+  \end{proof}
+  \subsection{斉次連立方程式から定まる部分空間の次元}
+  \label{sub:homogeneous_solution}
+  $m \times n$行列$A \in M_{m\times n}(K)$に対して，
+  $A$を係数行列とする斉次連立方程式の解の集合
+  \[
+    \{ v \in K^n \,;\, Av = 0\}  
+  \]
+  を考えると，これは$K^n$の部分空間になる．
+  この空間の次元について考えよう．
+  \begin{example}
+      \[
+        A = \pmt{ 1 & 1 & -1 & 0 \\ 2 & 2 & 1 & 1}  
+      \]
+      である場合を考える．$A$を階段行列に変形すると，
+      \[
+        \pmt{1 & 1 & 0 & -1/3 \\ 0 & 0 & 1 & -1/3}
+      \]
+      となる．よって，$A\pmt{x_1 \\ x_2 \\ x_3 \\ x_4} = 0$となることと，
+      \[
+        \begin{aligned}
+          x_1 + x_2 - \frac{1}{3}x_4 &= 0,\\
+          x_3 - \frac{1}{3}x_4 &= 0
+        \end{aligned}
+      \]
+      は同値である．ここから，
+      \[
+        x_1 = - x_2 + \frac{1}{3}x_4,\quad x_3 = \frac{1}{3}x_4
+      \]
+      であることがわかる．よって，
+      \[
+        \pmt{x_1 \\ x_2 \\ x_3 \\ x_4} 
+        = \pmt{-x_2 + x_4/3 \\ x_2 \\ x_4/3 \\ x_4}
+        = x_2 \pmt{-1 \\ 1 \\ 0 \\ 0} + x_4 \pmt{1/3 \\ 0 \\ 1/3 \\ 1}
+      \]
+      となる．これはつまり，$V = \{ v \in K^4 \,;\, Av = 0\}$という部分空間は，
+      $\pmt{-1 \\ 1 \\ 0 \\ 0}$と$\pmt{1/3 \\ 0 \\ 1/3 \\ 1}$で生成されているということである．
+      これらのベクトルは一次独立であるので，
+      結局$\dim V = 2$がわかる．
+  \end{example}
+  以上の考え方を一般化することで，次のことが証明できる．
+  \begin{thm}\label{thm:solution_space}
+    $m \times n$行列$A \in M_{m\times n}(K)$に対して，
+    $A$を係数行列とする斉次連立方程式の解全体が作る$K^n$の部分空間
+    \[
+      V = \{ v \in K^n \,;\, Av = 0\}  
+    \]
+    を考える．このとき，$\dim V = n - \rk A$である．
+  \end{thm}
+  \begin{proof}
+    $A$を階段行列に変形したものを$\widetilde{A}$とおく．
+    $\rk A = r$とすると$\widetilde{A}$は以下を満たす行列である．
+    \begin{itemize}
+        \item $r+1$行目以降の成分はすべて0
+        \item $j$行目($1 \le j \le r $)について，
+        第1列から見ていって初めて0でない成分が出てくる成分の値は1である．
+        \item その成分を$(j,r_j)$とするとき，
+          第$r_j$列は$j$行目のみが1であり，それ以外は0である．
+    \end{itemize}
+    今，番号を適切に入れ替える，つまり，未知数$\idxdot{x}{1}{n}$の番号を入れ替えることにより，
+    $r_j = j$であると仮定してもよい．
+    そうすると，この行列は次のような形をしている．
+    \[
+      \pmt{
+        1 & 0 & \cdots & 0 & \ast & \cdots & \ast \\ 
+        0 & 1 & \cdots & 0 & \ast & \cdots & \ast \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & & \vdots \\
+        0 & 0 & \cdots & 1 & \ast & \cdots & \ast \\
+        0 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & & \vdots & \vdots &  & \vdots \\
+        0 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+      }
+    \]
+    よって，$Av=0$であるとき，$v = \pmt{x_1 \\ \vdots \\ x_n}$が満たすべき方程式は，
+    \[
+      x_j + \alpha_{j,r+1} x_{r+1} + \dots + \alpha_{j,n}x_n = 0\, (1 \le j \le r)
+    \]
+    となる．
+  ただし，$\alpha_{k,\ell}$は上の行列の$\ast$の部分に相当する．
+  このことから，各$x_j\,(1 \le j \le r)$について，
+  \[
+    x_j = -\alpha_{j,r+1} x_{r+1} - \dots - \alpha_{j,n}x_n
+  \]
+  が成立する．そこで，$w_k \in K^m\,(j+1 \le k \le n)$を，
+  \[
+    w_k = \pmt{-\alpha_{1,k} \\ \vdots \\ -\alpha_{r,k} \\ 0 \\ \vdots \\ 1 \\ \vdots \\ 0}
+  \]
+  で定義する．
+  ただし，第$r+1$成分以降は第$k$成分のみ1でそれ以外は0であるとする．
+  すると，
+  $Av = 0$であるならば，
+  \[
+    \begin{split}
+      v &= \pmt{x_1 \\ \vdots \\ x_r \\ x_{r+1} \\ \vdots \\ x_n}
+        = \pmt{-\alpha_{1,r+1} x_{r+1} - \dots - \alpha_{1,n}x_n \\ 
+              \vdots \\ 
+              -\alpha_{r,r+1} x_{r+1} - \dots - \alpha_{r,n}x_n \\
+              x_{r+1} \\ \vdots \\ x_n } \\
+        &= x_{r+1} w_{r+1} + \dots + x_n w_n
+    \end{split}
+  \]
+  となる．
+  すなわち，$V = \gen{\idxdot{w}{r+1}{n}}$であることがわかる．
+
+  さらに，$\idxdot{w}{r+1}{n}$は一次独立である．
+  実際，$x_{r+1} w_{r+1} + \dots + x_n w_n = 0$となったとすると，
+  任意の$r+1 \le k \le n$に対して，左辺の第$k$成分は$x_k$であることがすぐにわかる．
+  従って，$x_k = 0$でなければならない．
+
+  以上より，$\idxdot{w}{r+1}{n}$は$V$の基底であって，
+  $\dim V = n - r$であることから結論を得る．
+  \end{proof}
+  % subsection 斉次連立方程式から定まる部分空間の次元} (end)
+  \subsection{次元定理}
+先程の\cref{thm:solution_space}は次のようにも解釈できる．
+\(A \in M_{m \times n}(K)\)に対して，
+線形写像$f \colon K^n \to K^m$を$f(v)=Av$で定めると，
+\cref{thm:solution_space}に出てくる部分空間$V$は$\ker f$そのものである．
+つまり，\cref{thm:solution_space}で主張したいことは，
+\[
+  \dim (\ker f) + \rk A = n = \dim K^n
+\]
+ということである．
+
+行列と線形写像は，行列表示によって密接に結びついており，有限次元のベクトル空間の間の線形写像は，
+適切な基底を考えることで行列表示できる．
+したがって，上の式を一般の線形写像に拡張することができないかどうかを考える．
+そのためにまず，線形写像のrankを定義する．
+\begin{dfn}
+  $V,W$を$K$-ベクトル空間とし，$f\colon V \to W$を線形写像とする．
+  このとき，$f$の像の次元$\dim \im f$を，$f$のrankといい，$\rk f$で表す．
+\end{dfn}
+ここで示すのは次の\textbf{次元定理}である．
+\begin{thm}\label{thm:dim_thm}
+  $V,W$を$K$-ベクトル空間とし，$f \colon V \to W$を線形写像とする．
+  このとき，以下が成立する．
+  \begin{equation}
+    \dim (\ker f)  + \rk f = \dim V
+  \end{equation}
+\end{thm}
+\begin{proof}
+  $\ker f$の次元を$r$として，その基底$\idxdot{v}{1}{r} \in V$を取る．
+  また$\im f$の次元を$s$として，その基底を$\idxdot{w}{1}{s} \in W$とする．
+  各$1 \le j \le s$に対して，$w_j \in \im f$なので，
+  ある$v'_j \in V$で，$f(v'_j) = w_j$となるものが存在する．
+  そこで，以下，$\idxdot{v}{1}{r},\idxdot{v'}{1}{s}$が$V$の基底であることを証明する．
+
+  まず$V$がこれらのベクトルで生成されることを示す．
+  $v \in V$とする．
+  $f(v) \in \im f$なので，スカラー$\idxdot{\alpha}{1}{s}\in K$で，
+  \[
+    f(v) = \lncmb{\alpha}{w}{1}{s}{+}
+  \]
+  となるものが存在する．$f(v'_j)=w_j$だったから，これは
+  \[
+    f(v) = f(\lncmb{\alpha}{v'}{1}{s}{+})
+  \]
+  と変形できる．従って，
+  \[
+    f(v - (\lncmb{\alpha}{v'}{1}{s}{+})) = 0
+  \]
+  となるので，$v - (\lncmb{\alpha}{v'}{1}{s}{+}) \in \ker f$である．
+  従って，スカラー$\idxdot{\beta}{1}{r}$で，
+  \[
+    v - (\lncmb{\alpha}{v'}{1}{s}{+}) = \lncmb{\beta}{v}{1}{r}{+}
+  \]
+  となるものが存在する．
+  従って，左辺の第二項を右辺に移項すれば，
+  \[
+    v = \lncmb{\alpha}{v'}{1}{s}{+} + \lncmb{\beta}{v}{1}{r}{+}
+  \]
+  であり，$v$は$\idxdot{v}{1}{r},\idxdot{v'}{1}{s}$の線形結合で書けることがわかるので，
+  結論を得る．
+
+  次に，一次独立であることを示すため，
+  \begin{equation}\label{eq:dim_thm_proof}
+    \lncmb{\alpha}{v'}{1}{s}{+} + \lncmb{\beta}{v}{1}{r}{+} = 0
+  \end{equation}
+  となるスカラー$\idxdot{\alpha}{1}{s},\idxdot{\beta}{1}{r} \in K$を取る．
+  両辺に$f$を適用すると，$\idxdot{v}{1}{r} \in \ker f$と，$f(v'_j) = w_j$であることから，
+  \[
+    \lncmb{\alpha}{w}{1}{s}{+} = 0
+  \]
+  がわかる．$\idxdot{w}{1}{s}$は$\im f$の基底なので，
+  $\idxdot{\alpha}{1}{s}$はすべて0であることがわかる．
+  従って，再び\eqref{eq:dim_thm_proof}を用いると，
+  \[
+     \lncmb{\beta}{v}{1}{r}{+} = 0
+  \]
+  であることがわかる．今度は$\idxdot{v}{1}{r}$が$\ker f$の基底であることから，
+  $\idxdot{\beta}{1}{r}$もすべて0になる．
+  以上で一次独立性が示された．
+
+  以上の議論から，$\idxdot{v}{1}{r},\idxdot{v'}{1}{s}$は$V$の基底をなすので，
+  $r+s=\dim V$である．
+  $r = \dim \ker f$，$s = \rk f$なので，結論を得る．
+\end{proof}
+次元定理を利用して次元を求める方法を以下の例で示す．
+\begin{example}
+  $n \ge 2$として，$K_n[x]$の部分空間
+  \[
+    V = \left\{ p(x) \in K_n[x] \,;\, p(0)=p(1)=0 \right\}
+  \]
+  を考える．
+  $V$の次元を計算することを考える．
+
+  今，線形写像$f \colon K_n[x] \to K^2$を，
+  \[
+    f(p(x)) = \pmt{p(0) \\ p(1)}
+  \]
+  で定義する．
+  すると，$V = \ker f$であることは容易にわかる．
+  次元定理(\cref{thm:dim_thm})によれば，$\dim \ker f + \rk f = \dim K_n[x] = n+1$なので，
+  $\rk f$を求めれば十分である．
+  
+  ここで，$f$は全射である．
+  実際，任意の$\pmt{a_1 \\ a_2} \in K^2$に対して，$x(x-1)+(a_2-a_1)x+a_1 \in K_n[x]$であり，
+  \[
+    f(x(x-1)+(a_2-a_1)x+a_1) = \pmt{a_1 \\ a_2}
+  \]
+  となるからである．
+  よって，$\im f = K^2$であり，$\rk f = 2$となる．
+  よって，次元定理より，$\dim V = (n+1)-2 = n - 1$がわかる．
+\end{example}
+\subsection{直和}
+$V$を$K$-ベクトル空間とし，$W_1,W_2 \subset V$を部分空間とすると，
+和$W_1 + W_2$という部分空間ができることはすでに\cref{prop:sum_and_intersection}で扱った通りである．
+
+和については，次の命題が成立する．
+\begin{prop}\label{prop:gen_sum}
+  2つのベクトルの集合$X_1,X_2 \subset V$があり，
+  $W_1 = \gen{X_1}$，$W_2 = \gen{X_2}$であるとする．
+  このとき，$W_1 + W_2 = \gen{X_1 \cup X_2}$である．
+\end{prop}
+\begin{proof}
+  $v \in W_1 + W_2$とすると，
+  ある$w_1 \in W_1$と$w_2 \in W_2$で，
+  $v=w_1+w_2$となるものが存在する．
+  $w_1$は$X_1$の元の線形結合で書け，$w_2$は$X_2$の元の線形結合で書けるので，
+  $w_1 + w_2$は$X_1 \cup X_2$の線形結合で書ける．
+  つまり，$v \in \gen{X_1 \cup X_2}$である．
+
+  一方，$v \in \gen{X_1 \cup X_2}$であるとする．
+  すると，ある$\idxdot{w}{1}{r_1}\in X_1$と$\idxdot{w'}{1}{r_2} \in X_2$，
+  そしてスカラー$\idxdot{\alpha}{1}{r_1},\idxdot{\alpha'}{1}{r_2} \in K$で，
+  \[
+    v = \lncmb{\alpha}{w}{1}{r_1}{+} + \lncmb{\alpha'}{w'}{1}{r_2}{+}
+  \]
+  となるものが存在する．
+  ここで，$\lncmb{\alpha}{w}{1}{r_1}{+} \in \gen{X_1}$であり，
+  $\lncmb{\alpha'}{w'}{1}{r_2}{+} \in \gen{X_2}$であるので，
+  $v \in \gen{X_1} + \gen{X_2}$である．
+  以上で結論を得る．
+\end{proof}
+この命題から，特に$W_1$と$W_2$の基底を$B_1$，$B_2$とすれば，
+$W_1 + W_2 = \gen{B_1 \cup B_2}$であることはわかる．
+しかし，$B_1 \cup B_2$は一次独立であるとは限らないので，
+これは基底になっているとは限らない．
+逆に，$B_1 \cup B_2$が自動的に基底となってくれれば都合がいいので，そういう性質を定義する．
+\begin{dfn}
+  $V$を$K$-ベクトル空間とし，$W_1,W_2$をその部分空間とする．
+  $W_1 + W_2$が\textbf{直和} (direct sum)であるとは，
+  任意の$v \in W_1 + W_2$に対して，
+  $v = w_1 + w_2$となるような$w_1 \in W_1$と$w_2 \in W_2$の組がただ一つしかないことを言う．
+  このとき，$W_1 + W_2$を$W_1 \oplus W_2$と表現する．
+  \footnote{$W_1 + W_2$が直和であれば，
+  $W_1 + W_2$という書き方と$W_1 \oplus W_2$という書き方は同じものを指す．
+  ただ後者は直和であるということを強調しているだけである．}
+\end{dfn}
+以下の補題は直和であることを証明する際に便利である．
+\begin{lemma} \label{lemma:dsum_zero}
+  $W_1,W_2$を$V$の部分空間であるとする．このとき，以下は同値である．
+  \begin{enumerate}
+    \item $W_1 + W_2$は直和である．
+    \item $w_1 \in W_1$と$w_2 \in W_2$が$w_1 + w_2 = 0$を満たすならば，
+      $w_1 = w_2 = 0$である．
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  $(1)\Rightarrow (2)$: $0 \in W_1 + W_2$なので，
+  $0=w_1 + w_2$となるような$w_1 \in W_1$と$w_2 \in W_2$の組は唯一つである．
+  明らかに，$0 \in W_1$，$0 \in W_2$であり，$0 = 0 + 0$なので，$w_1 = w_2 = 0$である．
+
+  $(2)\Rightarrow (1)$: $v \in W_1 + W_2$に対して，
+  \[
+    v = w_1 + w_2 = w'_1 + w'_2
+  \]
+  となる$w_1,w'_1 \in W_1$と$w_2,w'_2 \in W_2$をとる．
+  このとき，$(w_1 - w'_1) + (w_2 - w'_2) = 0$であり，
+  $w_1 - w'_1 \in W_1$，$w_2 - w'_2 \in W_2$であるので，
+  (2)から$w_1 - w'_1 = 0$かつ$w_2 - w'_2 = 0$がわかる．
+  よって，$w_1 = w'_1$，$w_2 = w'_2$となり，結論を得る．
+\end{proof}
+先程も言ったとおり，$W_1 + W_2$が直和である場合には，
+$W_1$の基底と$W_2$の基底の和集合が$W_1 \oplus W_2$の基底になるという著しい事実がある．
+\begin{prop}
+  $W_1,W_2$を$V$の部分空間であるとする．このとき，以下は同値である．
+  \begin{enumerate}
+    \item $W_1 + W_2$は直和である．
+    \item 任意に$W_1$と$W_2$の基底$B_1$と$B_2$を選ぶと，$B_1$と$B_2$は共通部分を持たず，
+        さらに$B_1 \cup B_2$は$W_1 + W_2$の基底をなす．
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(1) \Rightarrow (2)$: $B_1$を$W_1$の，$B_2$を$W_2$の基底とする．
+  まず$B_1 \cap B_2 = \emptyset$を示す．
+  実際$v \in B_1 \cap B_2$とすると，当然$v \in W_1 + W_2$でもあり，$v \in W_1 \cap W_2$でもある．
+  よって，$v$の$W_1$と$W_2$の元による分解の仕方として，
+  $v = 0 + v = v + 0$の2通りが考えられるが，これは$W_1 + W_2$が直和であることに反する．
+
+  次に$B_1 \cup B_2$が$W_1 \oplus W_2$の基底であることを示す．
+  実際，$B_1 \cup B_2$が$W_1 \oplus W_2$を生成することは~\cref{prop:gen_sum}で示した通りだから，
+  $B_1 \cup B_2$が一次独立であることを示せば十分である．
+  そこで，$v_1,\dots,v_{r_1} \in B_1$と$v'_1,\dots,v'_{r_2} \in B_2$，
+  そしてスカラー$\alpha_1,\dots,\alpha_{r_1}, \alpha'_1, \dots, \alpha'_{r_2} \in K$で，
+  \[
+    \alpha_1 v_1 + \dots + \alpha_{r_1} v_{r_1} + \alpha'_1 v'_1 + \dots + \alpha'_{r_2} v'_{r_2} = 0
+  \]
+  となるものを取る．
+  このとき，$\alpha_1 v_1 + \dots + \alpha_{r_1} v_{r_1} \in W_1$，
+  $\alpha'_1 v'_1 + \dots + \alpha'_{r_2} v'_{r_2} \in W_2$であるから，(1)の仮定と\cref{lemma:dsum_zero}より，
+  \[
+    \alpha_1 v_1 + \dots + \alpha_{r_1} v_{r_1} = \alpha'_1 v'_1 + \dots + \alpha'_{r_2} v'_{r_2} = 0 
+  \]
+  とならなければならない．
+  $B_1$と$B_2$はそれぞれ一次独立なので，
+  結局$\alpha_1 = \dots = \alpha_{r_1} = \alpha'_1 = \dots = \alpha'_{r_2} = 0$である．
+  以上で結論を得る．
+
+  $(2) \Rightarrow (1)$: $W_1$の基底$B_1$と$W_2$の基底$B_2$を任意に取る．
+  すると，(2)より，$B_1 \cup B_2$は$W_1 + W_2$の基底であり，さらに$B_1$と$B_2$は共通部分を持たない．
+  今，$w_1 + w_2 = 0$となる$w_1 \in W_1$と$w_2 \in W_2$を取る．
+  そして，$v_1,\dots,v_{r_1} \in B_1$と$v'_1,\dots ,v'_{r_2} \in B_2$，
+  スカラー$\alpha_1,\dots,\alpha_{r_1}, \alpha'_1, \dots, \alpha'_{r_2} \in K$で，
+  \[
+    w_1 = \alpha_1 v_1 + \dots + \alpha_{r_1} v_{r_1},\ 
+    w_2 = \alpha'_1 v'_1 + \dots + \alpha'_{r_2} v'_{r_2}
+  \]
+  と表現する．
+  すると，
+  \[
+    \alpha_1 v_1 + \dots + \alpha_{r_1} v_{r_1} + \alpha'_1 v'_1 + \dots + \alpha'_{r_2} v'_{r_2} = 0
+  \]
+  であり，これは$B_1 \cup B_2$の線形結合であるから，
+  $\alpha_1 = \dots = \alpha_{r_1} = \alpha'_1 = \dots = \alpha'_{r_2} = 0$である．
+  よって，$w_1 = w_2 = 0$であり，\cref{lemma:dsum_zero}を用いれば結論を得る．
+\end{proof}
+上の命題からただちに次のことがわかる．
+\begin{prop}\label{prop:direct_sum_dim}
+  $W_1 + W_2$が直和であれば，$\dim (W_1 \oplus W_2)=\dim W_1 + \dim W_2$である．
+\end{prop}
+では，$W_1 + W_2$が直和とは限らない場合，その次元はどうなるであろうか．
+$W_1$の基底を$B_1$，$W_2$の基底を$B_2$とすると，
+\cref{prop:gen_sum}より，$B_1 \cup B_2$は$W_1 + W_2$を生成することは言える．
+しかし今度は直和ではないので，$B_1 \cup B_2$そのものが基底であるとは限らない．
+$B_1 \cup B_2$の中には，基底を構成するためには不要なベクトルがある可能性があるので，
+一般に$\dim (W_1 + W_2) \le \dim W_1 + \dim W_2$である．
+この差を評価するための定理が以下の定理である．
+\begin{thm}\label{thm:second_dim_thm}
+  $W_1,W_2$を$V$の部分空間であるとする．このとき，
+  \begin{equation}
+    \dim (W_1 + W_2) = \dim W_1 + \dim W_2 - \dim (W_1 \cap W_2)
+  \end{equation}
+  が成り立つ．
+\end{thm}
+この定理を証明するために，以下の補題をまず証明する．
+この補題自体も，\textbf{基底の延長}と呼ばれる重要な性質である．
+\begin{lemma}
+  $W \subset V$を部分空間とする．
+  $W$の基底$B$に対して，$B$を含む$V$の基底$B'$が存在する．
+\end{lemma}
+\begin{proof}
+  $\dim V = n$，$\dim W = \abs{B} = r$とする．$r$についての逆向き帰納法で証明する．
+
+  まず$r=n$とすると，$B$自身が$V$の基底でもあるので自明である．
+  次に，一般の$r$で補題が成立しているとする．$\dim W = r - 1$として，$B$を$W$の基底とする．
+  $r-1 < n$なので，$B$の線形結合で書けない$V$の元$v$が存在する．
+  このとき，$B \cup \{v\}$は一次独立であり，
+  $W' = \gen{B \cup \{v\}}$は$r$次元の部分空間である．
+  帰納法の仮定より，$W'$の基底$B \cup \{v\}$を含むような$V$の基底$B'$を作ることができる．
+  これは当然$B$も含むので，$\dim W = r-1$の場合も補題は成立する．
+  以上で結論を得る．
+\end{proof}
+では\cref{thm:second_dim_thm}を証明しよう．
+
+\begin{proof}[\cref{thm:second_dim_thm}]
+  $W_1 \cap W_2$の基底$B$を取る．
+  $W_1 \cap W_2$は$W_1$の部分空間でもあり，$W_2$の部分空間でもあるから，
+  $B$を含むような$W_1$の基底$B_1$と，$B$を含むような$W_2$の基底$B_2$を取ることができる．
+  すると，$B_1 \cup B_2$が$W_1 + W_2$を生成することが\cref{prop:gen_sum}からわかる．
+  そこで，$B_1 \cup B_2$が一次独立であることを示せば，$B_1 \cup B_2$が$W_1 + W_2$の基底であることが示される．
+  すると，包除定理より，
+  \[
+    \abs{B_1 \cup B_2} = \abs{B_1} + \abs{B_2} - \abs{B_1 \cap B_2}
+  \]
+  であり，$B_1 \cap B_2 = B$であることと，
+  $\abs{B_1} = \dim W_1$，$\abs{B_2} = \dim W_2$，$\abs{B_1 \cup B_2} = \dim (W_1 + W_2)$, $\abs{B} = \dim (W_1 \cap W_2)$であることから，結論が得られる．
+
+  $B_1 \cup B_2$が一次独立であることを示そう．
+  $B$の元を$\idxdot{w}{1}{m}$とし，
+  $B$を延長して$W_1$の基底を作るときに追加された元を$\idxdot{v}{m+1}{n_1}$，
+  $W_2$の基底を作るときに追加された元を$\idxdot{v'}{m+1}{n_2}$とする．
+  つまり，
+  \[
+    \begin{aligned}
+      B_1 &= \left\{ \idxdot{w}{1}{m}, \idxdot{v}{m+1}{n_1} \right\}, \\
+      B_2 &= \left\{ \idxdot{w}{1}{m}, \idxdot{v'}{m+1}{n_2} \right\}
+    \end{aligned}
+  \]
+  であり，
+  \[
+    B_1 \cup B_2 = \left\{ \idxdot{w}{1}{m}, \idxdot{v}{m+1}{n_1}, \idxdot{v'}{m+1}{n_2} \right\}
+  \]
+  である．
+  そこで，
+  \begin{equation}\label{eq:second_dim}
+    \lncmb{\alpha}{w}{1}{m}{+} + \lncmb{\beta}{v}{m+1}{n_1}{+} + \lncmb{\beta'}{v'}{m+1}{n_2}{+} = 0
+  \end{equation}
+  となるスカラー$\alpha_j,\beta_k,\beta'_\ell$を取る．
+  このとき，
+  \[
+    \lncmb{\alpha}{w}{1}{m}{+} + \lncmb{\beta}{v}{m+1}{n_1}{+} =  - (\lncmb{\beta'}{v'}{m+1}{n_2}{+})
+  \]
+  であり，
+  この式の左辺は$B_1$の元，右辺は$B_2$の元である．
+  従って，右辺は$B_1 \cap B_2$の元であるので，
+  \[
+    -(\lncmb{\beta'}{v'}{m+1}{n_2}{+}) = \lncmb{\gamma}{w}{1}{m}{+}
+  \]
+  と書ける．
+  再び移項して，
+  \[
+    \lncmb{\beta'}{v'}{m+1}{n_2}{+} + \lncmb{\gamma}{w}{1}{m}{+} = 0
+  \]
+  と書けば，これは$W_2$の基底$B_2$の元の線形結合であるので，
+  $\idxsum{\beta'}{m+1}{n_2}{=} = \idxsum{\gamma}{1}{m}{=} = 0$である．
+  これを\eqref{eq:second_dim}に代入すれば，
+  \[
+    \lncmb{\alpha}{w}{1}{m}{+} + \lncmb{\beta}{v}{m+1}{n_1}{+} = 0
+  \]
+  となり，これは$W_1$の基底$B_1$の元の線形結合である．
+  従って，$\idxsum{\alpha}{1}{m}{=} = \idxsum{\beta}{m+1}{n_1}{=} = 0$となるから，
+  結論を得る．
+\end{proof}
+\cref{thm:second_dim_thm}から，次のことがわかる．
+\begin{prop}\label{prop:two_direct_sum}
+  $W_1,W_2$を$V$の部分空間とする。
+  このとき、以は同値である。
+  \begin{enumerate}
+    \item $W_1 + W_2$は直和である。
+    \item $W_1 \cap W_2 = \{0\}$である。
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+$(1) \Rightarrow (2)$:
+$W_1 + W_2$は直和なので，$\dim (W_1 + W_2) = \dim W_1 + \dim W_2$である．
+\cref{thm:second_dim_thm}を用いると，$\dim (W_1 \cap W_2) = 0$がわかるので，(2)が得られる．
+
+$(2) \Rightarrow (1)$:
+(2)の仮定と\cref{thm:second_dim_thm}より，$\dim (W_1 + W_2) = \dim W_1 + \dim W_2$であるので，$W_1 + W_2$は直和である．
+\end{proof}
+さて，3つ以上の部分空間に関しても，直和という概念は同様に定義される．
+最後にこのことに触れておくことにしよう．
+\begin{dfn}
+  $V$を$K$-ベクトル空間とし，$\idxdot{W}{1}{m}$をその部分空間とする．
+  $\idxsum{W}{1}{m}{+}$が\textbf{直和} (direct sum)であるとは，
+  任意の$v \in \idxsum{W}{1}{m}{+}$に対して，
+  $v = \idxsum{w}{1}{m}{+}$となるような$w_j \in W_j\,(j=1,\dots,m)$の組がただ一つしかないことを言う．
+  このとき，$\idxsum{W}{1}{m}{+}$を$\idxsum{W}{1}{m}{\oplus}$と表現する．
+\end{dfn}
+3つ以上の部分空間の和が直和であるための必要十分条件は，2つのときと比べるといささか複雑になってしまう．
+\begin{prop}
+  $V$を$K$-ベクトル空間とし，$\idxdot{W}{1}{m}$をその部分空間とする．
+  このとき，以下は同値である．
+  \begin{enumerate}
+    \item $\idxsum{W}{1}{m}{+}$は直和である．
+    \item $\idxsum{w}{1}{m}{+}=0$となるような$w_j \in W_j\,(j=1,\dots,m)$が存在すれば，$\idxsum{w}{1}{m}{=}=0$である．
+    \item 任意の$j = 1,\dots,m$に対して，
+    \[
+      W_j \cap (\idxsum{W}{1}{j-1}{+} + \idxsum{W}{j+1}{m}{+}) = \{ 0 \}  
+    \]
+    となる．
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  $(1) \Leftrightarrow (2)$は\cref{lemma:dsum_zero}の証明とほぼ同じであるので省略する．
+  
+  $(1) \Rightarrow (3)$: ある$j$で，
+  \[
+      W_j \cap (\idxsum{W}{1}{j-1}{+} + \idxsum{W}{j+1}{m}{+}) \neq \{ 0 \}  
+  \]
+  となるものが存在したと仮定する．
+  このとき，$0 \neq v \in W_j \cap (\idxsum{W}{1}{j-1}{+} + \idxsum{W}{j+1}{m}{+})$を一つ取ることができる．
+  この$v$は$W_j$の元であり，なおかつ$\idxsum{W}{1}{j-1}{+} + \idxsum{W}{j+1}{m}{+}$の元であるから，$W_1,\dots,W_m$の元の和で書く方法は２通りあることになり，(1)に反する．よって結論を得る．
+
+  $(3) \Rightarrow (2)$:
+  $\idxsum{w}{1}{m}{+}=0$となるような$w_j \in W_j\,(j=1,\dots,m)$で，
+  $w_j$のうちどれか一つは0にならないものが存在したと仮定する．
+  そのような$w_j$に対し，$w_j = -\idxsum{w}{1}{j-1}{-} - \idxsum{w}{j+1}{m}{-}$なので，
+  $w_j \in W_j \cap (\idxsum{W}{1}{j-1}{+} + \idxsum{W}{j+1}{m}{+})$であることがわかる．
+  これは(3)に反するから，結論を得る．
+\end{proof}
+この命題について勘違いしやすいことを注意しておこう．部分空間が2つの場合，
+$W_1 + W_2$が直和であるための必要十分条件は，$W_1 \cap W_2 = \emptyset$となることであった．
+なので，そこからの類推で，$\idxsum{W}{1}{m}{+}$が直和になるための必要十分条件は，
+「任意の$j,k$に対して$W_j \cap W_k = \emptyset$となることである」と言いたくなってしまうが，これは間違いである．
+\begin{example}
+  $K^2$の3つの部分空間を，
+  \[
+        W_1 = \gen{\pmt{1 \\ 0}}，
+        W_2 = \gen{\pmt{0 \\ 1}}，
+        W_3 = \gen{\pmt{1 \\ 1}}
+  \]
+  で定める．
+  すると，
+  $W_1 \cap W_2 = W_2 \cap W_3 = W_3 \cap W_1 = \emptyset$となることはすぐにわかるが，
+  $W_1 + W_2 + W_3$は直和にはならない．
+  実際，
+  \[
+    \pmt{1 \\ 0} + \pmt{0 \\ 1} + (-1) \pmt{1 \\ 1} = 0
+  \]
+  であり，この式の左辺は$W_1, W_2, W_3$の元の和になっているからである．
+\end{example}

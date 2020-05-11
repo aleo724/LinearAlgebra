@@ -1,0 +1,542 @@
+\section{線形写像}
+2つのベクトル空間が与えられたとき，その間の写像であって，ベクトル空間の性質を保つようなものを考える．
+\begin{dfn}
+    $V,W$を$K$-ベクトル空間とする．
+    写像$f\colon V \to W$が\textbf{線形写像}であるとは，
+    次の2つの条件を満たすことである．
+    \begin{enumerate}
+        \item 任意の$v_1,v_2 \in V$に対して，
+        $f(v_1 + v_2) = f(v_1) + f(v_2)$である．
+        \item 任意の$v \in V$と$\alpha \in K$に対して，
+        $f(\alpha v) = \alpha f(v)$である．
+    \end{enumerate}
+\end{dfn}
+部分空間の場合と同じく，上の2条件は一つの条件に直すことが可能である．
+\begin{prop}\label{prop:linear_one_condition}
+    $V,W$を$K$-ベクトル空間とする．
+    写像$f\colon V \to W$について，
+    以下の2つの条件は同値である．
+    \begin{enumerate}
+        \item $f$は線形写像である．
+        \item 任意の$v_1,v_2 \in V$と，
+        スカラー$\alpha_1,\alpha_2 \in K$に対して，
+        \[
+            f(\alpha_1 v_1 + \alpha_2 v_2) %
+            = \alpha_1 f(v_1) + \alpha_2 f(v_2)
+        \]
+        である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    $(1) \Rightarrow (2)$: 線形写像の定義を使うと，
+    \[
+        \begin{aligned}
+            f(\alpha_1 v_1 + \alpha_2 v_2) %
+            &= f(\alpha_1 v_1) + f(\alpha_2 v_2) \\
+            &= \alpha_1 f(v_1) + \alpha_2 f(v_2)
+        \end{aligned}
+    \]
+    となるので(2)が導ける．
+    
+    $(2) \Rightarrow (1)$: (2)の式で$\alpha_1 = \alpha_2 = 1$とすると，
+    \[
+        f(v_1 + v_2) = f(v_1) + f(v_2)
+    \]
+    を得る．
+    一方，$\alpha_2 = 0$とおけば，
+    \[
+        f(\alpha_1 v_1) = \alpha_1 f(v_1)
+    \]
+    を得る．
+\end{proof}
+\begin{example}\label{eg:Euclid}
+    $K^3$から$K^2$への写像$f$を，
+    \[
+        f\pmt{x_1 \\ x_2 \\ x_3} = \pmt{x_1 - 2x_2 \\ x_1 - x_3}
+    \]
+    で定めると，これは線形写像になる．
+    実際，\cref{prop:linear_one_condition}を確認してみればよく，任意の$v:=\pmt{x_1 \\ x_2 \\ x_3} \in K$，$w:=\pmt{y_1 \\ y_2 \\ y_3} \in K^3$と$\alpha,\beta \in K$に対して，
+    \[
+        \begin{aligned}
+            f(\alpha v + \beta w) %
+            &= f \pmt{\alpha x_1 + \beta y_1 \\ \alpha x_2 + \beta y_2 \\ \alpha x_3 + \beta y_3} \\
+            &= \pmt{(\alpha x_1 + \beta y_1)-2(\alpha x_2 + \beta y_2) \\ (\alpha x_1 + \beta y_1) - (\alpha x_3 + \beta y_3)} \\
+            &= \pmt{\alpha (x_1 - 2x_2) + \beta (y_1 - 2y_2) \\ \alpha (x_1 - x_3) + \beta (y_1 - y_3)} \\
+            &= \alpha \pmt{x_1 - 2x_2 \\ x_1 - x_3} + \beta \pmt{y_1 - 2y_2 \\ y_1 - y_3} \\
+            &= \alpha f(v) + \beta f(w)
+        \end{aligned}
+    \]
+    となるので，$f$の線形性がわかる．
+\end{example}
+今の\cref{eg:Euclid}の写像$f$は，行列を使って次のように表すことも可能である:
+\begin{equation}\label{eq:example_matrix}
+    f\pmt{x_1 \\ x_2 \\ x_3} = \pmt{1 & -2 & 0 \\ 1 & 0 & -1} \pmt{x_1 \\ x_2 \\ x_3}.
+\end{equation}
+実は，一般に，$K^n$から$K^m$への線形写像は，すべて行列の掛け算として表されることが以下の定理からわかる．
+\begin{thm}\label{thm:Euclid_linear_map}
+    ユークリッド空間$K^n$から$K^m$への写像$f$について，
+    以下は同値である．
+    \begin{enumerate}
+        \item $f$は線形写像である．
+        \item ある$m \times n$行列$A \in M_{m,n}(K)$で，
+        任意の$v \in K^n$に対して，
+        $f(v) = Av$となるものが存在する．
+        この$A$を$f$の\textbf{表現行列}という．
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    $(1) \Rightarrow (2)$:
+    $e_1,\dots,e_n$を$K^n$の標準基底として，
+    \[
+        f(e_j) = \pmt{a_{1j} \\ \vdots \\ a_{mj}} 
+    \]
+    とおき，
+    \[
+        A = \pmt{ a_{11} & \dots & a_{1n} \\ \vdots & & \vdots \\ a_{m1} & \dots & a_{mn} }
+    \]
+    で行列$A$を定義する．
+    このとき，$f(v) = Av$となることを示す．
+    $v \in K^n$を成分表示して，
+    $v = \pmt{x_1 \\ \vdots \\ x_n}$と書く．
+    すると，
+    \[
+        v = x_1 e_1 + \dots + x_n e_n
+    \]
+    であるので，$f$が線形写像であることから，
+    \[
+        \begin{aligned}
+            f(v) &= f(x_1 e_1 + \dots + x_n e_n) \\
+            &= x_1 f(e_1) + \dots + x_n f(e_n) \\
+            &= x_1  \pmt{a_{11} \\ \vdots \\ a_{m1}} + \dots + x_n  \pmt{a_{1n} \\ \vdots \\ a_{mn}}  \\
+            &= \pmt{a_{11}x_1 + \dots + a_{1n}x_n \\ \vdots \\ a_{m1}x_1 + \dots + a_{mn}x_n }
+        \end{aligned}
+    \]
+    となるが，この最後の式は$Av$のことである．
+    以上で結論を得る．
+    
+    $(2) \Rightarrow (1)$: 
+    \cref{prop:linear_one_condition}を確認すればよい．
+    $v_1,v_2 \in K^n$と$\alpha_1,\alpha_2 \in K$に対して，
+    \[
+        \begin{aligned}
+            f(\alpha_1 v_1 + \alpha_2 v_2) &= A(\alpha_1 v_1 + \alpha_2 v_2) \\
+            &= \alpha_1 A v_1 + \alpha_2 A v_2 \\
+            &= \alpha_1 f(v_1) + \alpha_2 f(v_2)
+        \end{aligned}
+    \]
+    となるので，結論を得る．
+\end{proof}
+\begin{remark}
+    この証明の$(2) \Rightarrow (1)$で標準基底を考える理由を，\cref{eg:Euclid}に沿って説明しておく．\cref{eg:Euclid}の$f$を標準基底に適用すると，
+    \[
+        \begin{aligned}
+            f\pmt{1 \\ 0 \\ 0} &= \pmt{1 \\ 1}, \\
+            f\pmt{0 \\ 1 \\ 0} &= \pmt{-2 \\ 0}, \\
+            f\pmt{0 \\ 0 \\ 1} &= \pmt{0 \\ -1}
+        \end{aligned}
+    \]
+    となり，これは\eqref{eq:example_matrix}の右辺に出てくる行列の第1列〜第3列に対応している．
+    このように，$f\colon K^n \to K^m$から\cref{thm:Euclid_linear_map}に現れる行列$A$を作るためには，「標準基底に$f$を適用した結果のベクトルを横に並べる」という操作をすればよい．
+\end{remark}
+以下の定理はほぼ明らかであるが，表現行列を使うことで，行列の積を線形写像の言葉で特徴づけることができることは重要である．
+\begin{prop}
+    $f \colon K^n \to K^\ell$，$g \colon K^\ell \to K^m$を線形写像とし，
+    $A \in M_{\ell,n}(K)$と$B \in M_{m,n}(K)$をそれぞれ$f,g$の表現行列とする．
+    このとき，$g \circ f\colon K^n \to K^m$の表現行列は$BA$である．
+\end{prop}
+\begin{proof}
+    $v \in K^\ell$に対して，
+    $(g \circ f)(v) = g(f(v)) = g(Av) = BAv$なので明らかである．
+\end{proof}
+線形写像に関する基本的な性質をまとめておく．
+\begin{prop}\label{prop:linear_map_properties}
+    $V,V_1,V_2,V_3,W$を$K$-ベクトル空間とする．
+    \begin{enumerate}
+        \item $f\colon V \to W$が線形写像ならば，
+        $f(0) = 0$である．
+        \item 恒等写像$\iden_V \colon V \to V$は線形写像である．
+        \item $f\colon V_1 \to V_2$と$g \colon V_2 \to V_3$が線形写像ならば，
+        合成$g \circ f \colon V_1 \to V_3$も線形写像である．
+        \item $f \colon V \to W$が単射であるための必要十分条件は，
+        $f(v)=0$ならば$v = 0$となることである．
+        \item $f \colon V \to W$が全単射ならば，
+        その逆写像$f^{-1}\colon W \to V$も線形写像である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $v \in V$を任意に1つ取る．
+        このとき，$v + (-v) = 0$なので，
+        \[
+            f(v + (-v)) = f(0)
+        \]
+        である．
+        左辺は$f$の線形性を用いて，
+        \[
+            f(v + (-v)) = f(v) - f(v) = 0
+        \]
+        となるので，$f(0) = 0$が示せる．
+        \item $v_1,v_2 \in V$と$\alpha_1,\alpha_2 \in V$に対し，
+        \[
+            \iden_V(\alpha_1 v_1 + \alpha_2 v_2)
+            = \alpha_1 v_1 + \alpha_2 v_2
+            = \alpha_1 \iden_V(v_1) + \alpha_2 \iden_V(v_2)
+        \]
+        となるので結論を得る．
+        \item $f,g$はともに線形なので，
+        $v_1,v_2 \in V$と$\alpha_1,\alpha_2 \in V$に対し，
+        \[
+            \begin{aligned}
+                (g \circ f)(\alpha_1 v_1 + \alpha_2 v_2) %
+                &= g(f(\alpha_1 v_1 + \alpha_2 v_2)) \\
+                &= g(\alpha_1 f(v_1) + \alpha_2 f(v_2)) \\
+                &= \alpha_1 g(f(v_1)) + \alpha_2 g(f(v_2)) \\
+                &= \alpha_1 (g\circ f)(v_1) + \alpha_2 (g \circ f)(v_2)
+            \end{aligned}
+        \]
+        となるので，結論を得る．
+        \item (必要性) (1)と単射の定義から明らかである．
+        
+        (十分性) $f(v)=0$を満たす$v$は$v=0$しかないと仮定する．
+        $v_1,v_2 \in V$を$f(v_1)=f(v_2)$となるように取る．
+        このとき，$f$の線形性から，
+        \[
+            f(v_1 - v_2) = f(v_1) - f(v_2) = 0
+        \]
+        となる．
+        よって，$v_1 - v_2 = 0$，つまり，
+        $v_1 = v_2$となるので，$f$は単射である．
+        \item $w_1,w_2 \in W$と，$\beta_1,\beta_2 \in K$を任意に取って，
+        $f^{-1}(w_1) = v_1$，$f^{-1}(w_2) = v_2$とおく．
+        このとき逆写像の定義から，$f(v_1) = w_1$，$f(v_2)=w_2$である．
+        
+        今，$v' = f^{-1}(\beta_1 w_1 + \beta_2 w_2)$とおくと，
+        $f(v') = \beta_1 w_1 + \beta_2 w_2$である．
+        
+        一方で，
+        \[
+            \begin{aligned}
+                f(\beta_1 v_1 + \beta_2 v_2) %
+                &= \beta_1 f(v_1) + \beta_2 f(v_2) \\
+                &= \beta_1 w_1 + \beta_2 w_2
+            \end{aligned}
+        \]
+        なので，
+        $f(v') = f(\beta_1 v_1 + \beta_2 v_2)$が成立する．
+        $f$は全単射なので，$v' = \beta_1 v_1 + \beta_2 v_2$であり，これは，
+        \[
+            f^{-1}(\beta_1 w_1 + \beta_2 w_2)
+            = \beta_1 f^{-1}(w_1) + \beta_2 f^{-1}(w_2)
+        \]
+        ということなので，結論を得る．
+    \end{enumerate}
+\end{proof}
+\cref{prop:linear_map_properties}の(4)と(5)について，もう少し簡潔に述べるための用語をいくつか準備しよう．
+\begin{dfn}
+    $V,W$を$K$-ベクトル空間，$f \colon V \to W$を線形写像とする．
+    \begin{enumerate}
+        \item $f$を適用すると$0$に行くような$V$の元全体のなす$V$の部分集合を，$f$の\textbf{核}(kernel)といい，
+        $\ker f$と書く．
+        これはつまり，
+        \[
+            \ker f = \{ v \in V \,;\, f(v) = 0\}
+        \]
+        ということである．
+        \item $f(v)$という形の元全体のなす$W$の部分集合を，$f$の\textbf{像}(image)といい，$\im f$と書く．つまり，
+        \[
+            \im f = \{f(v) \in W \,;\, v \in V\}
+        \]
+        ということである．
+        \item $f$が全単射であるとき，$f$を\textbf{同型写像}(isomorphism)といい，$V$と$W$は\textbf{同型}(isomorphic)であるという．
+        $V$と$W$が同型であることを，$V \cong W$と書く．
+    \end{enumerate}
+\end{dfn}
+以上の用語を定義すれば，線形写像における全射や単射といった概念は次のように簡潔に述べることができる．
+\begin{prop}
+    $V,W$を$K$-ベクトル空間，
+    $f \colon V \to W$を線形写像とする．
+    \begin{enumerate}
+        \item $\ker f$は$V$の部分空間である．
+        \item $\im f$は$W$の部分空間である．
+        \item $f$が単射であることと，$\ker f = \{0\}$であることは同値である．
+        \item $f$が全射であることと，$\im f = W$であることは同値である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $v_1,v_2 \in \ker f$と$\alpha_1,\alpha_2 \in K$を任意に取る．
+        このとき，\cref{prop:subspace_one_condition}より，$\alpha_1 v_1 + \alpha_2 v_2 \in \ker f$であることを示せばよいことがわかる．
+        $v_1,v_2 \in \ker f$なので，$f(v_1) = f(v_2) = 0$である．従って，
+        \[
+            f(\alpha_1 v_1 + \alpha_2 v_2) = \alpha_1 f(v_1) + \alpha_2 f(v_2) = 0
+        \]
+        となるので，
+        $\alpha_1 v_1 + \alpha_2 v_2 \in \ker f$である．
+        \item $w_1,w_2\in \im f$と$\beta_1,\beta_2 \in K$を任意に取る．
+        $\beta_1 w_1 + \beta_2 w_2 \in \im f$を示せばよい．
+        $w_1,w_2\in \im f$なので，ある$v_1,v_2 \in V$で，
+        \[
+            f(v_1) = w_1,\quad f(v_2) = w_2
+        \]
+        となるものが存在する．
+        すると，
+        \[
+            \beta_1 w_1 + \beta_2 w_2%
+            = \beta_1 f(v_1) + \beta_2 f(v_2) %
+            = f(\beta_1 v_1 + \beta_2 v_2)
+        \]
+        となるので，$\beta_1 w_1 + \beta_2 w_2 \in \im f$が証明できた．
+        \item \cref{prop:linear_map_properties}(4)より明らかである．
+        \item 全射の定義から明らかである．
+    \end{enumerate}
+\end{proof}
+\cref{thm:Euclid_linear_map}の示すとおり，ユークリッド空間の間の線形写像は，表現行列とベクトルの積で表されるのであった．
+なので，その線形写像が全射であるか単射であるかという性質も，対応する表現行列の性質に帰着される．
+\begin{prop}\label{prop:Euclid_map_properties}
+    $f \colon K^n \to K^m$を線形写像とし，
+    $A \in M_{m,n}(K)$を$f$の表現行列とする．
+    \begin{enumerate}
+        \item $f$が単射であるための必要十分条件は，$\rk A = n$となることである．
+        \item $f$が全射であるための必要十分条件は，$\rk A = m$となることである．
+        \item $f$が全単射であるための必要十分条件は，$A$が正則になることである．
+        またこのとき，$f^{-1}$の表現行列は$A^{-1}$である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}
+        \item $f$が単射であるということは，$f(v)=0$となる$v$は$0$しかないということである．
+        これは，$Av = 0$となる$v$が$0$しかないということを意味している．
+        斉次連立方程式の解の存在定理より，これは$\rk A = n$と同値である．
+        \item $f$が全射であるということは，任意の$w \in K^m$に対して，$v \in K^n$で$f(v)=Av=w$を満たすものが存在するということである．
+        つまり，任意の$w \in K^m$に対して，$Av=w$という方程式が解を持つということと同値である．
+        このためには，任意の$w \in K^m$に対して，
+        拡大係数行列$\widetilde{A} = \pmt{A & w}$と係数行列$A$のランクが一致することが必要十分条件である．
+        これが成り立つためには，$\rk A = m$が必要十分であることを示す．
+        
+        $\rk A = m$ならば，どのような$w \in K^m$を付け加えて拡大係数行列を作っても，
+        そもそも行数が$m$で不変なので，
+        $\rk A$は$m$にしかなり得ない．
+        
+        一方，逆に$r :=\rk A < m$であったと仮定する．
+        すると，行基本変形を行うことで，
+        ある正則行列$P \in M_{m}(K)$で，
+        $PA$が階段行列になるものが存在することがわかる．
+        すると，$P\widetilde{A}$は，
+        \[
+            P\widetilde{A} = \pmt{PA & Pw}
+        \]
+        と書けることがわかる．
+        今，$PA$は階段行列で，$r < m$なので，
+        $PA$の$r+1$行目以降はすべて0である．
+        
+        そこで，$w$を標準基底の$r+1$番目である$e_{r+1}$を使って，$w = P^{-1}e_{r+1}$と選べば，
+        \[
+            P\widetilde{A} = \pmt{PA & PP^{-1}e_{r+1}} = \pmt{PA & e_{r+1}}
+        \]
+        となるが，この行列のランクは$r+1$となるため，$r = \rk A$と一致しない．
+        以上で結論を得る．
+        \item (1)と(2)より，全射かつ単射であることと，
+        $m = n$であり$\rk = m$であることが同値になるので，
+        $A$は正則である．
+        また，$f^{-1}$の表現行列を$B$とすると，
+        $f^{-1}\circ f = f \circ f^{-1} = \iden_{K^m}$なので，$AB=BA=E_m$となるから，
+        $B=A^{-1}$である．
+    \end{enumerate}
+\end{proof}
+\subsection{線形写像の表現行列}
+$V$を$K$-ベクトル空間として，
+$B$を$V$の有限部分集合とし，
+$B$の元を$v_1,\dots,v_n$と順序付けしておく．
+このとき，$K^n$から$V$への写像$\phi_V$を，
+\begin{equation}\label{eq:coord_map}
+    \varphi_{V,B}\pmt{x_1 \\ \vdots \\ x_n} = x_1 v_1 + \dots + x_n v_n
+\end{equation}
+と定義する．この写像は線形写像である．
+実際，
+$\pmt{x_1 \\ \vdots \\ x_n},\pmt{y_1 \\ \vdots \\ y_n} \in K^n$と$\alpha,\beta \in K$に対して，
+\[
+    \begin{aligned}
+        \varphi_{V,B} \left( \alpha \pmt{x_1 \\ \vdots \\ x_n} + \beta \pmt{y_1 \\ \vdots \\ y_n} \right) %
+        &= \varphi_V \pmt{\alpha x_1 + \beta y_1 \\ \vdots \\ \alpha x_n + \beta y_n} \\
+        &= (\alpha x_1 + \beta y_1) v_1 + \dots + (\alpha x_n + \beta y_n) v_n \\
+        &= \alpha (x_1 v_1 + \dots + x_n v_n) + \beta(y_1 v_1 + \dots + y_n v_n) \\
+        &= \alpha \varphi_V\pmt{x_1 \\ \vdots \\ x_n} + \beta \varphi_V\pmt{y_1 \\ \vdots \\ y_n} 
+    \end{aligned}
+\]
+となるからである．
+
+$B$の性質と$\varphi_{V,B}$の性質には以下のような対応があある．
+\begin{prop}\label{prop:coord_map}
+    \begin{enumerate}
+        \item $\varphi_{V,B}$が単射であることと，$B$が一次独立であることは同値である．
+        \item $\varphi_{V,B}$が全射であることと，$B$が$V$を生成することは同値である．
+        \item $\varphi_{V,B}$が同型であることと，$B$が$V$の基底であることは同値である．
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    (3)は(1)と(2)から直ちに言えるので，
+    (1)と(2)のみ示す．
+    \begin{enumerate}
+        \item \cref{prop:linear_map_properties}(4)より，
+        \[
+            \begin{aligned}
+                &\mbox{$\varphi_{V,B}$が単射である．} \\
+                &\Longleftrightarrow \mbox{$\varphi_{V,B} \pmt{x_1 \\ \vdots \\ x_n} = 0$ならば，$x_1 = \dots = x_n = 0$である．} \\
+                &\Longleftrightarrow \mbox{$x_1 v_1 + \dots + x_n v_n = 0$ならば$x_1 = \dots = x_n = 0$である．}
+            \end{aligned}
+        \]
+        この最後の主張は$B$の一次独立性の定義そのものだから，結論を得る．
+        \item 
+        $\varphi_{V,B}$が全射であることと，
+        任意の$v\in V$に対して，
+        ある$\pmt{x_1 \\ \vdots \\ x_n}$で，
+        $\varphi_{V,B} \pmt{x_1 \\ \vdots \\ x_n} = v$となるものが存在することは同値である．
+        この式は$x_1 v_1 + \dots + x_n v_n = v$と同値なので，これは任意の$v \in V$が$v_1,\dots,v_n$の線形結合で書けるということを意味しており，従って，$B$は$V$を生成するという定義そのものである．
+        以上で結論を得る．
+    \end{enumerate}
+\end{proof}
+そこでこの$\varphi_{V,B}$を使って，次のような定義をする．
+\begin{dfn}
+    $V$を$K$-ベクトル空間とする．
+    $V$の元を並べた有限列$\calB = (v_1,\dots,v_n)$が，$V$の\textbf{順序付き基底}であるとは，$\{v_1,\dots,v_n\}$が$V$の基底をなすことをいう．
+\end{dfn}
+\begin{dfn}\label{dfn:representative_matrix}
+    $V,V'$を$K$-ベクトル空間，$\calB,\calB'$をそれぞれ$V,V'$の順序付き基底であるとし，それぞれの元の個数を$n,n'$とする．
+    また，$\varphi_{V,\calB}$と$\varphi_{V',\calB'}$を先ほどの\eqref{eq:coord_map}で定めると，\cref{prop:coord_map}より，これらは同型になる．
+    
+    このとき，任意の線形写像$f \colon V \to V'$について，合成
+    \[
+        \psi := \varphi_{V',\calB'}^{-1} \circ f \circ \varphi_{V,\calB} \colon K^n \to K^{n'}
+    \]
+    は，ユークリッド空間の線形写像を与える．
+    そこで，\cref{thm:Euclid_linear_map}を用いて，$\psi$の表現行列$A$を考えることができるが，これを\textbf{$f$の$\calB$と$\calB'$に関する表現行列}という．
+\end{dfn}
+このように，基底を用いることで，線形写像は行列の形で表現することができる．
+ただ，この定義では，具体的に表現行列をどう求めればいいかは教えてくれない．
+そこで，具体的な計算方法を以下の命題で与えよう．
+\begin{prop}\label{prop:rep_matrix_calc}
+    $V,V'$を$K$-ベクトル空間，$\calB,\calB'$をそれぞれ$V,V'$の順序付き基底であるとし，
+    \[
+        \begin{aligned}
+            \calB &= (v_1,\dots,v_n) \\
+            \calB' &= (v'_1,\dots,v'_{n'})
+        \end{aligned}
+    \]
+    とする．
+    $f \colon V \to V'$を線形写像として，
+    $\calB$に属している各$v_j$について，
+    \[
+        f(v_j) = \alpha_{1j} v'_1 + \dots \alpha_{n'j} v'_{n'}
+    \]
+    と線形結合で表示できたと仮定する．
+    このとき，$f$の$\calB$と$\calB'$に関する表現行列は，
+    \[
+        \pmt{\alpha_{11} & \dots & \alpha_{1n} \\%
+        \vdots & \ddots & \vdots \\%
+        \alpha_{n'1} & \dots & \alpha_{n'n}}
+    \]
+    で与えられる．
+\end{prop}
+\begin{proof}
+    \cref{dfn:representative_matrix}に現れる写像$\psi \colon K^n \to K^{n'}$の表現行列を計算してみる．
+    任意の$\pmt{x_1 \\ \vdots \\ x_n} \in K^n$に対して，
+    \[
+        \begin{aligned}
+            (f \circ \varphi_{V,\calB})\pmt{x_1 \\ \vdots \\ x_n} %
+            &= f(x_1 v_1 + \dots + x_n v_n) \\
+            &= x_1 f(v_1) + \dots + x_n f(v_n) \\
+            &= \sum_{j=1}^n x_j f(v_j) \\
+            &= \sum_{j=1}^n x_j (\alpha_{1j} v'_1 + \dots + \alpha_{n'j} v'_{n'}) \\
+            &= \sum_{j=1}^n (\alpha_{1j}x_j v'_1 + \dots + \alpha_{n'j}x_j v'_{n'}) \\
+            &= \left(\sum_{j=1}^n \alpha_{1j}x_j\right) v'_1 + \dots + \left(\sum_{j=1}^n \alpha_{n'j}x_j\right) v'_{n'}
+        \end{aligned}
+    \]
+    であるから，
+    \[
+        \varphi^{-1}_{V',\calB'} \circ f \circ \varphi_{V,\calB})\pmt{x_1 \\ \vdots \\ x_n} = \pmt{
+            \sum_{j=1}^n \alpha_{1j}x_j \\
+            \vdots \\
+            \sum_{j=1}^n \alpha_{n'j}x_j
+        } %
+        = \pmt{\alpha_{11} & \dots & \alpha_{1n} \\%
+        \vdots & \ddots & \vdots \\%
+        \alpha_{n'1} & \dots & \alpha_{n'n}} \pmt{x_1 \\ \vdots \\ x_n}
+    \]
+    となるので結論を得る．
+\end{proof}
+\begin{example}
+    $f \colon K^2 \to K^3$を，
+    \[
+        f\pmt{x_1 \\ x_2} = \pmt{x_1 + x_2 \\ x_2 \\ x_1 - x_2}
+    \]
+    で定める．
+    $K^2$と$K^3$の順序付き基底$\calB,\calB'$を，
+    \[
+        \begin{aligned}
+            \calB &= \left(\pmt{1 \\ 0}, \pmt{1 \\ 1}\right), \\
+            \calB' &= \left(\pmt{1 \\ 0 \\ 0}, \pmt{1 \\ 1 \\ 0} , \pmt{1 \\ 1 \\ 1} \right)
+        \end{aligned}
+    \]
+    で定める．$\calB$と$\calB'$に関する$f$の表現行列を求めよう．
+    \[
+        \begin{aligned}
+            f\pmt{1 \\ 0} &= \pmt{ 1 \\ 0 \\ -1} = 1 \cdot \pmt{1 \\ 0 \\ 0 } + 1 \pmt{1 \\ 1 \\ 0} + (-1)\cdot \pmt{1 \\ 1 \\ 1} \\
+            f\pmt{1 \\ 1} &= \pmt{ 2 \\ 1 \\ 0} = 1 \cdot \pmt{1 \\ 0 \\ 0 } + 1 \cdot \pmt{1 \\ 1 \\ 0} + 0 \cdot \pmt{1 \\ 1 \\ 1}
+        \end{aligned}
+    \]
+    となる．
+    表現行列は，\cref{prop:rep_matrix_calc}より，各式の係数を縦に並べてしまえばよく，
+    \[
+        \pmt{1 & 1\\ 1 & 1 \\ -1 & 0 }
+    \]
+    となる．
+\end{example}
+\begin{example}
+    $n$を1以上の整数とする．
+    $K_n[x]$を，$n$次以下の多項式全体の作るベクトル空間とする．
+    $K_2[x]$と$K_3[x]$の順序付き基底$\calB,\calB'$を，
+    \[
+        \begin{aligned}
+            \calB &= \left(1, x, x^2\right), \\
+            \calB' &= \left(1, x, x^2, x^3 \right)
+        \end{aligned}
+    \]
+    で定める．
+    $f \colon K_2[x] \to K_3[x]$を，$f(\varphi(x)) = (x-1)\varphi(x)$で定めるとき，$\calB$と$\calB'$に関する$f$の表現行列を求めよう．
+    \[
+        \begin{aligned}
+            f(1) &= x - 1 & &= (-1) \cdot 1 & &+ 1 \cdot x & & & & \\
+            f(x) &= x(x-1) & &= & & (-1)x & & +1 \cdot x^2 & & \\
+            f(x^2) &= x^2(x-1) & &= & & & & (-1)x^2 & & +1 \cdot x^3
+        \end{aligned}
+    \]
+    となるので，表現行列は，
+    \[
+        \pmt{-1 & 0 & 0 \\ 1 & -1 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1}
+    \]
+    である．
+\end{example}
+表現行列の中で特別なものを考える．
+\begin{dfn}
+    $V$を線形空間とし，$\calB,\calB'$を$V$の2つの順序付き基底であるとし，それぞれの元の個数を$n,n'$とする．
+    このとき，恒等写像$\iden_V$の$\calB$と$\calB'$に関する表現行列$A$を，\textbf{$\calB$と$\calB'$の間の基底の変換行列}という．
+    表現行列の定義から，この$A$は
+    \begin{equation}\label{eq:basis_exchange_map}
+        \psi_{\calB,\calB'} := \varphi_{V,\calB'}^{-1} \circ \varphi_{V,\calB} \colon K^n \to K^{n'}
+    \end{equation}
+    の変換行列であり，従って同型を与える．
+    これを$\calB$と$\calB'$の間の\textbf{基底の入れ替え行列}という．
+\end{dfn}
+以上の定義から，実は以下のことがわかる．
+\begin{thm}\label{thm:dim_well-posedness}
+    $V$が$n$個の元からなる基底$B$を持つとする．
+    このとき，$V$の任意の基底の元の個数は$n$である．
+\end{thm}
+\begin{proof}
+    $\calB$を$B$の元を適当に順序付けしてできる順序付き基底とする．
+    また，$\calB'$を$V$の別の順序付き基底とする．
+    $\calB,\calB'$それぞれの元の個数を$n,n'$とする．
+    このとき，\eqref{eq:basis_exchange_map}で定義される$\calB$と$\calB'$の間の基底の入れ替え写像$\psi_{\calB,\calB'}\colon K^n \to K^{n'}$は同型である．
+    すると，\cref{prop:Euclid_map_properties}の(3)より，$n=n'$でなければならないことがわかる．
+    つまり，$\calB$と$\calB'$の元の個数は一致する．
+\end{proof}
